@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Codesponsors.com</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+</head>
+<body>
+    <h1>Toaster example - (https://www.codesponsors.com/)
+    </h1>
+    <h4>Click on buttons</h4>
+    
+    <button id="success">Success</button>
+    <button id="info">Info</button>
+    <button id="warning">Warning</button>
+    <button id="error">Error</button>
+    <br/><br/>
+    <p><b> Override global options </b></p>
+    <button id="override">override</button><br/>
+    <p><b> Immediately remove current toasts without using animation </b></p>
+    <button id="remove">remove</button><br/>
+    <p><b> Remove current toasts using animation </b></p>
+    <button id="clear">clear</button><br/>
+    <p>You can customize more options. follow this link <a href="https://codeseven.github.io/toastr/demo.html">Toaster</a></p> 
+    <script>
+     $(document).ready(function() {
+        $("#success").click(function(){
+            toastr_call("success","Active","Successfully activated");
+        });
+        $("#info").click(function(){
+            toastr_call("info","Activated","For your Information");
+        });
+        $("#warning").click(function(){ 
+            toastr_call("warning","Not Activated","Wrong Information");
+        });
+        $("#override").click(function(){ 
+            override = {"positionClass": "toast-top-left"};  
+            toastr_call("error","Failed","Page not found",override);
+        }); 
+        $("#error").click(function(){
+            toastr_call("error","Failed","Page not found");
+        }); 
+        $("#remove").click(function(){     
+            toastr.remove();
+        });
+        $("#clear").click(function(){       
+            toastr.clear();
+        });
+      });
+
+      function toastr_call(type,title,msg,override)
+      {
+        toastr[type](msg, title,override);
+        toastr.options = {
+          "closeButton": false,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": true,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }  
+      }
+    </script>
+</body>
+</html>
