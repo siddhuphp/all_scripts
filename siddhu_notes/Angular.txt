@@ -53,4 +53,36 @@ Creating Service (Service will also called Injectables)
 		- inside the app.module.ts
 			Step 1: Add import { service class name } from 'Service file path';
 			Step 2: Add class name at providers
+			
+Call to API data
+
+	First of all, you need to import 'HttpClientModule' at app.module.ts
+	-Inside the main app.module.ts
+		import { HttpClientModule } from '@angular/common/http';
 		
+		@NgModule({
+		  declarations: [...],
+		  imports: [
+			HttpClientModule
+		  ],
+		  providers: [...],
+		  bootstrap: [...]
+		 })
+		 
+		export class AppModule { }
+		
+		Step 1: Import HttpClientModule from angular common/http
+		Step 2: Add HttpClientModule in imports
+		
+		After Loading HttpClientModule in App.module.js. Now you can use were you need require
+		Example:
+		-Inside somename.service.ts
+		
+		import { HttpClient } from '@angular/common/http';
+		
+		//create objective		
+		 constructor(private _http:HttpClient){}
+		 
+		 
+		 
+Observables
