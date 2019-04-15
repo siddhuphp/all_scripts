@@ -7,3 +7,50 @@ data binding
 	event binding
 	property data binding
 	single way data binding
+
+	
+	
+Creating Component
+
+	somename.component.ts
+	- inside the component
+		import { Component } from '@angular/core';
+		
+		@Component({})
+		
+		export class Classname {}
+		
+		Step 1: Import Component from angular core
+		Step 2: Create a Declerative
+				Step 2A: give selector name ex: selector:`app-name`,
+				Step 2B: Load Template or TemplateUrl same CSS 
+		Step 3: Export a class name. Class name 1st letter should be capital
+		
+		After creating component, You need to load component in app.module.ts
+		- inside the app.module.ts
+			Step 1: Add import { component class name } from 'Component file path';
+			Step 2: Add class name at declarations
+		
+		Hence, Now you can load <app-name></app-name> at any html
+
+Creating Service (Service will also called Injectables)
+	
+	somename.service.ts
+	- Inside the service
+		import { Injectable } from '@angular/core';
+		
+		@Injectable({})
+		
+		export class Classname {}
+		
+		Step 1: Import Injectable from angular core
+		Step 2: Create a Declerative
+				Step 2A: 
+				Step 2B: 
+		Step 3: Export a class name. Class name 1st letter should be capital
+		
+		After creating service, You need to load service in app.module.ts
+		- inside the app.module.ts
+			Step 1: Add import { service class name } from 'Service file path';
+			Step 2: Add class name at providers
+		
