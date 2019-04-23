@@ -24,7 +24,7 @@ function make_data()
    var msg = $("#message-text").val();
    console.log(row_index);
    console.log(name);     
-   obj[row_index] = [{"name":"sud","age":23},{"name":"sddd","age":53}];
+   obj[row_index] = [{"name":"sud","age":23},{"name":"sddd","age":53}];  
    data.push(obj);  
    $('#configform')[0].reset();
    console.log(obj);
