@@ -67,6 +67,7 @@
       </div>
     </div>
 
+
     <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -98,6 +99,17 @@
   </div>
 </div>
 
+    <?php
+      $headers = apache_request_headers();
+      $urlAddr;
+      if (isset($headers['Referer']))
+      {
+          $urlAddr =  $headers['Referer'];
+      }
+    ?>
+    <script>
+     var url  = '<?php echo $urlAddr; ?>'
+    </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script
