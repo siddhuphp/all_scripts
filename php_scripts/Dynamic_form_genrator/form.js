@@ -18,11 +18,13 @@ $(".column-index").click(function name(params) {
 });
 
 
-function dynamic_form(row_index,column) {  
+function dynamic_form(row_index,column_num,column_order) {  
 // alert(row_index);
-alert(column);
+// alert(column);
   $('#configform')[0].reset();
   $("#row_index").val(row_index);
+  $("#column_num").val(column_num);
+  $("#column_order").val(column_order);
   console.log(obj);
   //alert(obj[row_index][0].name);
   $("#recipient-name").val(obj[row_index][0].name);
@@ -35,13 +37,15 @@ var obj = {};
 function make_data()
 {
    
-   var row_index = $("#row_index").val();
+   var row_index = $("#row_index").val();// row order
+   var column_num = $("#column_num").val(); // col-1....col-6
+   var column_order = $("#column_order").val(); // in column input field order
    var name = $("#recipient-name").val();
    var msg = $("#message-text").val();
   //  console.log(row_index);
   //  console.log(name); 
-    obj[row_index]= [];      
-    obj[row_index] = [{"name":name,"age":msg}];  
+   // obj[row_index]= [];        
+    obj[row_index][column_num][column_order] = [{"name":name,"age":msg,"column_num":column_num,"column_order":column_order}];  
   //  obj[7]= [];  
   //  obj[7].push([{"name":788,"age":85}]);  
   //  obj[7].push([{"name":123,"age":45}]);  

@@ -90,6 +90,7 @@
           </div>
 		  <input type="hidden" id="row_index" />        
 		  <input type="hidden" id="column_num" />        
+		  <input type="hidden" id="column_order" />        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
