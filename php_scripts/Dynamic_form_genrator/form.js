@@ -27,7 +27,7 @@ function dynamic_form(row_index,column_num,column_order) {
   $("#column_order").val(column_order);
   console.log(obj);
   //alert(obj[row_index][0].name);
-  $("#recipient-name").val(obj[row_index][0].name);
+  //$("#recipient-name").val(obj[row_index][0].name);
 };
 
 // var data = [];
@@ -44,11 +44,21 @@ function make_data()
    var msg = $("#message-text").val();
   //  console.log(row_index);
   //  console.log(name); 
-   // obj[row_index]= [];        
-    obj[row_index][column_num][column_order] = [{"name":name,"age":msg,"column_num":column_num,"column_order":column_order}];  
-  //  obj[7]= [];  
-  //  obj[7].push([{"name":788,"age":85}]);  
-  //  obj[7].push([{"name":123,"age":45}]);  
+    //obj[row_index][column_num][column_order]  = [];  
+   //console.log(row_index +'-'+ column_num +'-'+ column_order );      
+    
+    if(typeof obj[row_index] === 'undefined') {
+      // does not exist
+      obj[row_index] = [{"name":name,"age":msg,"column_num":column_num,"column_order":column_order}];
+    }
+    else {
+        // does exist
+        obj[row_index].push({"name":name,"age":msg,"column_num":column_num,"column_order":column_order});
+        
+    } 
+  //  obj[7] = [];  
+  //  obj[7].push([{1:{"name":788,"age":85}}]);  
+  //  obj[7].push([{2:{"name":123,"age":45}}]);  
   //  data.push(obj);  
    $('#configform')[0].reset();
    $('#exampleModal').modal('hide');

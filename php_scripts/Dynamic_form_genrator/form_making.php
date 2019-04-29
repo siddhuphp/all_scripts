@@ -7,7 +7,7 @@
           {
 ?>
 
-          <button type="button" id="dynamic_form_<?php echo $row; ?>" onClick="dynamic_form(<?php echo $row; ?>,1)" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">+ Add </button></br></br>
+          <button type="button" id="dynamic_form_<?php echo $row; ?>" onClick="dynamic_form(<?php echo $row; ?>,1,1)" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">+ Add </button></br></br>
 
      <?php }else if($column_num == 2){ ?>
           <button type="button" id="dynamic_form_<?php echo $row; ?>" onClick="dynamic_form(<?php echo $row; ?>,2,1)" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">+ Add </button> &nbsp; &nbsp;
