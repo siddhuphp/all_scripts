@@ -1,37 +1,30 @@
-
-
 var i = 1;
-$("#column_1").click(function name(params) {
-
+$(".column-index").click(function name(params) {
+ var column_num = $(this).attr("data-column"); 
   $.ajax({
-    method: 'POST',
-    data: {"row":i},
-    dataType: 'html',
-    url: url+'/form_making.php'
-}).done(function(data) {
-    // If successful
-   console.log(data);
-   $("#dynamic_form").append(data);
-}).fail(function(jqXHR, textStatus, errorThrown) {
-    // If fail
-    console.log(textStatus + ': ' + errorThrown);
+          method: 'POST',
+          data: {"row":i,"column_num":column_num},
+          dataType: 'html',
+          url: url+'/form_making.php'
+        }).done(function(data) {
+           // If successful
+          console.log(data);
+          $("#dynamic_form").append(data);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+          // If fail
+          console.log(textStatus + ': ' + errorThrown);
+        }); 
+      i++;  
 });
 
 
-
-
-
- 
-  i++;  
-});
-
-
-function dynamic_form(row_index) {  
- alert(row_index);
+function dynamic_form(row_index,column) {  
+// alert(row_index);
+alert(column);
   $('#configform')[0].reset();
   $("#row_index").val(row_index);
   console.log(obj);
-  alert(obj[row_index][0].name);
+  //alert(obj[row_index][0].name);
   $("#recipient-name").val(obj[row_index][0].name);
 };
 
@@ -46,8 +39,12 @@ function make_data()
    var name = $("#recipient-name").val();
    var msg = $("#message-text").val();
   //  console.log(row_index);
-  //  console.log(name);     
-   obj[row_index] = [{"name":name,"age":msg}];  
+  //  console.log(name); 
+    obj[row_index]= [];      
+    obj[row_index] = [{"name":name,"age":msg}];  
+  //  obj[7]= [];  
+  //  obj[7].push([{"name":788,"age":85}]);  
+  //  obj[7].push([{"name":123,"age":45}]);  
   //  data.push(obj);  
    $('#configform')[0].reset();
    $('#exampleModal').modal('hide');
@@ -58,12 +55,3 @@ function make_data()
   
 }
 
-
-
-
-$("#column_2").click(function name(params) {
-  $("#dynamic_form").append(
-    '<button type="button" id="dynamic_form_'+i+'_1" onClick="dynamic_form('+i+'_1)" data-index="'+i+'" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">+ Add </button> &nbsp; &nbsp; <button type="button" id="dynamic_form_'+i+'_2" onClick="dynamic_form('+i+'_2)" data-index="'+i+'" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">+ Add </button></br></br>'
-  );
-  i++;  
-});

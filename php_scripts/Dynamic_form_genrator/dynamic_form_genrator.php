@@ -20,43 +20,43 @@
           <h5>Select columns</h5>
           <button
             type="button"
-            class="btn btn-outline-primary btn-sm"
-            id="column_1"
+            class="btn btn-outline-primary btn-sm column-index"
+            id="column_1" data-column="1"
           >
             1 Column
           </button>
           <button
             type="button"
-            class="btn btn-outline-primary btn-sm"
-            id="column_2"
+            class="btn btn-outline-primary btn-sm column-index"
+            id="column_2" data-column="2"
           >
             2 Column
           </button>
           <button
             type="button"
-            class="btn btn-outline-primary btn-sm"
-            id="column_3"
+            class="btn btn-outline-primary btn-sm column-index"
+            id="column_3" data-column="3"
           >
             3 Column
           </button>
           <button
             type="button"
-            class="btn btn-outline-primary btn-sm"
-            id="column_4"
+            class="btn btn-outline-primary btn-sm column-index"
+            id="column_4" data-column="4"
           >
             4 Column
           </button>
           <button
             type="button"
-            class="btn btn-outline-primary btn-sm"
-            id="column_5"
+            class="btn btn-outline-primary btn-sm column-index"
+            id="column_5" data-column="5"
           >
             5 Column
           </button>
           <button
             type="button"
-            class="btn btn-outline-primary btn-sm"
-            id="column_6"
+            class="btn btn-outline-primary btn-sm column-index"
+            id="column_6" data-column="6"
           >
             6 Column
           </button>
@@ -89,6 +89,7 @@
             <textarea class="form-control" id="message-text"></textarea>
           </div>
 		  <input type="hidden" id="row_index" />        
+		  <input type="hidden" id="column_num" />        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
