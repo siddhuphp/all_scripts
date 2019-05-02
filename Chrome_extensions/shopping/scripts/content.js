@@ -21,4 +21,11 @@ let product_images = new Array();
       "product_images":product_images,
   };
 
-  console.log(data);
+  
+    chrome.storage.sync.set({"data": data}, function() {
+        console.log(data);
+      });
+  
+  
+
+ //console.log(data);

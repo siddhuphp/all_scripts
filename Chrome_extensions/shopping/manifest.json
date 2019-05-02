@@ -6,7 +6,7 @@
     "browser_action":{
         "default_popup":"popup.html"
     },
-    "permissions":["tabs","activeTab"],
+    "permissions":["tabs","activeTab","storage"],
     
     
     
