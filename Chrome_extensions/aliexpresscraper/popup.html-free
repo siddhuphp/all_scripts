@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta name="google-site-verification" content="q19o5FPil4mXNMts8aAsAPTNFdaiPS0hhplRgwebffo" />
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-20496101-9"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'UA-20496101-9');
+	</script>
+
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="bower_components/i18next/i18next.js"></script>
+
+	<script src="jszip.js"></script>
+	<script src="popup.js"></script>
+	
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Bootstrap 3, from LayoutIt!</title>
+
+	<meta name="description" content="drop shopping tool,scrapping,ぜどり,転売,スクレピング,外贸,数据采集">
+	<meta name="author" content="taiho">
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body id=body style="min-width:700px; font-size : 12px;">
+
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<h3 id=title>
+					AliExpress Scraper Free
+				</h3>
+			
+				<dl>
+					<dt>						
+					</dt>
+					<dd  id="msg" style="font-size : 12px;">
+					 	can only Scrape AliExpress products and images,Scraper Ex version can Banggood,Taobao China,wish,amazon etc,and many in the future.
+				    	Also We Can customize for you, if need make contract:<a href="https://wangbo1086.wixsite.com/scraper" target="_blank">Tech Team</a>. enjoy it!
+					</dd>
+					
+					<div id=info hidden>
+						<dt>
+							Help:
+						</dt>
+						<dd>
+							1.After scraper,You can Edit,modify the item,The Copy and Download Always give the Modified
+						</dd>
+						<dd>
+							2.Only Paid User can Download CSV and images .The general user can copy CSV to ClipBoard
+						</dd>
+					</div>
+				</dl>
+				
+				<button id=download0 type="button" class="btn btn-primary" style="font-size : 12px;">
+					Copy CSV to ClipBoard
+					
+				</button>
+				or
+				<button id=download1 type="button" class="btn btn-primary" style="font-size : 12px;">
+					Download CSV&Images
+				</button>
+				<table id=product class="table" style="width:100%;">
+					<thead>
+						<tr>
+							<th style="width:10%;">
+								Product ID
+							</th>
+							<th style="width:30%;">
+								Product Name
+							</th>
+							<th style="width:10%;">
+								Price
+							</th>
+							<th style="width:10%;">
+								Wt(kg)
+							</th>
+							<th style="width:20%;">
+								Pkg Size
+							</th>
+							<th style="width:20%;">
+								Options
+							</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="width: 80px; color: black; text-align: left;" id="d0"></td>
+							<td style="width: 400px; color: black; text-align: left;" contenteditable="true" id=d1></td>
+							<!--td style="width: 50px; color: black; text-align: left;" contenteditable="true" id=d2></td-->
+							<!--td style="width: 50px; color: black; text-align: left;" contenteditable="true" id=d3></td-->
+							<td style="width:  50px; color: black; text-align: left;" contenteditable="true" id=d4></td>
+							<td style="width:  50px; color: black; text-align: left;" contenteditable="true" id=d5></td>
+							<!--<td style="width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-heigh: 50; max-width:100; color: black; text-align: left;" contenteditable="true" id="d6"></td>-->
+							<!--<td style="width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-heigh: 50; max-width:100; color: black; text-align: left;" contenteditable="true" id=d7></td>-->
+							<td style="width:  100px; color: black; text-align: left;" contenteditable="true" id=d8></td>
+							<td style="width: 200px; color: black; text-align: left;" contenteditable="true" id=d9></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div id="images_small">
+					<label id="v_label"></label>
+				</div>
+				<br>
+				<table id=images class="table" hidden>
+					<thead>
+						<tr>
+							<th>
+								#
+							</th>
+							<th>
+								Image URL
+							</th>
+
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<br>
+				<label id=label_id style="color: red;"></label>
+
+				<!--
+            <div id=contract>
+			<span class="label label-success">Contract</span> 
+			<address>
+				Copyright <strong>Netwhole, Inc.</strong>Japan Tokyo<br>E-mail:taiho1086@hotmail.co.jp
+			</address>
+			</div>
+			-->
+			</div>
+		</div>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/scripts.js"></script>
+	
+	
+	
+</body>
+
+</html>

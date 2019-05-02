@@ -1,0 +1,119 @@
+
+function downloadFile(url, onSuccess, ObjectList, zip) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.responseType = "blob";
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      if (onSuccess) {
+    	onSuccess(xhr.response, ObjectList, zip);
+      }
+    }
+  }
+  xhr.send(null);
+}
+
+function onDownloadComplete(blobData, ObjectList, zip){
+    if (count < ObjectList.length) {
+      blobToBase64(blobData, function(binaryData){
+      // add downloaded file to zip:
+      if (count<=10){
+         var fileName = ObjectList[0]+".jpg";
+      }else{
+         var fileName = ObjectList[0]+"__"+String(count-10)+".jpg";
+      }
+      zip.file(fileName, binaryData, {base64: true});
+      //zip.file(fileName+".docx", binaryData, {base64: true}); //file"+count+".docx"
+      if (count < ObjectList.length -1){
+        count++;
+        downloadFile(ObjectList[count], onDownloadComplete, ObjectList, zip);
+      } else {
+        	zipAndSaveFiles(zip);
+      }
+    });
+  }
+}
+
+function blobToBase64(blob, callback) {
+  var reader = new FileReader();
+  reader.onload = function() {
+    var dataUrl = reader.result;
+    var base64 = dataUrl.split(',')[1];
+    callback(base64);
+  };
+  reader.readAsDataURL(blob);
+}
+
+function zipAndSaveFiles(zip) {
+  chrome.windows.getLastFocused(function(window) {
+    zip.generateAsync({type:"blob"})
+    .then(function (zip) {
+      // see FileSaver.js
+      var fileName=ObjectList[0]+".zip"
+      saveAs(zip, fileName);
+    });
+  });
+}
+
+
+function downloadCsvString() {
+  var str=new Array();
+	var str1 = '\uFEFF';
+  var str2 = '\uFEFF';
+  
+  str1 += "Product ID" + "," + "Product Name" + "," + "Category" + "," + "ShipFee" + "," +"Product Price"+","+"Weight(kg)"+","+"Product Description(html)"+","+"Products Url"+","+"Pakcage Size"+","+"Option"+",";
+	str1 += '\r\n';
+	
+	//ObjectList[6]='\"'+ObjectList[6]+'\"';
+	ObjectList[6]=ObjectList[6].substring(0,32700);
+	
+	
+	for (var i = 0; i < ObjectList.length; ++i) {
+    	 
+    	 if (i<10) {
+    	    str1 += ObjectList[i].replace('"', '""')+"," ;
+	     }else{
+	        
+	        if (i==10){
+	            str1 += '\r\n';
+	            //str2 += '\r\n';
+	            //str2 += '\r\n';
+	            str2 += "Product ID"+","+"Image Url"+",";
+	            str2 += '\r\n'
+	        }
+	        str2 += ObjectList[0].replace('"', '""') +","+ ObjectList[i].replace('"', '""');
+	        str2 += '\r\n';
+	     }	     
+    }
+    str2 += '\r\n';
+    str[0]=str1;
+    str[1]=str2;
+    return str;
+}
+
+var count;
+var ObjectList;
+
+chrome.runtime.onMessage.addListener(function (msg) {
+  
+  //console.log("i am background.js receiver messages");
+  //console.log(msg.action);
+  if ((msg.action === 'download') && (msg.ObjectList !== undefined)) {
+    // You should check that `msg.ObjectList` is a non-empty array...
+    ObjectList = msg.ObjectList;
+        
+      var zip = new JSZip();
+    
+      var filename =ObjectList[0]+"-product.csv";
+      zip.file(filename, downloadCsvString()[0]);
+      var filename =ObjectList[0]+"-images.csv";
+      zip.file(filename, downloadCsvString()[1]);
+    
+      count=10;
+    downloadFile(msg.ObjectList[count], onDownloadComplete, msg.ObjectList, zip);
+    console.log('download-enter');
+  }
+  
+})
+
+

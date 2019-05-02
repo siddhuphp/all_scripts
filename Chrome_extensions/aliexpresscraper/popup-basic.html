@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+<script src="jszip.js"></script>
+<script src="popup.js"></script>
+<title>AliExpress Scraper</title>
+<link rel='stylesheet' type='text/css' href='popup.css'>
+</head>
+<body id=body style="min-width:700px; font-size : 11px;">
+<label id=license></label>
+<label id=label_top style="color: red;">Please access <a href="https://www.aliexpress.com/">AliExpress.com</a>, Find one your favorite Product,Click to Download CSV&Images</label>
+<br>
+<br>
+<button id=download0 style="font-size : 11px;">Copy CSV to ClipBoard</button>
+<button id=download1 style="font-size : 11px;">Download CSV&Images</button>
+<br>
+<br>
+<table id=product>
+  <tr style="background-color: #bde9ba;">
+    <td style="width: 100px; color: red; text-align: left;">Product ID</td>
+    <td style="width: 400px; color: red; text-align: left;">Product Name</td>
+    <td style="width: 50px; color: red; text-align: left;">Category</td>
+    <td style="width: 50px; color: red; text-align: left;">Sub Category</td>
+    <td style="width:  50px; color: red; text-align: left;">Price</td>
+    <td style="width:  50px; color: red; text-align: left;">Weight(kg)</td>
+    <!--<td style="width: 100px; color: red; text-align: left;">Description(html)</td>-->
+    <!--<td style="width: 100px; color: red; text-align: left;">Products Url</td>-->
+    <td style="width:  50px; color: red; text-align: left;">Pakcage Size</td>
+    <td style="width: 100px; color: red; text-align: left;">Options</td>
+  </tr>
+    
+  <tr>
+    <td style="width: 100px; color: black; text-align: left;" id="d0"></td>
+    <td style="width: 400px; color: black; text-align: left;" contenteditable="true" id=d1></td>
+    <td style="width: 50px; color: black; text-align: left;" contenteditable="true" id=d2></td>
+    <td style="width: 50px; color: black; text-align: left;" contenteditable="true" id=d3></td>
+    <td style="width:  50px; color: black; text-align: left;" contenteditable="true" id=d4></td>
+    <td style="width:  50px; color: black; text-align: left;" contenteditable="true" id=d5></td>
+    <!--<td style="width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-heigh: 50; max-width:100; color: black; text-align: left;" contenteditable="true" id="d6"></td>-->
+    <!--<td style="width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-heigh: 50; max-width:100; color: black; text-align: left;" contenteditable="true" id=d7></td>-->
+    <td style="width:  50px; color: black; text-align: left;" contenteditable="true" id=d8></td>
+    <td style="width: 100px; color: black; text-align: left;" contenteditable="true" id=d9></td>
+  </tr>
+
+</table>
+
+<table id=images >
+  <tr style="background-color: #bde9ba;">
+   <td style="width: 10px; color: red; text-align: left;">Num</td-->
+   <td style="width: 400px; color: red; text-align: left;">Image URL</td>
+  </tr>
+
+</table>
+<br>
+<label id=label_id style="color: red;"></label>
+</body>
+</html>

@@ -1,0 +1,4 @@
+//*[@id="j-product-detail-bd"]/div[1]/div/h1
+
+console.log(document.evaluate('//*[@id="j-product-detail-bd"]/div[1]/div/h1', document,
+  null, XPathResult.ANY_TYPE, null).iterateNext().textContent);

@@ -1,0 +1,20 @@
+{
+    "name": "E-commerce extension, Developed by Siddhu",
+    "version": "1.0",
+    "description": "This extension will work on E-commerce sites",
+    "manifest_version": 2,
+    "browser_action":{
+        "default_popup":"popup.html"
+    },
+    "permissions":["tabs","activeTab"],
+    
+    
+    
+    "content_scripts":[
+        {
+            "matches":["https://www.aliexpress.com/*"],
+            "all_frames": true,
+            "js":["jquery-3.4.1.min.js","scripts/content.js"]
+        }
+    ]
+}

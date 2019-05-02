@@ -1,0 +1,39 @@
+{
+  "name": "Import CSV capture",
+  "description": "Import CSV capture Dropping tools",
+  "version": "1.0",
+  "minimum_chrome_version": "16.0.884",
+  "permissions": ["downloads", "<all_urls>","identity","https://www.googleapis.com/","storage","tabs"],
+  "background": {
+    "persistent": true,
+    "scripts": ["background.js","jszip.js","FileSaver.js"]
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "chrome_style": true,
+    "default_icon": "ImportCSVCapture128-dvl.png",
+    "scripts": ["jszip.js"]
+  },  
+   "oauth2": {
+    "client_id": "979899324989-2u7a0s69a7h066l8k07vlm7efmnf7uh8.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
+      "https://www.googleapis.com/auth/chromewebstore.readonly"
+    ]
+  },
+  
+  "options_ui": {
+    
+    "page": "options.html",
+    "chrome_style": true,
+    "open_in_tab": true
+  },
+  
+  "icons" : {
+     "16": "ImportCSVCapture16.png",
+     "48": "ImportCSVCapture48.png",
+    "128": "ImportCSVCapture128.png"
+  },
+  
+  "manifest_version": 2
+}
