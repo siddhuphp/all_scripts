@@ -22,7 +22,7 @@ Content_script
 		-js: this is for load js files and those files will run after webpage loaded.
 				Note: you have to put jquery first. If you are using Jquery. It will load files in order way. 
 
-Back Ground scripts
+background (background script)
 	Background_script is something that will run in backgroun. for example if user clicks on new tab,
 	user write something on browser urls. user close the current tab like that.
 
@@ -46,3 +46,12 @@ Back Ground scripts
        ],
        "persistent": false
      },
+
+Chrome API
+	If user clicked on default_icon and you want fire a function as background script
+	ex:
+		chrome.browserAction.onClicked.addListener(buttonClicked)
+		function buttonClicked(){ // call back function
+    	console.log("button Clicked");
+		}
+

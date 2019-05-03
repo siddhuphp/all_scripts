@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <style>
+                table {
+                  font-family: arial, sans-serif;
+                  border-collapse: collapse;
+                  width: 100%;
+                }
+                
+                td, th {
+                  border: 1px solid #dddddd;
+                  text-align: left;
+                  padding: 8px;
+                }
+                
+        </style>
+
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="popup.js"></script>
+</head>
+
+<body>
+    <button type="button" id="shopping">Get Data</button>
+    <table style="width:100%">
+        <tr>
+          <th>Product title</th>
+          <th>Product price</th> 
+          <th>Product discount price</th>
+        </tr>
+        <tr>
+          <td id="product_title"> - </td>
+          <td id="product_price"> - </td> 
+          <td id="product_discount_price"> - </td>
+        </tr>        
+      </table>
+      <h4> Product Images </h4>
+      <span id="product_images"> - </span>
+</body>
+</html>
