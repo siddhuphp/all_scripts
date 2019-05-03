@@ -1,26 +1,48 @@
-//*[@id="j-product-detail-bd"]/div[1]/div/h1
+Chrome Extension
 
-console.log(document.evaluate('//*[@id="j-product-detail-bd"]/div[1]/div/h1', document,
-  null, XPathResult.ANY_TYPE, null).iterateNext().textContent);
-  
-  
-  <ul class="image-thumb-list" id="j-image-thumb-list">
-					<li class=""><span class="img-thumb-item"><img alt="(50pieces/lot) CAB-E1-RJ45BNC BNC to RJ45 E1 cable 3m 10ft for cisco V.35 AS5350 AS5400 VWIC2-2MFT-G703,VWIC2-2MFT Cables" src="https://ae01.alicdn.com/kf/HTB1T.LjRXXXXXXyXXXXq6xXFXXXg/50pieces-lot-CAB-E1-RJ45BNC-BNC-to-RJ45-E1-cable-3m-10ft-for-cisco-V.jpg_50x50.jpg"></span></li>
-					<li class=""><span class="img-thumb-item"><img alt="(50pieces/lot) CAB-E1-RJ45BNC BNC to RJ45 E1 cable 3m 10ft for cisco V.35 AS5350 AS5400 VWIC2-2MFT-G703,VWIC2-2MFT Cables" src="https://ae01.alicdn.com/kf/HTB1bbOBRXXXXXcOaXXXq6xXFXXXJ/50pieces-lot-CAB-E1-RJ45BNC-BNC-to-RJ45-E1-cable-3m-10ft-for-cisco-V.jpg_50x50.jpg"></span></li>
-					<li class="current"><span class="img-thumb-item"><img alt="(50pieces/lot) CAB-E1-RJ45BNC BNC to RJ45 E1 cable 3m 10ft for cisco V.35 AS5350 AS5400 VWIC2-2MFT-G703,VWIC2-2MFT Cables" src="https://ae01.alicdn.com/kf/HTB1e7SPRXXXXXX_XVXXq6xXFXXXY/50pieces-lot-CAB-E1-RJ45BNC-BNC-to-RJ45-E1-cable-3m-10ft-for-cisco-V.jpg_50x50.jpg"></span></li>
-					<li><span class="img-thumb-item"><img alt="(50pieces/lot) CAB-E1-RJ45BNC BNC to RJ45 E1 cable 3m 10ft for cisco V.35 AS5350 AS5400 VWIC2-2MFT-G703,VWIC2-2MFT Cables" src="https://ae01.alicdn.com/kf/HTB1bQWxRXXXXXXqapXXq6xXFXXXM/50pieces-lot-CAB-E1-RJ45BNC-BNC-to-RJ45-E1-cable-3m-10ft-for-cisco-V.jpg_50x50.jpg"></span></li>
-					<li><span class="img-thumb-item"><img alt="(50pieces/lot) CAB-E1-RJ45BNC BNC to RJ45 E1 cable 3m 10ft for cisco V.35 AS5350 AS5400 VWIC2-2MFT-G703,VWIC2-2MFT Cables" src="https://ae01.alicdn.com/kf/HTB1RrCxRXXXXXaBapXXq6xXFXXXF/50pieces-lot-CAB-E1-RJ45BNC-BNC-to-RJ45-E1-cable-3m-10ft-for-cisco-V.jpg_50x50.jpg"></span></li>
-					<li><span class="img-thumb-item"><img alt="(50pieces/lot) CAB-E1-RJ45BNC BNC to RJ45 E1 cable 3m 10ft for cisco V.35 AS5350 AS5400 VWIC2-2MFT-G703,VWIC2-2MFT Cables" src="https://ae01.alicdn.com/kf/HTB1db9SRXXXXXalXVXXq6xXFXXXz/50pieces-lot-CAB-E1-RJ45BNC-BNC-to-RJ45-E1-cable-3m-10ft-for-cisco-V.jpg_50x50.jpg"></span></li>
-			</ul>
-			
-			
-			chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
-    var url = tabs[0].url;
-    console.log(url);
-});
+manifest.json	
+	Firstly we need to talk about manifest.json file. This is the main fail to config the Chrome 
+	Extension. All the config will happen this file only.
 
-console.log("lodded");
-chrome.storage.sync.get(['product_title'], function(result) {
-    console.log('Value currently is ' + result.product_title);
-  });
+Content_script
+	Content_script is something will work after webpage loaded. You can impilment this in particular
+  website too. Simple it excute the code after webpage loaded.
+	Ex:
+		"content_scripts":[
+        {
+            "matches":["https://www.aliexpress.com/*"],
+            "all_frames": true,
+            "js":["jquery-3.4.1.min.js","scripts/content.js"]
+        }
+    ]
 
+		Above content_scripts has array to load multiple things. 
+		-matches: for set urls to work Chrome Extension. 
+		-all_frames: this is work even website has iframes
+		-js: this is for load js files and those files will run after webpage loaded.
+				Note: you have to put jquery first. If you are using Jquery. It will load files in order way. 
+
+Back Ground scripts
+	Background_script is something that will run in backgroun. for example if user clicks on new tab,
+	user write something on browser urls. user close the current tab like that.
+
+	Background scripts are registered in the manifest under the "background" field. They are listed in
+	an array after the "scripts" key, and "persistent" should be specified as false.
+
+	Ex:
+		"background": {
+			"scripts": ["background.js"],
+			"persistent": false
+  	},
+
+	Multiple background scripts can be registered for modularized code.
+
+	Ex:
+		 "background": {
+       "scripts": [
+         "backgroundContextMenus.js",
+         "backgroundOmniBox.js",
+         "backgroundOauth.js"
+       ],
+       "persistent": false
+     },

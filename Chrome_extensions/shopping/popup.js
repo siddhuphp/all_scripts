@@ -13,7 +13,17 @@ $(function(){
                 $("#product_images").append('<img src="'+value+'">&nbsp;&nbsp;');
               });
             
+              clearStorage();
           });
     });
 });
 
+function clearStorage(){
+        // Clear chrome storage before saving
+        chrome.storage.local.clear(function() {
+            var error = chrome.runtime.lastError;
+            if (error) {
+                console.error(error);
+            }
+        }); 
+}
