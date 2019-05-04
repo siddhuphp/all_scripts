@@ -1,4 +1,13 @@
-let product_title = document.evaluate('//*[@id="j-product-detail-bd"]/div[1]/div/h1', document,
+chrome.runtime.onMessage.addListener(gotMessage);
+
+function gotMessage(message){
+    console.log(message.msg);
+    products();
+}
+
+function products(){
+
+  let product_title = document.evaluate('//*[@id="j-product-detail-bd"]/div[1]/div/h1', document,
   null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
 
 let product_price = document.evaluate('//*[@id="j-sku-price"]', document,
@@ -30,3 +39,5 @@ let product_images = new Array();
   
 
  //console.log(data);
+}
+

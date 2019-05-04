@@ -17,7 +17,7 @@ Content_script
     ]
 
 		Above content_scripts has array to load multiple things. 
-		-matches: for set urls to work Chrome Extension. 
+		-matches: for set urls to work Chrome Extension.(https://developer.chrome.com/apps/match_patterns)
 		-all_frames: this is work even website has iframes
 		-js: this is for load js files and those files will run after webpage loaded.
 				Note: you have to put jquery first. If you are using Jquery. It will load files in order way. 
@@ -48,10 +48,49 @@ background (background script)
      },
 
 Chrome API
-	If user clicked on default_icon and you want fire a function as background script
-	ex:
-		chrome.browserAction.onClicked.addListener(buttonClicked)
-		function buttonClicked(){ // call back function
-    	console.log("button Clicked");
-		}
+	chrome.browserAction
+		Use browser actions to put icons in the main Google Chrome toolbar, to the right of the address bar. In addition to its ICON, a browser action can have a TOOLTIP, a BADGE, and a POPUP.
 
+		https://developer.chrome.com/extensions/browserAction
+
+		If you want to create an icon that isn't always visible, use a PAGE ACTION instead of a browser action.
+
+		If user clicked on default_icon and you want fire a function as background script
+		ex:
+			chrome.browserAction.onClicked.addListener(buttonClicked)
+			function buttonClicked(){ // call back function
+    		console.log("button Clicked");
+			}
+
+		Register your browser action in the extension manifest like this:
+
+		"browser_action": {
+          "default_icon": {                    // optional
+            "16": "images/icon16.png",           // optional
+            "24": "images/icon24.png",           // optional
+            "32": "images/icon32.png"            // optional
+          },
+          "default_title": "Google Mail",      // optional; shown in tooltip
+          "default_popup": "popup.html"        // optional
+        },
+
+	chrome.pageAction
+		Use the chrome.pageAction API to put icons in the main Google Chrome toolbar, to the right of the address bar. Page actions represent actions that can be taken on the current page, but that aren't applicable to all pages. Page actions appear grayed out when inactive.
+
+		https://developer.chrome.com/extensions/pageAction
+
+		Register your page action in the extension manifest like this:
+		Ex:
+				"page_action": {
+          "default_icon": {                    // optional
+            "16": "images/icon16.png",           // optional
+            "24": "images/icon24.png",           // optional
+            "32": "images/icon32.png"            // optional
+          },
+          "default_title": "Google Mail",      // optional; shown in tooltip
+          "default_popup": "popup.html"        // optional
+        },
+
+How to send a message to background script to content_scripts?
+
+How to get current active tab details?
