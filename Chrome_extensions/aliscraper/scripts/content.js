@@ -29,14 +29,13 @@ let product_images = new Array();
       "product_discount_price":product_discount_price,
       "product_images":product_images,
   };
+  $("#product_title").text(product_title);
+ 
 
-
-    // Data storage in chrome storage
-    chrome.storage.sync.set({"data": data}, function() {
-        console.log(data);
-      });
   
-  
+  chrome.runtime.sendMessage({greeting: "hello",final:data}, function(response) {
+    console.log(response.farewell);
+  });
 
  //console.log(data);
 }

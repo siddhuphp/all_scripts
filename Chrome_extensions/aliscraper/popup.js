@@ -1,29 +1,23 @@
-console.log("lodded");
-$(function(){
-    $("#shopping").click(function() {
-        console.log("hitted");
-        chrome.storage.sync.get(['data'], function(result) {
-            console.log(result);
-            $("#product_title").text(result.data.product_title);
-            $("#product_price").text(result.data.product_price);
-            $("#product_discount_price").text(result.data.product_discount_price);
+chrome.runtime.sendMessage({popupOpen: true});
+
+console.log("POPUP js fired");
+
+  chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      console.log(sender.tab ?
+                  "from a content script:" + sender.tab.url :
+                  "from the extension");
+      if (request.greeting == "hello")
+      {
+        sendResponse({farewell: "goodbye"});
+        $("#product_title").text(request.final.product_title);
+        $("#product_price").text(request.final.product_price);
+        $("#product_discount_price").text(request.final.product_discount_price);
 
 
-            $.each(result.data.product_images, function( index, value ) {
-                $("#product_images").append('<img src="'+value+'">&nbsp;&nbsp;');
-              });
-            
-              clearStorage();
-          });
+        $.each(request.final.product_images, function( index, value ) {
+            $("#product_images").append('<img src="'+value+'">&nbsp;&nbsp;');
+          });          
+      }
+        
     });
-});
-
-function clearStorage(){
-        // Clear chrome storage before saving
-        chrome.storage.local.clear(function() {
-            var error = chrome.runtime.lastError;
-            if (error) {
-                console.error(error);
-            }
-        }); 
-}

@@ -1,11 +1,19 @@
 console.log("Background script running");
-console.log("below script will run only if u remove the default_popup.thml");
-chrome.browserAction.onClicked.addListener(buttonClicked)
 
-function buttonClicked(tab){
-    console.log("button clicked! TAB ID:"+tab.id);
-    let options = {
-       msg:"Hello" 
-    }
-    chrome.tabs.sendMessage(tab.id, options)
-}
+
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
+    if(message.popupOpen)
+     {
+        console.log("inside"); 
+        chrome.tabs.query({'active': true}, function(tabs) {
+            console.log(tabs[0].id);
+            let options = {
+                msg:"Hello" 
+             }
+             chrome.tabs.sendMessage(tabs[0].id, options)
+          });
+     }
+  });
+
+
+ 
