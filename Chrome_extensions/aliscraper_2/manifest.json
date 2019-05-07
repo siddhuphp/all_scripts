@@ -12,7 +12,7 @@
           },
           "default_popup":"popup.html"
     },
-    "permissions":["tabs","activeTab","storage"],
+    "permissions":["tabs","activeTab","storage","https://*.aliexpress.com/"],
 
     "background": {
         "scripts": ["background.js"],
