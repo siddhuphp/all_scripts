@@ -53,15 +53,35 @@ console.log("POPUP js fired");
             $.ajax({
               url: "https://freight.aliexpress.com/ajaxFreightCalculateService.htm?productid="+request.final.product_id+"&country=IN",
               type: 'GET',
-              crossDomain:true,
-              cache:false,
-              async:false,
-              //dataType: 'json', // added data type
-              success: function(res) {
-                  console.log(res);                 
+              contentType: "application/json; charset=utf-8", 
+              dataType: "html",           
+              success: function( res ) {
+                // covert string format to json              
+               var a =  JSON.parse(res.replace(/[()]/g, ''));
+               $("#products_item_options").append( make_shipping_details_frame(a) );             
               }
             });
           }
       }
         
     });
+
+
+    function make_shipping_details_frame(data)
+    {
+        var html = '<table style="width:100%"><tr><th>Shipping Company</th><th>Shipping Cost</th><th>Estimated Delivery Time</th><th>Tracking Information</th></tr>';
+        if(data)
+        {
+          
+           $.each(data['freight'], function( index, value ) {
+            html += '<tr><td>'+value.companyDisplayName+'</td>';
+            html += '<td>'+value.localPriceFormatStr+'</td>';
+            html += '<td>'+value.time+' days </td>';
+            var isTracked = (value.isTracked == true)?"Available":"NO";
+            html += '<td>'+isTracked+'</td></tr>';
+           });
+
+        }       
+        html += '</table>';
+        return html;
+      }

@@ -30,42 +30,32 @@ function dynamic_form(row_index,column_num,column_order) {
   //$("#recipient-name").val(obj[row_index][0].name);
 };
 
-// var data = [];
+
 var obj = {};
 
 
 function make_data()
 {
-   
    var row_index = $("#row_index").val();// row order
    var column_num = $("#column_num").val(); // col-1....col-6
    var column_order = $("#column_order").val(); // in column input field order
    var name = $("#recipient-name").val();
    var msg = $("#message-text").val();
-  //  console.log(row_index);
-  //  console.log(name); 
-    //obj[row_index][column_num][column_order]  = [];  
-   //console.log(row_index +'-'+ column_num +'-'+ column_order );      
-    
-    if(typeof obj[row_index] === 'undefined') {
+
+    if(typeof obj[row_index] === 'undefined')
+    {
       // does not exist
       obj[row_index] = [{"name":name,"age":msg,"column_num":column_num,"column_order":column_order}];
     }
-    else {
+    else
+    {
         // does exist
-        obj[row_index].push({"name":name,"age":msg,"column_num":column_num,"column_order":column_order});
-        
+        obj[row_index].push({"name":name,"age":msg,"column_num":column_num,"column_order":column_order});        
     } 
-  //  obj[7] = [];  
-  //  obj[7].push([{1:{"name":788,"age":85}}]);  
-  //  obj[7].push([{2:{"name":123,"age":45}}]);  
-  //  data.push(obj);  
+  
    $('#configform')[0].reset();
    $('#exampleModal').modal('hide');
-   $("#dynamic_form_"+row_index).replaceWith('<button type="button" id="dynamic_form_'+row_index+'" onClick="dynamic_form('+row_index+')" data-index="'+row_index+'" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">' +name+ '</button>'); 
-   console.log(obj);
-  //  console.log(data); 
-
-  
+   $("#dynamic_form_"+row_index+"_"+column_num+"_"+column_order).replaceWith('<button type="button" id="dynamic_form_'+row_index+'_'+column_num+'_'+column_order+'" onClick="dynamic_form('+row_index+','+column_num+','+column_order+')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">' +name+ '</button>'); 
+   console.log(obj); 
 }
 

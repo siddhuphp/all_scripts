@@ -197,3 +197,6 @@ function get_product_details()
 		return list_items;
 }
 
+
+
+
