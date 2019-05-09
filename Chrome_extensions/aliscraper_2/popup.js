@@ -84,4 +84,4 @@ console.log("POPUP js fired");
         }       
         html += '</table>';
         return html;
-      }
+    }

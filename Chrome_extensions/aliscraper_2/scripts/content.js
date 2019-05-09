@@ -32,7 +32,8 @@ let product_images = new Array();
       "product_detail_title":product_detail_title,
       "product_detail_sub_title":product_detail_sub_title,
       "product_detail_list":get_product_details(),
-  };
+	};
+
 
   chrome.runtime.sendMessage({greeting: "hello",final:data}, function(response) {
     console.log(response.farewell);
@@ -196,6 +197,8 @@ function get_product_details()
 		}
 		return list_items;
 }
+
+
 
 
 
