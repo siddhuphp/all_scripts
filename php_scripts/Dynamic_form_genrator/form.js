@@ -18,13 +18,14 @@ $(".column-index").click(function name(params) {
 });
 
 
-function dynamic_form(row_index,column_num,column_order) {  
+function dynamic_form(row_index,column_num,column_order,arr_index='') {  
 // alert(row_index);
 // alert(column);
   $('#configform')[0].reset();
   $("#row_index").val(row_index);
   $("#column_num").val(column_num);
   $("#column_order").val(column_order);
+  alert(arr_index);
   console.log(obj);
   //alert(obj[row_index][0].name);
   //$("#recipient-name").val(obj[row_index][0].name);
@@ -44,18 +45,22 @@ function make_data()
 
     if(typeof obj[row_index] === 'undefined')
     {
+     
       // does not exist
       obj[row_index] = [{"name":name,"age":msg,"column_num":column_num,"column_order":column_order}];
+      var arr_index = 0;
     }
     else
     {
-        // does exist
-        obj[row_index].push({"name":name,"age":msg,"column_num":column_num,"column_order":column_order});        
+      // does exist
+      obj[row_index].push({"name":name,"age":msg,"column_num":column_num,"column_order":column_order});
+       arr_index = (obj[row_index].length - 1);
+              
     } 
   
    $('#configform')[0].reset();
    $('#exampleModal').modal('hide');
-   $("#dynamic_form_"+row_index+"_"+column_num+"_"+column_order).replaceWith('<button type="button" id="dynamic_form_'+row_index+'_'+column_num+'_'+column_order+'" onClick="dynamic_form('+row_index+','+column_num+','+column_order+')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">' +name+ '</button>'); 
+   $("#dynamic_form_"+row_index+"_"+column_num+"_"+column_order).replaceWith('<button type="button" id="dynamic_form_'+row_index+'_'+column_num+'_'+column_order+'" onClick="dynamic_form('+row_index+','+column_num+','+column_order+','+arr_index+')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">' +name+ '</button>'); 
    console.log(obj); 
 }
 
