@@ -18,17 +18,20 @@ $(".column-index").click(function name(params) {
 });
 
 
-function dynamic_form(row_index,column_num,column_order,arr_index='') {  
+function dynamic_form(row_index,column_num,column_order,arr_index=null) {  
 // alert(row_index);
 // alert(column);
   $('#configform')[0].reset();
   $("#row_index").val(row_index);
   $("#column_num").val(column_num);
   $("#column_order").val(column_order);
-  alert(arr_index);
-  console.log(obj);
-  //alert(obj[row_index][0].name);
-  //$("#recipient-name").val(obj[row_index][0].name);
+  $("#arr_index").val(arr_index);
+ 
+  if((arr_index != null) && check_value_exists(obj[row_index][arr_index].name))
+  {
+    $("#recipient-name").val(obj[row_index][arr_index].name);
+  }
+  
 };
 
 
@@ -42,20 +45,25 @@ function make_data()
    var column_order = $("#column_order").val(); // in column input field order
    var name = $("#recipient-name").val();
    var msg = $("#message-text").val();
+   var array_index = $("#arr_index").val();
 
     if(typeof obj[row_index] === 'undefined')
-    {
-     
+    {     
       // does not exist
       obj[row_index] = [{"name":name,"age":msg,"column_num":column_num,"column_order":column_order}];
       var arr_index = 0;
     }
+    else if(array_index != null)
+    {
+        // remodified
+        obj[row_index][array_index] = {"name":name,"age":msg,"column_num":column_num,"column_order":column_order};
+        arr_index = array_index;
+    }
     else
     {
-      // does exist
+      // pushed new array if the object key value exists
       obj[row_index].push({"name":name,"age":msg,"column_num":column_num,"column_order":column_order});
-       arr_index = (obj[row_index].length - 1);
-              
+       arr_index = (obj[row_index].length - 1);              
     } 
   
    $('#configform')[0].reset();
@@ -64,3 +72,16 @@ function make_data()
    console.log(obj); 
 }
 
+
+
+function check_value_exists(val)
+{
+  if(val)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
