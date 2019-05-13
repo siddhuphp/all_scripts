@@ -13,8 +13,8 @@ For Radio & Checkboxs
 	-Inline or Vertical
 	-options
 	
-Prepended text
-Appended text
+Prepended text or image
+Appended text or image
 	
 	We can also take hidden fields
 	
