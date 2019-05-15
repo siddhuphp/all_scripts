@@ -2,7 +2,10 @@ chrome.runtime.onMessage.addListener(gotMessage);
 
 function gotMessage(message){
     console.log(message.msg);
-    products();
+    //below request send data to popup js. 
+		chrome.runtime.sendMessage({greeting: "hello",final:products()}, function(response) {
+			console.log(response.farewell);
+		}); 
 }
 
 function products(){
@@ -33,13 +36,9 @@ let product_images = new Array();
       "product_detail_sub_title":product_detail_sub_title,
       "product_detail_list":get_product_details(),
 	};
-
-
-  chrome.runtime.sendMessage({greeting: "hello",final:data}, function(response) {
-    console.log(response.farewell);
-  });
- 
+	return data;	
 }
+
 
 function validate_xpath(xpath)
 {
@@ -199,7 +198,13 @@ function get_product_details()
 }
 
 
+	//below request sending message to background js script. 
+  chrome.runtime.sendMessage({greeting: "background",msg:products()}, function(response) {
+    console.log(response.yes_recevied);//response from background script
+	});
 
+
+	
 
 
 
