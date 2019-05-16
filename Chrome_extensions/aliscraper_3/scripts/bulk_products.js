@@ -116,7 +116,7 @@ function bring_href_value(position)
     var dis_xpath = ("//ul[@class='util-clearfix son-list']/li["+position+"]/div[1]/div[1]/div[1]/a[1]/@href");
     if(validate_xpath_only(dis_xpath))
     {
-        value = document.evaluate(dis_xpath, document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+        value = "https:"+document.evaluate(dis_xpath, document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
     }
     else
     {
@@ -126,7 +126,7 @@ function bring_href_value(position)
 }
 
 const urls = new Array;
-const limit = 5;
+const limit = 2;
 $('.bulk_chk').on('change', function() {
     var val = this.checked ? this.value : '';
     if(urls.length < limit)
@@ -157,9 +157,18 @@ $('.bulk_chk').on('change', function() {
               });
         }); 
 
-        
+        //sending urls array to background.js
+        chrome.runtime.sendMessage({greeting: "urls_array",msg:urls}, function(response) {
+            console.log(response.yes_recevied);//response from background script
+        });
         
     }
-    console.log(urls);
+    //console.log(urls);
     
 });
+
+//below request sending message to background js script. And products() coming from content.js
+chrome.runtime.sendMessage({greeting: "background",msg:products()}, function(response) {
+    console.log(response.yes_recevied);//response from background script
+});
+	

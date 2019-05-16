@@ -21,17 +21,45 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 
 
 
-  //reciving request from content.js
+  //reciving request from bulk_products.js
   chrome.runtime.onMessage.addListener(
    function(request, sender, sendResponse) {
       console.log("request receivied by content script");
+      //var urls = new Array;
+      if(request.greeting == "urls_array")
+      {
+         console.log(request.msg); 
+         urls = request.msg; 
+      }
+
+
       if (request.greeting == "background")
       {
-         console.log(sender);
-         console.log(request);
-         console.log(request.msg);
+         //console.log(sender);
+         // console.log(sender.tab.url);
+         // console.log(sender.tab.id);
+         var c_url = sender.tab.url; //Current tab URL value
+         var c_tab_id = sender.tab.id; //Current tab Id
+         if (typeof urls !== 'undefined')
+         {
+           // console.log(urls); urls array from bulk_product js
+            urls.forEach(function(url){
+               if(url == c_url)
+               {
+                  //console.log(url+"this url matched");
+                  //console.log(request.msg); //send this data to store
+               }
+            });
+           
+         }
+
+                  
+         // console.log(request);
+         //console.log(request.msg);        
+         // console.log(JSON.stringify(request.msg));  //to copy json code in console.log
+         //chrome.tabs.remove(sender.tab.id);  // this is used for close the tab    
          sendResponse({yes_recevied: request.msg});
-      }
+      }      
    });
 
 

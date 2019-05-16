@@ -198,10 +198,7 @@ function get_product_details()
 }
 
 
-	//below request sending message to background js script. 
-  chrome.runtime.sendMessage({greeting: "background",msg:products()}, function(response) {
-    console.log(response.yes_recevied);//response from background script
-	});
+
 
 
 	
