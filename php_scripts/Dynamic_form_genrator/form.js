@@ -29,7 +29,7 @@ function dynamic_form(row_index,column_num,column_order,arr_index=null) {
  
   if((arr_index != null) && check_value_exists(obj[row_index][arr_index].name))
   {
-    $("#recipient-name").val(obj[row_index][arr_index].name);
+    $("#label-name").val(obj[row_index][arr_index].name);
   }
   
 };
@@ -43,7 +43,7 @@ function make_data()
    var row_index = $("#row_index").val();// row order
    var column_num = $("#column_num").val(); // col-1....col-6
    var column_order = $("#column_order").val(); // in column input field order
-   var name = $("#recipient-name").val();
+   var name = $("#label-name").val();
    var msg = $("#message-text").val();
    var array_index = $("#arr_index").val();
 
