@@ -25,17 +25,20 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
   chrome.runtime.onMessage.addListener(
    function(request, sender, sendResponse) {
       console.log("request receivied by content script");
-      //var urls = new Array;
+
+      var response_arry = new Array;
       if(request.greeting == "urls_array")
       {
-         console.log(request.msg); 
+         //console.log(request.msg); 
          urls = request.msg; 
+         response_arry = [{"urls":urls,"msg":"Im came from urls array"}];
+         sendResponse({yes_recevied: response_arry}); 
       }
 
 
       if (request.greeting == "background")
       {
-         //console.log(sender);
+         // console.log(sender);
          // console.log(sender.tab.url);
          // console.log(sender.tab.id);
          var c_url = sender.tab.url; //Current tab URL value
@@ -44,27 +47,54 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
          {
            // console.log(urls); urls array from bulk_product js
             urls.forEach(function(url){
-               if(url == c_url)
-               {
+               if(url == c_url) // checking url matched or not
+               {                  
                   //console.log(url+"this url matched");
-                  //console.log(request.msg); //send this data to store
+                  //console.log(request.msg); //send this data to store                 
+                 var sts = send_product(request.msg); //send this data to store
+                 response_arry = [{"url":url,"status":sts}];
+                 
+                 
+                 if(sts)// got response from server then proceed
+                 {
+                    console.log("i reached here");
+                     // Removing url value from urls
+                     var index = urls.indexOf(url);
+                     if (index !== -1)
+                     {
+                        urls.splice(index, 1); // remove url in current array
+                     }
+                     chrome.tabs.remove(c_tab_id);
+                 }                  
                }
             });
-           
+            //console.log(urls);
+            sendResponse({yes_recevied: response_arry}); 
          }
-
-                  
+                 
          // console.log(request);
          //console.log(request.msg);        
          // console.log(JSON.stringify(request.msg));  //to copy json code in console.log
-         //chrome.tabs.remove(sender.tab.id);  // this is used for close the tab    
-         sendResponse({yes_recevied: request.msg});
+         //chrome.tabs.remove(sender.tab.id);  // this is used for close the tab
+         
+         
       }      
    });
 
 
-   
-
+   function send_product(details) // send product details to server
+   {
+      if(details)
+      {
+         console.log(details); //here we hit the server
+         status = true;
+      }
+      else
+      {
+         status = false;
+      }
+      return status;
+   }
 
    
 
