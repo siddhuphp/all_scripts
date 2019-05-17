@@ -162,8 +162,7 @@ $('.bulk_chk').on('change', function() {
 
 //below request sending message to background js script. And products() coming from content.js
 chrome.runtime.sendMessage({greeting: "background",msg:products()}, function(response) {
-    console.log(response.yes_recevied);//response from background script
-    console.log(urls);
+    console.log(response.response_insert);//response from background script   
 });
     
 // chunks array [1,2,3,4,5,6] as [[1,2][3,4][5,6]] if pass chunk_size 2
@@ -190,7 +189,7 @@ function run_batches(urls)
       });
 
     chrome.runtime.sendMessage({greeting: "urls_array",msg:urls}, function(response) {
-        console.log(response);//response from background script
+        console.log(response.yes_recevied);//response from background script
     });
     
     // var chun = chunkArray(urls,2);

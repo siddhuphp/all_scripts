@@ -43,6 +43,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
          // console.log(sender.tab.id);
          var c_url = sender.tab.url; //Current tab URL value
          var c_tab_id = sender.tab.id; //Current tab Id
+         var not_allow_list_page = false;
          if (typeof urls !== 'undefined')
          {
            // console.log(urls); urls array from bulk_product js
@@ -64,12 +65,24 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
                      {
                         urls.splice(index, 1); // remove url in current array
                      }
-                     chrome.tabs.remove(c_tab_id);
-                 }                  
+                    // chrome.tabs.remove(c_tab_id);
+                 }
+                 not_allow_list_page = true;                  
                }
             });
             //console.log(urls);
-            sendResponse({yes_recevied: response_arry}); 
+            if(not_allow_list_page)
+            {
+               sendResponse({response_insert: response_arry}); 
+            }else
+            {
+               sendResponse({response_insert: null});
+            }
+            
+         }
+         else
+         {
+            sendResponse({response_insert: null});
          }
                  
          // console.log(request);

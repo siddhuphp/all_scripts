@@ -83,8 +83,8 @@ function list_items()
 		catch (e) {
 		  console.log( 'Error: Document tree modified during iteration ' + e );
 		}		
-		console.log(list_items);
-    console.log(list_item_details(list_items));
+		// console.log(list_items);
+    // console.log(list_item_details(list_items));
     return list_item_details(list_items);
 	}
 }
@@ -93,7 +93,7 @@ function list_item_details(list_items)
 {
 	var final_list_items = [];
 	list_items.forEach(function(value,key) {
-		console.log("key = "+key+ ": value = "+value);
+		//console.log("key = "+key+ ": value = "+value);
 		 final_list_items.push({
             item_name: value, 
             item_type: check_type(key),
