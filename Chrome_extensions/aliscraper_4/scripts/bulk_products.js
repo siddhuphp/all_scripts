@@ -126,7 +126,7 @@ function bring_href_value(position)
 }
 
 const urls = new Array;
-const limit = 2;
+const limit = 10;
 $('.bulk_chk').on('change', function() {
     var val = this.checked ? this.value : '';
     if(urls.length < limit)
@@ -152,7 +152,7 @@ $('.bulk_chk').on('change', function() {
 
         // 3. Add event handler
         button.addEventListener ("click", function() {
-            run_batches(urls);
+            send_urls_to_bg_js(urls);
         });        
         
     }
@@ -163,47 +163,17 @@ $('.bulk_chk').on('change', function() {
 //below request sending message to background js script. And products() coming from content.js
 chrome.runtime.sendMessage({greeting: "background",msg:products()}, function(response) {
     console.log(response.response_insert);//response from background script   
-});
-    
-// chunks array [1,2,3,4,5,6] as [[1,2][3,4][5,6]] if pass chunk_size 2
-function chunkArray(myArray, chunk_size){
-    var index = 0;
-    var arrayLength = myArray.length;
-    var tempArray = [];
-    
-    for (index = 0; index < arrayLength; index += chunk_size) {
-        myChunk = myArray.slice(index, index+chunk_size);
-        // Do something if you want with the group
-        tempArray.push(myChunk);
-    }
-
-    return tempArray;
-}
+});  
 
 
-//Runs batch wise
-function run_batches(urls)
+
+//Send selected url values to background js
+function send_urls_to_bg_js(urls)
 {
-    urls.forEach(function(url) {
-        window.open(url, '_blank');
-      });
-
-    chrome.runtime.sendMessage({greeting: "urls_array",msg:urls}, function(response) {
-        console.log(response.yes_recevied);//response from background script
-    });
-    
-    // var chun = chunkArray(urls,2);
-    //console.log(chun);
-    // chun.forEach(function(set)
-    // {
-        //console.log(set);
-        // set.forEach(function(url){
-        //     window.open(url, '_blank');
-        // });
-
-        //sending urls array to background.js
-        // chrome.runtime.sendMessage({greeting: "urls_array",msg:set}, function(response) {
-        //     console.log(response.yes_recevied);//response from background script
-        // });
-    // });
+     chrome.runtime.sendMessage({greeting: "urls_array",msg:urls}, function(response) {
+       console.log(response.yes_recevied);//response from background script
+     });    
 }
+
+
+
