@@ -171,4 +171,19 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 
 
 
- 
+ function tst(){
+   var xhr = new XMLHttpRequest();
+   xhr.open("GET", "https://www.aliexpress.com/item/BIANYILONG-2019-t-shirt-men-Newest-Venom-Marvel-t-shirt-3D-Printed-T-shirts-Men-Women/32972594727.html?spm=2114.search0103.3.9.13351a9788kZlF&ws_ab_test=searchweb0_0,searchweb201602_5_10065_10068_319_10059_10884_317_10887_10696_321_322_10084_453_10083_454_10103_10618_10307_537_536,searchweb201603_52,ppcSwitch_0&algo_expid=a44de6fc-ddc4-4ac1-834d-bbd0ad84acab-1&algo_pvid=a44de6fc-ddc4-4ac1-834d-bbd0ad84acab&transAbTest=ae803_3", true);
+   xhr.onreadystatechange = function() {
+     if (xhr.readyState == 4) {
+       // WARNING! Might be injecting a malicious script!
+      // document.getElementById("resp").innerHTML = xhr.responseText;
+       console.log(xhr.responseText);
+       
+     }
+   }
+   xhr.send();
+
+ }
+
+ //tst();
