@@ -8,6 +8,7 @@ User inputs
 	-Disable
 	-Default value
 	-Hover text
+	-Requiered
 	
 For Radio & Checkboxs
 	-Inline or Vertical
