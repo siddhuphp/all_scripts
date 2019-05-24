@@ -199,9 +199,3 @@ function get_product_details()
 
 
 
-
-
-	
-
-
-
