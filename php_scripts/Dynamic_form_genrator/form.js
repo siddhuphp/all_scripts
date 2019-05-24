@@ -43,32 +43,41 @@ function make_data()
    var row_index = $("#row_index").val();// row order
    var column_num = $("#column_num").val(); // col-1....col-6
    var column_order = $("#column_order").val(); // in column input field order
-   var name = $("#label-name").val();
+   var label = $("#label-name").val();
+   var type = $("#type").val();
+   var name = $("#name").val();
+   var placeholder = $("#placeholder").val();
+   var defaultValue = $("#default-value").val();
+   var helpText = $("#help-text").val();
+   var hoverText = $("#hover-text").val();
+   var readonly = $("#readonly").val();
+   var disable = $("#disable").val();
+   var requiered = $("#requiered").val();
    var msg = $("#message-text").val();
    var array_index = $("#arr_index").val();
 
     if(typeof obj[row_index] === 'undefined')
     {     
       // does not exist
-      obj[row_index] = [{"name":name,"age":msg,"column_num":column_num,"column_order":column_order}];
+      obj[row_index] = [{"label":label,"type":type,"name":name,"placeholder":placeholder,"defaultValue":defaultValue,"helpText":helpText,"hoverText":hoverText,"readonly":readonly,"disable":disable,"requiered":requiered,"column_num":column_num,"column_order":column_order}];
       var arr_index = 0;
     }
     else if(array_index != null)
     {
         // remodified
-        obj[row_index][array_index] = {"name":name,"age":msg,"column_num":column_num,"column_order":column_order};
+        obj[row_index][array_index] = {"label":label,"type":type,"name":name,"placeholder":placeholder,"defaultValue":defaultValue,"helpText":helpText,"hoverText":hoverText,"readonly":readonly,"disable":disable,"requiered":requiered,"column_num":column_num,"column_order":column_order};
         arr_index = array_index;
     }
     else
     {
       // pushed new array if the object key value exists
-      obj[row_index].push({"name":name,"age":msg,"column_num":column_num,"column_order":column_order});
+      obj[row_index].push({"label":label,"type":type,"name":name,"placeholder":placeholder,"defaultValue":defaultValue,"helpText":helpText,"hoverText":hoverText,"readonly":readonly,"disable":disable,"requiered":requiered,"column_num":column_num,"column_order":column_order});
        arr_index = (obj[row_index].length - 1);              
     } 
   
    $('#configform')[0].reset();
    $('#exampleModal').modal('hide');
-   $("#dynamic_form_"+row_index+"_"+column_num+"_"+column_order).replaceWith('<button type="button" id="dynamic_form_'+row_index+'_'+column_num+'_'+column_order+'" onClick="dynamic_form('+row_index+','+column_num+','+column_order+','+arr_index+')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">' +name+ '</button>'); 
+   $("#dynamic_form_"+row_index+"_"+column_num+"_"+column_order).replaceWith('<button type="button" id="dynamic_form_'+row_index+'_'+column_num+'_'+column_order+'" onClick="dynamic_form('+row_index+','+column_num+','+column_order+','+arr_index+')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">' +label+ '</button>'); 
    console.log(obj); 
 }
 

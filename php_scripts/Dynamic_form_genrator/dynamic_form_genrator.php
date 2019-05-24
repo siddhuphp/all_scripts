@@ -73,7 +73,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Form feild</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -84,10 +84,61 @@
             <label for="label-name" class="col-form-label">Label:</label>
             <input type="text" class="form-control" id="label-name">
           </div>
+
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+          <label for="type">Type:</label>
+            <select class="form-control" id="type">
+              <option value="1"> Text </option>
+              <option value="2"> Radio </option>
+              <option value="3"> Select </option>
+              <option value="4"> Multi select </option>
+              <option value="5"> Checkbox </option>
+              <option value="6"> Description </option>           
+            </select>
           </div>
+
+          <div class="form-group">
+            <label for="name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name">
+          </div>
+
+          <div class="form-group">
+            <label for="placeholder" class="col-form-label">Placeholder:</label>
+            <input type="text" class="form-control" id="placeholder">
+          </div>
+
+          <div class="form-group">
+            <label for="default-value" class="col-form-label">Default value:</label>
+            <input type="text" class="form-control" id="default-value">
+          </div>
+
+          <div class="form-group">
+            <label for="help-text" class="col-form-label">Help text:</label>
+            <textarea class="form-control" id="help-text"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="hover-text" class="col-form-label">Hover text:</label>
+            <textarea class="form-control" id="hover-text"></textarea>
+          </div>
+
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" value="1" id="readonly">Readonly
+            </label>
+          </div>
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" id="disable" value="1">Disable
+            </label>
+          </div>
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" value="1" id="requiered">Requiered
+            </label>
+          </div>
+
+          <!-- https://itsolutionstuff.com/post/simple-add-remove-input-fields-dynamically-using-jquery-with-bootstrapexample.html -->
 		  <input type="hidden" id="row_index" />        
 		  <input type="hidden" id="column_num" />        
 		  <input type="hidden" id="column_order" />        
