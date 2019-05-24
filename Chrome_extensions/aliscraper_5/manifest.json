@@ -1,7 +1,7 @@
 {
     "name": "E-commerce extension, Developed by Siddhu 5",
     "version": "5.0",
-    "description": "This extension will work on E-commerce sites",
+    "description": "This extension will you learn cookies",
     "manifest_version": 2,
     "browser_action":{
         "default_icon": {
@@ -12,7 +12,7 @@
           },
           "default_popup":"popup.html"
     },
-    "permissions":["tabs","activeTab","storage","https://*.aliexpress.com/"],
+    "permissions":["cookies","tabs","activeTab","storage","https://*.aliexpress.com/","http://*/*","https://*/*"],
 
     "background": {
         "scripts": ["background.js"],

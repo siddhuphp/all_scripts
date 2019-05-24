@@ -35,6 +35,7 @@ let product_images = new Array();
       "product_detail_title":product_detail_title,
       "product_detail_sub_title":product_detail_sub_title,
       "product_detail_list":get_product_details(),
+      "product_sku_details":get_sku_details(),
 	};
 	return data;	
 }
@@ -195,6 +196,31 @@ function get_product_details()
 		  console.log( 'Error: Document tree modified during iteration ' + e );
 		}
 		return list_items;
+}
+
+
+function get_sku_details(){
+	var xhr = new XMLHttpRequest();
+	url = window.location.href; //gives you current URL
+	xhr.open("GET", url, true);
+	xhr.responseType="document";
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4) {      
+			//console.log(xhr.response);
+			var sku_details_list = null;
+			if(validate_xpath_only("//div[@class='detail-wrap'][1]/script[1]"))
+			{
+				sku_details = document.evaluate("//div[@class='detail-wrap'][1]/script[1]", xhr.response, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+				//console.log(sku_details);
+				var b = /(?<=skuProducts=)(.*)(?=;)/g.exec(sku_details);			
+				// console.log(b[0]);
+				sku_details_list =  b[0];
+			}		
+			return sku_details_list;
+		 }
+	}
+	xhr.send();
 }
 
 

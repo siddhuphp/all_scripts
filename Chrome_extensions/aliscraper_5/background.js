@@ -172,7 +172,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
  function get_sku_details(){
    var xhr = new XMLHttpRequest();
    xhr.open("GET", "https://www.aliexpress.com/item/BIANYILONG-2019-t-shirt-men-Newest-Venom-Marvel-t-shirt-3D-Printed-T-shirts-Men-Women/32972594727.html?spm=2114.search0103.3.9.13351a9788kZlF&ws_ab_test=searchweb0_0,searchweb201602_5_10065_10068_319_10059_10884_317_10887_10696_321_322_10084_453_10083_454_10103_10618_10307_537_536,searchweb201603_52,ppcSwitch_0&algo_expid=a44de6fc-ddc4-4ac1-834d-bbd0ad84acab-1&algo_pvid=a44de6fc-ddc4-4ac1-834d-bbd0ad84acab&transAbTest=ae803_3", true);
-     xhr.responseType="document";
+   xhr.responseType="document";
 
    xhr.onreadystatechange = function() {
      if (xhr.readyState == 4) {      
@@ -189,7 +189,67 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
    }
    xhr.send();
  }
+// get_sku_details();
+
+var global_cookie = new Array;
+function exp_on_cookies(){
+   var xhr = new XMLHttpRequest();
+   var url = 'https://www.aliexpress.com/item/A-DI-Summer-New-High-quality-men-t-shirt-short-sleeve-casual-o-neck-100-cotton/32981321603.html?spm=2114.search0103.3.1.13351a97KXxanq&ws_ab_test=searchweb0_0,searchweb201602_4_10065_10068_319_10059_10884_317_10887_10696_321_322_10084_453_10083_454_10103_10618_10307_537_536,searchweb201603_52,ppcSwitch_0&algo_expid=5e9405ea-d611-4441-8e08-ae46f47f723c-0&algo_pvid=5e9405ea-d611-4441-8e08-ae46f47f723c';
+   xhr.open("GET", url, true);
+   xhr.responseType="document";
+
+   xhr.onreadystatechange = function() {
+     if (xhr.readyState == 4) {      
+       //console.log(xhr.response);     
+       prices = document.evaluate('//*[@id="j-sku-price"]', xhr.response, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+       price_discount = document.evaluate('//*[@id="j-sku-discount-price"]', xhr.response, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+      // console.log(prices);       
+       console.log(price_discount);       
+      }
+      obj = {
+         "url":url,
+         "name":"aep_usuc_f"
+      }
+      
+      chrome.cookies.get(obj, function(cookies) {         
+         console.log(cookies);
+         global_cookie.push(cookies.value);
+       });
+
+       obj_set = {
+         "url":url,
+         "name":"aep_usuc_f",
+         "value":"site=glo&c_tp=INR&region=IN&b_locale=en_US" //global_cookie[0]
+       } 
+
+      //  console.log(obj_set);
+      chrome.cookies.set(obj_set, function(cookies) {         
+         console.log(cookies);
+         after_cookie_modify();
+       });
+     
+   }
+   xhr.send();
+ }
+
+ exp_on_cookies();
 
 
- get_sku_details();
+ function after_cookie_modify()
+ {
+   var xhr = new XMLHttpRequest();
+   var url = 'https://www.aliexpress.com/item/A-DI-Summer-New-High-quality-men-t-shirt-short-sleeve-casual-o-neck-100-cotton/32981321603.html?spm=2114.search0103.3.1.13351a97KXxanq&ws_ab_test=searchweb0_0,searchweb201602_4_10065_10068_319_10059_10884_317_10887_10696_321_322_10084_453_10083_454_10103_10618_10307_537_536,searchweb201603_52,ppcSwitch_0&algo_expid=5e9405ea-d611-4441-8e08-ae46f47f723c-0&algo_pvid=5e9405ea-d611-4441-8e08-ae46f47f723c';
+   xhr.open("GET", url, true);
+   xhr.responseType="document";
 
+   xhr.onreadystatechange = function() {
+     if (xhr.readyState == 4) {      
+       //console.log(xhr.response);     
+       prices = document.evaluate('//*[@id="j-sku-price"]', xhr.response, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+       price_discount = document.evaluate('//*[@id="j-sku-discount-price"]', xhr.response, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+       //console.log(prices);       
+       console.log(price_discount);       
+      }     
+   }
+   xhr.send();
+ }
