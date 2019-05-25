@@ -94,3 +94,28 @@ function check_value_exists(val)
     return false;
   }
 }
+
+// For checkbox and radio options
+$(".add-more").click(function(){ 
+  var html = $(".copy").html();
+  $(".after-add-more").after(html);
+});
+
+
+$("body").on("click",".remove",function(){ 
+  $(this).parents(".control-group").remove();
+});
+
+
+// For selecting field type
+$('#type').on('change', function() {
+  ary = ['2','3','4','5'];  
+  if(ary.indexOf(this.value) > -1)
+  {
+    $("#show_if_chk_or_radio").show();    
+  }
+  else
+  {
+    $("#show_if_chk_or_radio").hide();
+  }
+});

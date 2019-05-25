@@ -88,12 +88,15 @@
           <div class="form-group">
           <label for="type">Type:</label>
             <select class="form-control" id="type">
+              <option value=""> Select </option>
               <option value="1"> Text </option>
               <option value="2"> Radio </option>
               <option value="3"> Select </option>
               <option value="4"> Multi select </option>
               <option value="5"> Checkbox </option>
               <option value="6"> Description </option>           
+              <option value="7"> Datepicker </option>           
+              <option value="8"> File </option>           
             </select>
           </div>
 
@@ -101,6 +104,16 @@
             <label for="name" class="col-form-label">Name:</label>
             <input type="text" class="form-control" id="name">
           </div>
+
+          <!-- For check box -->
+          <span  id="show_if_chk_or_radio" style="display:none;">
+          <div class="input-group control-group after-add-more">
+            <input type="text" name="options[]" class="form-control" placeholder="Enter Option Name Here">
+            <div class="input-group-btn"> 
+              <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+            </div>
+          </div>
+          </span>
 
           <div class="form-group">
             <label for="placeholder" class="col-form-label">Placeholder:</label>
@@ -149,6 +162,20 @@
         <button type="button" class="btn btn-primary" onclick="make_data()">Save changes</button>
       </div>
     </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- Copy Fields -->
+<div class="copy d-none">
+  <div class="control-group input-group" style="margin-top:10px">
+    <input type="text" name="options[]" class="form-control" placeholder="Enter Option Name Here">
+    <div class="input-group-btn"> 
+      <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
     </div>
   </div>
 </div>
