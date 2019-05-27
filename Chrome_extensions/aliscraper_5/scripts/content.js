@@ -35,8 +35,9 @@ let product_images = new Array();
       "product_detail_title":product_detail_title,
       "product_detail_sub_title":product_detail_sub_title,
       "product_detail_list":get_product_details(),
-      "product_sku_details":get_sku_details(),
+      "product_sku_details":get_sku_details()      
 	};
+	// console.log(data);
 	return data;	
 }
 
@@ -50,7 +51,7 @@ function validate_xpath(xpath)
   }
   else
   {
-    value = ' - ';
+    value = null;
   }
   return value;
 }
@@ -137,16 +138,27 @@ function get_images_data(key)
 {
 	var iterator = document.evaluate('//*[@id="j-product-info-sku"]/dl['+key+']/dd/ul/li/a/img/@src', document, null, XPathResult.ANY_TYPE, null );
 	try {
-		  var thisNode = iterator.iterateNext();
-		  var list_items = [];		  
-		  var i = 0;
-		  while (thisNode) {
-					if(thisNode.textContent !== null && thisNode.textContent !== '') {
-					 list_items[i] = thisNode.textContent;
-					 thisNode = iterator.iterateNext();
-						i++;
-					}
-			  } 
+				var thisNode = iterator.iterateNext();
+				var list_items = [];		  
+				var i = 0; var j = 1;
+				while (thisNode) {
+						if(thisNode.textContent !== null && thisNode.textContent !== '') {
+						var id = validate_xpath('//*[@id="j-product-info-sku"]/dl['+key+']/dd/ul/li['+j+']/a/@id');
+						var data_sku_id = validate_xpath('//*[@id="j-product-info-sku"]/dl['+key+']/dd/ul/li['+j+']/a/@data-sku-id');
+						var title = validate_xpath('//*[@id="j-product-info-sku"]/dl['+key+']/dd/ul/li['+j+']/a/@title');
+
+						make_list_obj = {
+															"img":thisNode.textContent,
+															"id":id,
+															"data_sku_id":data_sku_id,
+															"title":title,
+														};	
+
+						list_items[i] = make_list_obj;
+						thisNode = iterator.iterateNext();
+							i++; j++;
+						}
+					} 
 		}
 		catch (e) {
 		  console.log( 'Error: Document tree modified during iteration ' + e );
@@ -155,18 +167,31 @@ function get_images_data(key)
 }
 
 
+
+
+
 function get_text_data(key)
 {
 	var iterator = document.evaluate('//*[@id="j-product-info-sku"]/dl['+key+']/dd/ul/li/a/span', document, null, XPathResult.ANY_TYPE, null );
 	try {
 		  var thisNode = iterator.iterateNext();
 		  var list_items = [];		  
-		  var i = 0;
+		  var i = 0; var j = 1;
 		  while (thisNode) {
 					if(thisNode.textContent !== null && thisNode.textContent !== '') {
-					 list_items[i] = thisNode.textContent;
+						var id = validate_xpath('//*[@id="j-product-info-sku"]/dl['+key+']/dd/ul/li['+j+']/a/@id');
+						var data_sku_id = validate_xpath('//*[@id="j-product-info-sku"]/dl['+key+']/dd/ul/li['+j+']/a/@data-sku-id');
+					
+
+						make_list_obj = {
+															"text":thisNode.textContent,
+															"id":id,
+															"data_sku_id":data_sku_id															
+														};	
+
+					 list_items[i] = make_list_obj;					
 					 thisNode = iterator.iterateNext();
-						i++;
+					 i++; j++;
 					}
 			  } 
 		}
@@ -183,12 +208,22 @@ function get_product_details()
 	try {
 		  var thisNode = iterator.iterateNext();
 		  var list_items = [];		  
-		  var i = 0;
+		  var i = 0; var j = 1;
 		  while (thisNode) {
 					if(thisNode.textContent !== null && thisNode.textContent !== '') {
-					 list_items[i] = thisNode.textContent;
+						var key = validate_xpath('//div[@class="main-content"]/div[@id="j-product-tabbed-pane"]/div/div/div/div[2]/div[2]/ul/li['+j+']/span[1]');
+						var value = validate_xpath('//div[@class="main-content"]/div[@id="j-product-tabbed-pane"]/div/div/div/div[2]/div[2]/ul/li['+j+']/span[2]');
+					
+
+						make_list_obj = {
+															"full_text":thisNode.textContent,
+															"key":key,																												
+															"value":value,																												
+														};	
+
+					 list_items[i] = make_list_obj;					 
 					 thisNode = iterator.iterateNext();
-						i++;
+						i++; j++;
 					}
 			  } 
 		}
@@ -199,29 +234,30 @@ function get_product_details()
 }
 
 
-function get_sku_details(){
-	var xhr = new XMLHttpRequest();
-	url = window.location.href; //gives you current URL
-	xhr.open("GET", url, true);
-	xhr.responseType="document";
-
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4) {      
-			//console.log(xhr.response);
-			var sku_details_list = null;
-			if(validate_xpath_only("//div[@class='detail-wrap'][1]/script[1]"))
-			{
-				sku_details = document.evaluate("//div[@class='detail-wrap'][1]/script[1]", xhr.response, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-				//console.log(sku_details);
-				var b = /(?<=skuProducts=)(.*)(?=;)/g.exec(sku_details);			
-				// console.log(b[0]);
-				sku_details_list =  b[0];
-			}		
-			return sku_details_list;
-		 }
-	}
-	xhr.send();
+function get_sku_details(){	
+	response_obj = { "status":false}	
+	if(validate_xpath_only("//div[@class='detail-wrap'][1]/script[1]"))
+	{
+		sku_details = document.evaluate("//div[@class='detail-wrap'][1]/script[1]", document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+		//console.log(sku_details);
+		var sku_data = /(?<=skuProducts=)(.*)(?=;)/g.exec(sku_details);			
+		// console.log(sku_data[0]);
+		var sizing_info =  /(?<=window.runParams.title=)(.*)(?=;)/g.exec(sku_details);
+		response_obj = {
+			 "status":true,
+			 "sku_details":sku_data[0],
+			 "sizing_details":sizing_info[0],
+		}
+	}		
+	return response_obj;
+		 
 }
+	
+	
+
+
+
+
 
 
 

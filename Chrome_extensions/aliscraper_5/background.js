@@ -232,7 +232,7 @@ function exp_on_cookies(){
    xhr.send();
  }
 
- exp_on_cookies();
+ //exp_on_cookies(); //hold
 
 
  function after_cookie_modify()

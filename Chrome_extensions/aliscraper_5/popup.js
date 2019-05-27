@@ -20,31 +20,48 @@ console.log("POPUP js fired");
             $("#product_images").append('<img src="'+value+'">&nbsp;&nbsp;');
           });
           
-          $("#product_images").append('<hr>');
-          $.each(request.final.product_item_list, function( index, value ) {
-            $("#products_item_options").append('<h4>'+value.item_name+'</h4>');           
+          
+          $.each(request.final.product_item_list, function( index, value ) {                      
             if(value.item_values)
             {
               $.each(value.item_values, function( k, v ) {
                 if(value.item_type == "TEXT")
                 {
-                  $("#products_item_options").append('<p>'+v+'</p>');
+                  $("#product_text").text(value.item_name);
+                  $("#text_type").text('Item Type:'+value.item_type);
+                  $("#product_text_details  tr:last").after(`<tr>
+                                                    <td>`+v.text+`</td>                                                    
+                                                    <td> `+v.id+` </td>
+                                                    <td> `+v.data_sku_id+` </td>                                                    
+                                                  </tr>`
+                                                );
                 }
                 else if(value.item_type == "IMAGE")
                 {
-                  $("#products_item_options").append('<img src="'+v+'">&nbsp;&nbsp;');
+                  $("#product_image").text(value.item_name);
+                  $("#image_type").text('Item Type:'+value.item_type);
+                  $("#product_image_details  tr:last").after(`<tr>
+                                                    <td><img src='`+v.img+`'/></td>                                                    
+                                                    <td> `+v.id+` </td>
+                                                    <td> `+v.data_sku_id+` </td> 
+                                                    <td> `+v.title+` </td>
+                                                  </tr>`
+                                                );
                 }                
               });
             }
-            $("#products_item_options").append('<p><b>Item Type: </b>'+value.item_type+'</p>');
-          });
-          $("#products_item_options").append('<hr>');
+            //$("#products_item_options").append('<p><b>Item Type: </b>'+value.item_type+'</p>');
+          });         
 
           // Product details
-          $("#products_item_options").append('<h4>'+request.final.product_detail_title+'</h4>');
-          $("#products_item_options").append('<p><b>'+request.final.product_detail_sub_title+'</b></p>');
+          $("#product_details_list_text").text(request.final.product_detail_title);
+          $("#product_details_list_text_type").text(request.final.product_detail_sub_title);
           $.each(request.final.product_detail_list, function( index, value ) {
-            $("#products_item_options").append('<p>'+value+'</p>');
+            $("#product_details_list  tr:last").after(`<tr>
+                                                    <td>`+value.key+`</td>                                                    
+                                                    <td> `+value.value+` </td>                                                   
+                                                  </tr>`
+                                                );
           });
           
           //India Shipping Details
@@ -63,7 +80,9 @@ console.log("POPUP js fired");
             });
           }
       }
-        
+
+      $("#sizing_info").append( make_sizing_info_frame(request.final.product_sku_details.sizing_details) );
+        // console.log(typeof request.final.product_sku_details.sizing_details);
     });
 
 
@@ -80,6 +99,36 @@ console.log("POPUP js fired");
             var isTracked = (value.isTracked == true)?"Available":"NO";
             html += '<td>'+isTracked+'</td></tr>';
            });
+
+        }       
+        html += '</table>';
+        return html;
+    }
+
+    function make_sizing_info_frame(data)
+    {
+        var html = '<table style="width:100%">';       
+        data = JSON.parse(data); //convert string to json object           
+                   
+        if(data)
+        {
+          html += '<tr>';
+          $.each(data.sizeAttr.title, function( k, v ) {
+            html += '<th>'+v+'</th>';
+          });
+          html += '</tr>';
+
+          
+           $.each(data.sizeAttr.list, function( index, value ) {
+            html += '<tr>';
+            html += '<td>'+value[0]+'</td>';
+            html += '<td>'+value[1]+'</td>';
+            html += '<td>'+value[2]+'</td>';
+            html += '<td>'+value[3]+'</td>';
+            html += '<td>'+value[4]+'</td>';
+            html += '</tr>';
+           });
+         
 
         }       
         html += '</table>';
