@@ -82,7 +82,11 @@ console.log("POPUP js fired");
       }
 
       $("#sizing_info").append( make_sizing_info_frame(request.final.product_sku_details.sizing_details) );
-        // console.log(typeof request.final.product_sku_details.sizing_details);
+      $("#package_info").append( make_package_info_frame(request.final.product_package_details) );
+      $("#sold_by_info").append( make_sold_by_info_frame(request.final.product_sold_by_details) );
+      $("#breadcrumb_info").append( make_breadcrumb_info_frame(request.final.product_breadcrumb_details) );
+     
+        
     });
 
 
@@ -111,7 +115,7 @@ console.log("POPUP js fired");
         data = JSON.parse(data); //convert string to json object           
                    
         if(data)
-        {
+        {         
           html += '<tr>';
           $.each(data.sizeAttr.title, function( k, v ) {
             html += '<th>'+v+'</th>';
@@ -130,6 +134,90 @@ console.log("POPUP js fired");
            });
          
 
+        }       
+        html += '</table>';
+        return html;
+    }
+
+    function make_package_info_frame(data)
+    {
+        var html = '<table style="width:100%">';       
+        //data = JSON.parse(data); //convert string to json object           
+                 
+        if(data)
+        {
+          html += '<tr><th colspan="2"> Package Details </th></tr>';
+          html += '<tr>';          
+          html += '<th> Keys </th>';         
+          html += '<th> Values </th>';         
+          html += '</tr>';
+
+          
+           $.each(data, function( index, value ) {
+             if((value.key != null) && (value.value != null))
+             {
+              html += '<tr>';
+              html += '<td>'+value.key+'</td>';
+              html += '<td>'+value.value+'</td>';           
+              html += '</tr>';
+             }
+            
+           });
+         
+
+        }       
+        html += '</table>';
+        return html;
+    }
+
+
+    function make_sold_by_info_frame(data)
+    {
+        var html = '<table style="width:100%">';       
+        //data = JSON.parse(data); //convert string to json object           
+                   
+        if(data)
+        {
+          html += '<tr><th colspan="2"> Sold by </th></tr>';
+          html += '<tr>';          
+          html += '<th> Sold by </th>';         
+          html += '<th> URL </th>';         
+          html += '<th> Address </th>';         
+          html += '</tr>';
+         
+              html += '<tr>';
+              html += '<td>'+data.sold_by+'</td>';
+              html += '<td>'+data.url+'</td>';           
+              html += '<td>'+data.address+'</td>';           
+              html += '</tr>';
+        }       
+        html += '</table>';
+        return html;
+    }
+
+
+    function make_breadcrumb_info_frame(data)
+    {
+        var html = '<table style="width:100%">';       
+        //data = JSON.parse(data); //convert string to json object           
+        console.log(data);           
+        if(data)
+        {
+          html += '<tr><th> bread crumb </th></tr>';        
+          $.each(data, function( index, value ) {
+            if(typeof value != 'object')
+            {
+              html += '<tr>';                     
+              html += '<td>'+value+'</td>';           
+              html += '</tr>';
+            }else if(typeof value === 'object')
+            {
+              html += '<tr>';                     
+              html += '<td>'+value.last+'</td>';           
+              html += '</tr>';
+            }
+            
+          });
         }       
         html += '</table>';
         return html;

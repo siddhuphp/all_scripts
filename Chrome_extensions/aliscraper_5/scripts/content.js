@@ -35,7 +35,10 @@ let product_images = new Array();
       "product_detail_title":product_detail_title,
       "product_detail_sub_title":product_detail_sub_title,
       "product_detail_list":get_product_details(),
-      "product_sku_details":get_sku_details()      
+      "product_sku_details":get_sku_details(),      
+      "product_package_details":get_package_details(),      
+      "product_sold_by_details":get_sold_by(),
+      "product_breadcrumb_details":get_breadcrumb_details()
 	};
 	// console.log(data);
 	return data;	
@@ -255,9 +258,71 @@ function get_sku_details(){
 	
 	
 
+function get_package_details()
+{
+	var iterator = document.evaluate('//div[@class="ui-box pnl-packaging-main"]/div[2]/ul[1]/li/span[@class="packaging-title"]', document, null, XPathResult.ANY_TYPE, null );
+	try {
+		  var thisNode = iterator.iterateNext();
+		  var list_items = [];		  
+		  var i = 0; var j = 1;
+		  while (thisNode) {				  
+					if(thisNode.textContent !== null && thisNode.textContent !== '') {
+						var value = validate_xpath('//div[@class="ui-box pnl-packaging-main"]/div[2]/ul[1]/li['+j+']/span[@class="packaging-des"]');
+							make_list_obj = {
+																"key":thisNode.textContent,																																											
+																"value":value,																												
+															};	
+
+					 list_items[i] = make_list_obj;					 
+					 thisNode = iterator.iterateNext();
+						i++; j++;
+					}
+			  } 
+		}
+		catch (e) {
+		  console.log( 'Error: Document tree modified during iteration ' + e );
+		}
+		return list_items;
+}
 
 
 
+function get_sold_by()
+{
+		var sold_by = validate_xpath('//div[@class="store-info-wrap"]/dl/dd/a');
+		var url = validate_xpath('//div[@class="store-info-wrap"]/dl/dd/a/@href');
+		var addr = validate_xpath('//div[@class="store-info-wrap"]/dl/dd[@class="store-address"]');
 
+		response_obj = {
+				"sold_by":sold_by,
+				"url":url,
+				"address":addr,
+		}
 
+		return response_obj;
+}
+
+function get_breadcrumb_details()
+{
+	var iterator = document.evaluate('//div[@class="ui-breadcrumb"]/div[@class="container"]/a', document, null, XPathResult.ANY_TYPE, null );
+	try {
+		  var thisNode = iterator.iterateNext();
+		  var list_items = [];		  
+		  var i = 0;
+		  while (thisNode) {				  
+					if(thisNode.textContent !== null && thisNode.textContent !== '') {
+					 list_items[i] = thisNode.textContent;					 
+					 thisNode = iterator.iterateNext();
+						i++; 
+					}
+			  } 
+		}
+		catch (e) {
+		  console.log( 'Error: Document tree modified during iteration ' + e );
+		}
+		var last = validate_xpath('//div[@class="ui-breadcrumb"]/div[@class="container"]/h2');
+		list_items.push({"last":last});
+		// console.log(list_items);
+		return list_items;
+}
 
