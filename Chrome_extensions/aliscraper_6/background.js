@@ -1,5 +1,6 @@
 console.log("This is from Back ground js");
 const url_bucket = new Array();
+var url_response_aftr_scrape = new Array();
 
 
   //reciving request from bulk_products.js
@@ -34,8 +35,8 @@ const url_bucket = new Array();
       
       if(!isInArray(request.url,url_bucket) && (request.status == 1))
       {
-         url_bucket.push(request.url);
-         console.log(goto_scrape(request.url));
+         url_bucket.push(request.url.split("?")[0]);
+         goto_scrape(request.url);
       }
       else if(request.status == 0)
       {
@@ -83,7 +84,10 @@ const url_bucket = new Array();
       if (xhr.readyState == 4) {
           if(xhr.response)
           {
-            make_scrape(xhr.response);            
+             rst = make_scrape(xhr.response);
+             console.log(rst);
+             url_response_aftr_scrape[url] = rst;
+             console.log(url_response_aftr_scrape);                        
           }         
          }
       }
@@ -109,7 +113,7 @@ const url_bucket = new Array();
          "product_sold_by_details":get_sold_by(document),
          "product_breadcrumb_details":get_breadcrumb_details(document),
       };
-      console.log(data);
+      // console.log(data);
       return data;
    }
 
@@ -166,8 +170,8 @@ const url_bucket = new Array();
    {
       var final_list_items = [];
       list_items.forEach(function(value,key) {        
-         alert("key = "+key+ ": value = "+value);        
-         console.log("key = "+key+ ": value = "+value);        
+         // alert("key = "+key+ ": value = "+value);        
+         // console.log("key = "+key+ ": value = "+value);        
          final_list_items.push({
             item_name: value, 
             item_type: check_type(key,nDocument),
@@ -429,6 +433,8 @@ const url_bucket = new Array();
    {
       return document.evaluate(xpath, nDocument, null, XPathResult.ANY_TYPE, null).iterateNext() instanceof Node;  
    }
+
+  
 
 
   

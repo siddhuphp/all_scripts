@@ -10,7 +10,12 @@ console.log("POPUP js fired");
       if (request.greeting == "hello")
       {
         sendResponse({farewell: "goodbye"});    
-      }        
+      }       
+      elseif (request.greeting == "stored_url")
+      {
+        sendResponse({farewell: "Im from stored URL"}); 
+        $("#clickme").val("siddhu");   
+      }       
     });
 
 

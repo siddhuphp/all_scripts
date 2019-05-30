@@ -10,6 +10,9 @@ chrome.runtime.sendMessage({msg: "get_urls"}, function(response) {
     // console.log(response.url_bucket);//response from background script       
     if(response.status)
     {
+         alert(response.url_bucket);
+         console.log(response.url_bucket);
+        //  send_urls_to_popjs();
         $('input.bulk_chk[type=checkbox]').each(function () {
             var sThisVal = $(this).val();           
             if(response.url_bucket.includes(sThisVal.split("?")[0]))
@@ -158,4 +161,16 @@ function send_url_to_bg_js(url,status)
        console.log(urls);    
      });
         
+}
+
+function send_urls_to_popjs()
+{
+    chrome.runtime.onMessage.addListener(gotMessage);
+    function gotMessage(message){
+        console.log(message.msg);
+        //below request send data to popup js. 
+            chrome.runtime.sendMessage({greeting: "stored_url",urls:urls}, function(response) {
+                console.log(response.farewell);
+            }); 
+    }
 }
