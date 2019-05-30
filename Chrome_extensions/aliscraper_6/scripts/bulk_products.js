@@ -1,5 +1,26 @@
 console.log("This is from Bulk products js");
 
+var urls = new Array(); // this array will fill from send_url_to_bg_js() response of background js.
+
+//If user reload the current page, after selected few products. We need to append checked tick those products.
+//For that we are storing URL's globally in background js. So send request to get those URL's to to append checked tick.
+//below request sending message to background js script.
+chrome.runtime.sendMessage({msg: "get_urls"}, function(response) {
+    // console.log(response.status);//response from background script   
+    // console.log(response.url_bucket);//response from background script       
+    if(response.status)
+    {
+        $('input.bulk_chk[type=checkbox]').each(function () {
+            var sThisVal = $(this).val();           
+            if(response.url_bucket.includes(sThisVal.split("?")[0]))
+            {
+                $(this).prop('checked', true);
+            }
+          });       
+    }
+});
+
+
 //importing necessery CSS styles. It will insert this code in head
 var head = document.getElementsByTagName("head")[0];
 head.insertAdjacentHTML("afterbegin", `<style>
@@ -80,7 +101,7 @@ function case_3()
         if(contains(ul.innerHTML, "item"))
         {
             k = index + 1;
-            val = bring_href_value(k);
+            val = bring_href_value(k);          
             ul.insertAdjacentHTML("afterbegin", `<input type="checkbox" value="`+val+`" name="bulk_prdct" class="bulk_chk">`);       
         }
         
@@ -101,7 +122,8 @@ function bring_href_value(position)
     var dis_xpath = ("//ul[@class='util-clearfix son-list']/li["+position+"]/div[1]/div[1]/div[1]/a[1]/@href");
     if(validate_xpath_only(dis_xpath))
     {
-        value = "https:"+document.evaluate(dis_xpath, document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+        lnk=document.evaluate(dis_xpath, document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent.split("?")[0];
+        value = "https:"+lnk;
     }
     else
     {
@@ -131,7 +153,9 @@ $('.bulk_chk').on('change', function() {
 function send_url_to_bg_js(url,status)
 {
     obj = {greeting:"url_adding",url:url,status:status};
-     chrome.runtime.sendMessage(obj, function(response) {
-       console.log(response.yes_recevied);//response will come from background script
-     });    
+     chrome.runtime.sendMessage(obj, function(response) {    
+       urls = response.data;
+       console.log(urls);    
+     });
+        
 }
