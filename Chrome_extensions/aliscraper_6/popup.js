@@ -10,15 +10,26 @@ console.log("POPUP js fired");
       if (request.greeting == "hello")
       {
         sendResponse({farewell: "goodbye"});    
-      }       
-      elseif (request.greeting == "stored_url")
-      {
-        sendResponse({farewell: "Im from stored URL"}); 
-        $("#clickme").val("siddhu");   
-      }       
+      }           
     });
 
 
+    var port = chrome.extension.connect({
+      name: "Sample Communication"
+    });
+    port.postMessage("Hi BackGround");
+    port.onMessage.addListener(function(msg) {
+          console.log(msg);
+          msg.forEach(element => {
+            console.log(element);
+            $("#urls").append('<div><p>'+element+'</p><button onclick="test()"> Proceed </button></div>');
+          });
+    });
+
+    function test()
+    {
+      console.log("Clicked");
+    }
   
 
     

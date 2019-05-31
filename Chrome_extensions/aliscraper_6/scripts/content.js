@@ -11,6 +11,10 @@ function gotMessage(message){
 
 
 
+var jQueryScript = document.createElement('script');  
+jQueryScript.setAttribute('src','https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js');
+document.head.appendChild(jQueryScript);
+
 
 
 

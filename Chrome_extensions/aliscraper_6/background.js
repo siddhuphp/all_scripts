@@ -434,6 +434,15 @@ var url_response_aftr_scrape = new Array();
       return document.evaluate(xpath, nDocument, null, XPathResult.ANY_TYPE, null).iterateNext() instanceof Node;  
    }
 
+   // Below request send data to popup js 
+   // Continues 
+   chrome.extension.onConnect.addListener(function(port) {
+      console.log("Connected .....");
+      port.onMessage.addListener(function(msg) {
+           console.log("message recieved" + msg);           
+           port.postMessage(url_bucket);           
+      });
+ });
   
 
 
