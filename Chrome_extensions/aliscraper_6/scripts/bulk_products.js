@@ -10,7 +10,7 @@ chrome.runtime.sendMessage({msg: "get_urls"}, function(response) {
     // console.log(response.url_bucket);//response from background script       
     if(response.status)
     {
-         alert(response.url_bucket);
+        //  alert(response.url_bucket);
          console.log(response.url_bucket);        
         $('input.bulk_chk[type=checkbox]').each(function () {
             var sThisVal = $(this).val();           
