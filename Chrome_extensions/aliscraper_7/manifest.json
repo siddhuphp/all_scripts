@@ -24,8 +24,11 @@
         {
             "matches":["https://www.aliexpress.com/*"],
             "all_frames": true,
-            "js":["jquery-3.4.1.min.js","scripts/content.js","scripts/bulk_products.js"]
+            "js":["jquery-3.4.1.min.js","scripts/nicEdit/nicEdit.js","scripts/content.js","scripts/bulk_products.js"]
         }
-    ]
+    ],
+    "web_accessible_resources": [
+        "scripts/nicEdit/nicEditorIcons.gif"
+      ]
 
 }

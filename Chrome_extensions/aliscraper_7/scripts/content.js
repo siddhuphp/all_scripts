@@ -9,9 +9,12 @@ function gotMessage(message){
 }
 
 
-// var jQueryScript = document.createElement('script');  
-// jQueryScript.setAttribute('src','https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js');
-// document.head.appendChild(jQueryScript);
+/*var jQueryScript = document.createElement('script');  
+jQueryScript.setAttribute('src','https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js');
+document.head.appendChild(jQueryScript);*/
+var jQueryScript = document.createElement('script');  
+jQueryScript.setAttribute('src','https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js');
+document.head.appendChild(jQueryScript);
 
 
 
@@ -32,10 +35,11 @@ function getElementByXpath(path) {
 document.getElementById ("editor_call").addEventListener("click", myFunction, false);
 
 function myFunction() {
-	//' + $('.description-content').html() +'
+	
 	alert("edit");
-	$('.description-content').replaceWith('<textarea name="editor1" id="editor" class="ckeditor"></textarea>');
-	//CKEDITOR.replace( 'editor1' );
+	$('.description-content').replaceWith('<textarea name="editor1" id="editor" class="ckeditor" style="width: 100%;">' + $('.description-content').html() +'</textarea>');
+	new nicEditor({fullPanel : true}).panelInstance('editor');
+	test();
 }
 
 // document.getElementById ("preview_call").addEventListener("click", myFunction, false);
@@ -46,7 +50,22 @@ function myFunction() {
 
 
 
-
+function test()
+{
+	var sticky_panelContain_offset_top = $('div.nicEdit-panelContain').offset().top;
+	var sticky_panelContainer = function(){
+		var scroll_top = $(window).scrollTop();
+		if (scroll_top > sticky_panelContain_offset_top) { 
+				$('div.nicEdit-panelContain').css({ 'position': 'fixed', 'top':47 });
+			} else {
+					$('div.nicEdit-panelContain').css({ 'position': 'relative' ,'top':0}); 
+			}
+	};
+	sticky_panelContainer();
+	$(window).scroll(function() {
+			sticky_panelContainer();
+	});
+}
 
 
 
