@@ -25,12 +25,14 @@
         {
             "matches":["https://www.aliexpress.com/*"],
             "all_frames": true,
-            "js":["jquery-3.4.1.min.js","scripts/content.js","scripts/bulk_products.js"],
-            "css": []
+            "js":["jquery-3.4.1.min.js","sommerat/popper.js","sommerat/bootstrap.js","sommerat/summernote-bs4.js","scripts/content.js","scripts/bulk_products.js"],
+            "css": ["sommerat/bootstrap.css","sommerat/summernote-bs4.css"]
         }
     ],
     "web_accessible_resources": [
-        "scripts/nicEdit/nicEditorIcons.gif"
+        "sommerat/font/summernote.eot",
+        "sommerat/font/summernote.woff",
+        "sommerat/font/summernote.ttf"
       ]
 
 }
