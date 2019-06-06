@@ -1,7 +1,7 @@
 {
-    "name": "E-commerce extension, Developed by Siddhu 8",
-    "version": "8.0",
-    "description": "This extension will you learn, how to put text editor ",
+    "name": "E-commerce extension, Developed by Siddhu 9",
+    "version": "9.0",
+    "description": "This extension will you learn, how to post data to server",
     "manifest_version": 2,
     "browser_action":{
         "default_icon": {
