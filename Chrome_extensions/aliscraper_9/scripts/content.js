@@ -23,6 +23,7 @@ document.addEventListener('readystatechange', event => {
 
 
 
+
 function getElementByXpath(path) {
 	if(validate_xpath_only(path))
 	{
