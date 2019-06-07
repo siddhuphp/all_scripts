@@ -51,10 +51,7 @@ border: 3px dotted #333;
 </style>`);
 
 
-function validate_xpath_only(xpath)
-{
-  return document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null).iterateNext() instanceof Node;  
-}
+
 
 // Applying styles and checkbox for each products
 if(validate_xpath_only('.//div[@id="hs-list-items"]/ul[@id="hs-below-list-items"]/li'))
@@ -161,3 +158,4 @@ function send_url_to_bg_js(url,status)
      });
         
 }
+

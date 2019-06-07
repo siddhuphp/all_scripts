@@ -7,8 +7,20 @@ function gotMessage(message){
 		}); 
 }
 
-var dd = getElementByXpath('//div[@class="main-content"]/div/div/div/div[@id="j-product-desc"]');
-dd.insertAdjacentHTML('beforebegin', '<button id="editor_call"> Edit </button> &nbsp; &nbsp; &nbsp; <button id="preview_call"> Preview </button><br/>');
+document.addEventListener('readystatechange', event => {
+
+	if (event.target.readyState === "interactive") {  
+			alert("All HTML DOM elements are accessible");
+	}
+
+	if (event.target.readyState === "complete") {
+			console.log("Now external resources are loaded too, like css,src etc... ");
+			when_page_loads();
+			append_after_page_load();
+	}
+
+});
+
 
 
 function getElementByXpath(path) {
@@ -24,33 +36,12 @@ function getElementByXpath(path) {
   
 }
 
-function validate_xpath_only(xpath)
-{
-  return document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null).iterateNext() instanceof Node;  
-}
-
-
-document.getElementById ("editor_call").addEventListener("click", editaction, false);
-function editaction() {
-	remove_div_products();
-	$('#j-product-desc').summernote({
-		height: 300,
-		tabsize: 2,
-		followingToolbar: true,
-	});	
-}
-
-document.getElementById ("preview_call").addEventListener("click", previewaction, false);
-function previewaction() {
-	$('#j-product-desc').summernote('destroy');
-}
-
-
-
-function when_page_loads()
-{
-	// product-name
-	$('#target').replaceWith('<textarea name="product_title">' + $('target').html() +'</textarea>')
+function updateaction() {
+	final_product = products();
+	final_product.product_title = $(".product-name").text();
+	final_product.product_desc = $("#j-product-description").html();
+	console.log(final_product);
+	console.log(JSON.stringify(final_product));
 }
 
 
@@ -59,54 +50,83 @@ function remove_div_products()
 
 	try
 	{
-	var allListElements = $( 'div' );
-	var t = $( ".origin-part" ).find( allListElements );
-	
+		var allListElements = $( 'div' );
+		var t = $( ".origin-part" ).find( allListElements );
+		
 
-	if ($('.detailmodule_dynamic').length) {
-		$('.detailmodule_dynamic').remove();// to remove unwated data
-	}
-	else if(t.length > 0)
-	{
-		
-		//t.first().css( "background-color", "red" );
-		x=t.first().attr('style');
-		
-		if (x)
+		if ($('.detailmodule_dynamic').length) {
+			$('.detailmodule_dynamic').remove();// to remove unwated data
+		}
+		else if(t.length > 0)
 		{
-		if(x.indexOf("overflow:")>0){
-			t.first().remove(); 
+			
+			//t.first().css( "background-color", "red" );
+			x=t.first().attr('style');
+			
+			if (x)
+			{
+			if(x.indexOf("overflow:")>0){
+				t.first().remove(); 
+			}  
 		}  
-	}  
-	}	
-	else 
-	{
-		if ($('.origin-part div').length)
+		}	
+		else 
 		{
-			var styletext=$('.origin-part div').attr('style');
-			if (styletext.length>0)
+			if ($('.origin-part div').length)
 			{
-			if (styletext.indexOf("overflow")==0)
-			{
-				$('.origin-part div').remove();
+				var styletext=$('.origin-part div').attr('style');
+				if (styletext.length>0)
+				{
+				if (styletext.indexOf("overflow")==0)
+				{
+					$('.origin-part div').remove();
+				}
+			}
 			}
 		}
-		}
+	}
+	catch (e)
+	{
+		console.log( e);	
 	}
 }
-catch (e)
+
+
+function product_title_area()
 {
-	console.log( e);
-	return;
-}
+	$('.product-name').replaceWith('<textarea name="product-name" class="product-name" rows="3" cols="70">' + $('.product-name').html() +'</textarea>');
 }
 
 
 
+function when_page_loads()
+{
+	var dd = getElementByXpath('//div[@class="ui-breadcrumb"]');
+	dd.insertAdjacentHTML('beforebegin', '<button id="editor_call"> Edit </button> &nbsp; &nbsp; &nbsp; <button id="preview_call"> Preview & Update </button>');
+}
 
+function append_after_page_load()
+{
+	document.getElementById ("editor_call").addEventListener("click", editaction, false);
+	function editaction() {
+		remove_div_products();
+		product_title_area();
+		$('#j-product-description').summernote({
+			height: 300,
+			tabsize: 2,
+			followingToolbar: true,
+		});	
+	}
 
+	document.getElementById ("preview_call").addEventListener("click", previewaction, false);
+	function previewaction() {
+		$('#j-product-description').summernote('destroy');
+		$('.product-name').replaceWith('<h1 class="product-name">' + $('.product-name').val() +'</h1>');
+		updateaction();
+	}
+}
 
-
+// console.log(products());
 
 
 
