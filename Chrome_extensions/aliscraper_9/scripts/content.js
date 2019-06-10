@@ -15,10 +15,12 @@ document.addEventListener('readystatechange', event => {
 
 	if (event.target.readyState === "complete") {
 			console.log("Now external resources are loaded too, like css,src etc... ");
-			when_page_loads();
-			append_after_page_load();
+			if(validate_xpath_only('//div[@class="ui-breadcrumb"]'))
+			{
+				when_page_loads();
+				append_after_page_load();
+			}			
 	}
-
 });
 
 
@@ -33,16 +35,16 @@ function getElementByXpath(path) {
 	{
 		console.log("Failed to read xpath in content.js 21 line");
 		return false;
-	}
-  
+	}  
 }
 
 function updateaction() {
 	final_product = products();
 	final_product.product_title = $(".product-name").text();
-	final_product.product_desc = $("#j-product-description").html();
+	final_product.product_desc = $(".description-content").html();
+	final_product.product_short_desc = $("#shrt_desc").html();
 	console.log(final_product);
-	console.log(JSON.stringify(final_product));
+	console.log(JSON.stringify(final_product));	
 }
 
 
@@ -103,25 +105,41 @@ function product_title_area()
 function when_page_loads()
 {
 	var dd = getElementByXpath('//div[@class="ui-breadcrumb"]');
-	dd.insertAdjacentHTML('beforebegin', '<button id="editor_call"> Edit </button> &nbsp; &nbsp; &nbsp; <button id="preview_call"> Preview & Update </button>');
+	dd.insertAdjacentHTML('beforebegin', '<button id="editor_call"> Edit </button> &nbsp; &nbsp; &nbsp; <button id="preview_call"> Save </button>');
 }
 
+var first_click = 1;
 function append_after_page_load()
 {
 	document.getElementById ("editor_call").addEventListener("click", editaction, false);
 	function editaction() {
 		remove_div_products();
 		product_title_area();
-		$('#j-product-description').summernote({
+		$('.description-content').summernote({
 			height: 300,
 			tabsize: 2,
 			followingToolbar: true,
 		});	
+		
+		
+		if(first_click == 1)
+		{
+			$('.product-property-list').parent().append('<div class="ui-box-title">Short Description </div><span id="shrt_desc">'+$('.product-property-list').html()+'</span>');	
+			first_click = 0;
+		}
+		$('#shrt_desc').summernote({
+			height: 300,
+			tabsize: 2,
+			followingToolbar: true,
+		});
+		
+		
 	}
 
 	document.getElementById ("preview_call").addEventListener("click", previewaction, false);
 	function previewaction() {
-		$('#j-product-description').summernote('destroy');
+		$('.description-content').summernote('destroy');
+		$('#shrt_desc').summernote('destroy');
 		$('.product-name').replaceWith('<h1 class="product-name">' + $('.product-name').val() +'</h1>');
 		updateaction();
 	}

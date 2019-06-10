@@ -16,8 +16,7 @@ var url_response_aftr_scrape = new Array();
          var make_list = url_list_manage(request); 
          obj = {
                   yes_recevied: "Yes Recevied",
-                  data: make_list
-                 
+                  data: make_list                 
                };         
          sendResponse(obj); 
          // data: make_list        
