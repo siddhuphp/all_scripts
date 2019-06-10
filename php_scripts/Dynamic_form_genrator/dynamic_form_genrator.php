@@ -97,6 +97,7 @@
               <option value="6"> Description </option>           
               <option value="7"> Datepicker </option>           
               <option value="8"> File </option>           
+              <option value="8"> Range </option>           
             </select>
           </div>
 
@@ -112,6 +113,17 @@
             <div class="input-group-btn"> 
               <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
             </div>
+          </div>
+
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="options_appear">Inline 
+            </label>
+          </div>
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="options_appear">Vertical
+            </label>
           </div>
           </span>
 
