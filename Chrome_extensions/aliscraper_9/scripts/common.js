@@ -17,3 +17,9 @@ function validate_xpath(xpath)
   }
   return value;
 }
+
+//Checks value exists in array or not
+function isInArray(value, array)
+{
+  return array.indexOf(value) > -1;
+}

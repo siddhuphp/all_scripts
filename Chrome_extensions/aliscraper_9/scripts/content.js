@@ -19,6 +19,7 @@ document.addEventListener('readystatechange', event => {
 			{
 				when_page_loads();
 				append_after_page_load();
+				get_checked_urls();
 			}			
 	}
 });
@@ -147,6 +148,36 @@ function append_after_page_load()
 
 // console.log(products());
 
+// Check this current url in our url_bucket list. To Append 'Next' button
+// If exits check the count of url_bucket list. If it is grater than 0 then append next button.
+function get_checked_urls()
+{
+    obj = { greeting:"urls_count" };
+     chrome.runtime.sendMessage(obj, function(response) {    
+			  console.log(response);
+			  remain_process(response);			
+     });        
+}
+
+function remain_process(res)
+{
+	var dis_url = window.location.href.split("?")[0];	
+	if(isInArray(dis_url,res.urls) && (res.urls_count > 1))
+	{
+		$('#preview_call').after(' &nbsp; &nbsp; &nbsp; <button id="next_call"> Close & Next </button>');
+		document.getElementById ("next_call").addEventListener("click", nextaction, false);		
+	}	
+}
+
+
+function nextaction() {
+	var dis_url = window.location.href.split("?")[0];
+	obj = { greeting:"next_url", remove_url:dis_url };
+	chrome.runtime.sendMessage(obj, function(response) {    
+			 console.log(response);			 			
+	});
+	window.close();
+}
 
 
 

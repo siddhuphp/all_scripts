@@ -17,6 +17,7 @@ chrome.runtime.sendMessage({msg: "get_urls"}, function(response) {
             if(response.url_bucket.includes(sThisVal.split("?")[0]))
             {
                 $(this).prop('checked', true);
+                appendButton();
             }
           });       
     }
@@ -47,6 +48,16 @@ border: 3px dotted #333;
     width: 20px;
     height: 20px;
     z-index: 4;
+}
+.bulk_url{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999999;
+    background: #09bbff;
+    padding: 11px 18px;
+    border: 0;
+    color: #fff;
 }
 </style>`);
 
@@ -144,7 +155,8 @@ $('.bulk_chk').on('change', function() {
     {
         //remove this url in global urls list
         send_url_to_bg_js(this.value,0); 
-    }     
+    }
+    appendButton();    
 });
 
 
@@ -152,10 +164,61 @@ $('.bulk_chk').on('change', function() {
 function send_url_to_bg_js(url,status)
 {
     obj = {greeting:"url_adding",url:url,status:status};
-     chrome.runtime.sendMessage(obj, function(response) {    
+     chrome.runtime.sendMessage(obj, function(response) {          
        urls = response.data;
        console.log(urls);    
-     });
-        
+       global_urls_count(urls.length);
+     
+     });        
 }
 
+//Append button if checkbox checked
+function appendButton() {
+    var len = $(".bulk_chk:checked").length;
+    if(len>0)
+    {
+        var div = document.createElement("div");
+        div.className = 'bulk_div';
+        
+        // 1. Create the button       
+        var button = document.createElement("button");
+        button.className = 'bulk_url';
+        button.innerHTML = " Proceed ";
+        div.appendChild(button);
+
+        // 2. Append somewhere
+        var body = document.getElementsByTagName("body")[0];
+        body.appendChild(div);
+
+        // 3. Add event handler
+        button.addEventListener ("click", function() {
+            open_urls_by_bgjs();
+        });        
+    }
+    else
+    {
+       $('.bulk_url').remove();
+    }
+}
+
+//Send selected url values to background js
+function open_urls_by_bgjs()
+{
+    obj = {greeting:"open_urls"};
+     chrome.runtime.sendMessage(obj, function(response) {    
+              console.log(response);    
+     });        
+}
+
+
+function global_urls_count(len)
+{
+    if(len>0)
+    { 
+       $(".bulk_url").text('Proceed ('+len+')'); 
+    }
+    else
+    {
+        $('.bulk_url').remove();  
+    }  
+}
