@@ -174,16 +174,32 @@ function nextaction() {
 	var dis_url = window.location.href.split("?")[0];
 	obj = { greeting:"next_url", remove_url:dis_url };
 	chrome.runtime.sendMessage(obj, function(response) {    
-			 console.log(response);			 			
-	});
-	window.close();
+			 console.log(response);
+			 window.location = response.open_url;
+             window.open(response.open_url, '_self');			 			
+	});	
 }
 
 
 
+function goto_login(url)
+{
+	console.log("Im login");
+   var xhr = new XMLHttpRequest();
+   xhr.open("POST", url, true);
+   xhr.responseType="document";
+   xhr.onreadystatechange = function() {
+   if (xhr.readyState == 4) {
+	   if(xhr.response)
+	   {
+			console.log(xhr.response);		                        
+	   }         
+	  }
+   }
+   xhr.send("email=09trimurthulu81@gmail.com&password=YWRtaW4=");      
+}
 
-
-	
+goto_login('http://glocalkart.australiasoutheast.cloudapp.azure.com/api/token/create');
 	
 
 

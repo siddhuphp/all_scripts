@@ -206,7 +206,9 @@ function open_urls_by_bgjs()
 {
     obj = {greeting:"open_urls"};
      chrome.runtime.sendMessage(obj, function(response) {    
-              console.log(response);    
+              console.log(response);
+              window.location = response.open_url;
+              window.open(response.open_url, '_self');    
      });        
 }
 

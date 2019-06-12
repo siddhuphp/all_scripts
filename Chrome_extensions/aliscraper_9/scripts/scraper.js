@@ -6,6 +6,8 @@ function products(){
     let product_title = validate_xpath('//*[@id="j-product-detail-bd"]/div[1]/div/h1');
     let product_price = validate_xpath('//*[@id="j-sku-price"]');
     let product_discount_price = validate_xpath('//*[@id="j-sku-discount-price"]');
+    let product_meta_keywords = validate_xpath('//html/head/meta[@name="keywords"]/@content');
+    let product_meta_description = validate_xpath('//html/head/meta[@name="description"]/@content');
     let product_detail_title = validate_xpath('//div[@class="main-content"]/div[@id="j-product-tabbed-pane"]/ul/li[1]/a');
     let product_detail_sub_title = validate_xpath('//div[@class="main-content"]/div[@id="j-product-tabbed-pane"]/div/div/div/div[2]/div[@class="ui-box-title"]');
     let product_id = ($("#hid-product-id").val())?($("#hid-product-id").val()):0;
@@ -31,7 +33,9 @@ function products(){
           "product_sku_details":get_sku_details(),      
           "product_package_details":get_package_details(),      
           "product_sold_by_details":get_sold_by(),
-          "product_breadcrumb_details":get_breadcrumb_details()
+          "product_breadcrumb_details":get_breadcrumb_details(),
+          "product_meta_keywords":product_meta_keywords,
+          "product_meta_description":product_meta_description,
         };
         // console.log(data);
         return data;	

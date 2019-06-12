@@ -24,9 +24,10 @@ const url_bucket = new Array();
       
       if(request.greeting == "open_urls")
       {
-         open_urls();
+         var url = url_bucket[0];
          obj = {
-            yes_recevied: "Yes Recevied from open URLS"      
+            yes_recevied: "Yes Recevied from open URLS",
+            open_url:url     
          };         
          sendResponse(obj); 
       }
@@ -43,16 +44,16 @@ const url_bucket = new Array();
 
       if(request.greeting == "next_url")
       {
-         load_next_url(request);
+         var url = load_next_url(request);
          obj = {
-            yes_recevied: "Next URL's loaded",          
+            yes_recevied: "Next URL's loaded",
+            open_url:url          
          };         
          sendResponse(obj); 
       }
 
 
    });
-
 
    function url_list_manage(request)
    {
@@ -111,21 +112,10 @@ const url_bucket = new Array();
    });
 
 
- function open_urls()
- {
-   // console.log(url_bucket);
-   // console.log(url_bucket[0]);
-   var url = url_bucket[0];
-   var win = window.open(url, '_blank');
-   win.focus();
-     
- }
-  
-
 function load_next_url(req)
 {
    console.log(req.remove_url);
    remove_dis_value(req.remove_url);
-   open_urls();
+   return url_bucket[0];
 }
  
