@@ -81,25 +81,53 @@
       <div class="modal-body">
         <form id="configform">
           <div class="form-group">
-            <label for="label-name" class="col-form-label">Label:</label>
-            <input type="text" class="form-control" id="label-name">
-          </div>
-
-          <div class="form-group">
           <label for="type">Type:</label>
             <select class="form-control" id="type">
               <option value=""> Select </option>
-              <option value="1"> Text </option>
-              <option value="2"> Radio </option>
-              <option value="3"> Select </option>
-              <option value="4"> Multi select </option>
-              <option value="5"> Checkbox </option>
-              <option value="6"> Description </option>           
-              <option value="7"> Datepicker </option>           
-              <option value="8"> File </option>           
-              <option value="8"> Range </option>           
+              <option value="text"> Text </option>
+              <option value="radio"> Radio </option>
+              <option value="select"> Select </option>
+              <option value="multi_select"> Multi select </option>
+              <option value="checkbox"> Checkbox </option>
+              <option value="description"> Description </option>           
+              <option value="editior"> Editior (wysiwyg) </option>           
+              <option value="datepicker"> Datepicker </option>           
+              <option value="timepicker"> Timepicker </option>           
+              <option value="file"> File </option>           
+              <option value="range"> Range </option>           
             </select>
           </div>
+		  
+		  <div class="form-group">
+            <label for="label-name" class="col-form-label">Label:</label>
+            <input type="text" class="form-control" id="label-name">
+          </div>
+		  
+		  <!-- For text field-->
+		  <span  id="show_if_text" style="display:none;">
+			  <label for="label-name" class="col-form-label">Prepend:</label>
+				<div class="input-group mb-3">
+				<select class="form-control" id="type">
+				  <option value=""> Select </option>
+				  <option value="no"> No </option>
+				  <option value="text"> Text </option>
+				  <option value="icon"> Icon </option>
+				 </select>
+				<input type="text" class="form-control" id="prepend-name">
+			  </div>
+			  
+			  <label for="label-name" class="col-form-label">Append:</label>
+				<div class="input-group mb-3">
+				<select class="form-control" id="type">
+				  <option value=""> Select </option>
+				  <option value="no"> No </option>
+				  <option value="text"> Text </option>
+				  <option value="icon"> Icon </option>
+				 </select>
+				<input type="text" class="form-control" id="append-name">
+			  </div>
+		  </span>
+		  <!-- For text field ends-->
 
           <div class="form-group">
             <label for="name" class="col-form-label">Name:</label>

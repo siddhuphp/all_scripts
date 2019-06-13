@@ -183,22 +183,22 @@ function nextaction() {
 
 
 
-// function goto_login(url)
-// {
-// 	console.log("Im login");
-//    var xhr = new XMLHttpRequest();
-//    xhr.open("POST", url, true);
-//    xhr.responseType="document";
-//    xhr.onreadystatechange = function() {
-//    if (xhr.readyState == 4) {
-// 	   if(xhr.response)
-// 	   {
-// 			console.log(xhr.response);		                        
-// 	   }         
-// 	  }
-//    }
-//    xhr.send("email=09trimurthulu81@gmail.com&password=YWRtaW4=");      
-// }
+function goto_login(url)
+{
+	console.log("Im login");
+   var xhr = new XMLHttpRequest();
+   xhr.open("POST", url, true);
+   xhr.responseType="document";
+   xhr.onreadystatechange = function() {
+   if (xhr.readyState == 4) {
+	   if(xhr.response)
+	   {
+			console.log(xhr.response);		                        
+	   }         
+	  }
+   }
+   xhr.send("email=09trimurthulu81@gmail.com&password=YWRtaW4=");      
+}
 
 
 // function goto_login(url)
@@ -214,7 +214,7 @@ function nextaction() {
 // 	saveData.error(function() { alert("Something went wrong"); });      
 // }
 
-// goto_login('//glocalkart.australiasoutheast.cloudapp.azure.com/api/token/create');
+// goto_login('http://glocalkart.australiasoutheast.cloudapp.azure.com/api/token/create');
 	
 
 

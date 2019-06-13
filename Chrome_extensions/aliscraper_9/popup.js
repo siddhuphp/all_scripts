@@ -17,7 +17,7 @@ console.log("POPUP js fired");
     var port = chrome.extension.connect({
       name: "Sample Communication"
     });
-    port.postMessage("Hi BackGround");
+    port.postMessage("Hi BackGround! i'M cOMING FROM pop.JS ");
     port.onMessage.addListener(function(msg) {
           console.log(msg);
           msg.forEach(element => {
@@ -31,9 +31,18 @@ console.log("POPUP js fired");
       console.log("Clicked");
     }
   
+  
 
-    
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelector('button').addEventListener('click', loginAction);     
+    });
 
+    function loginAction() {
+     var email = $("#email").val();
+      var pwd = $("#pwd").val();
+      console.log(email + pwd);
+      port.postMessage(email + pwd);
+    }
     
 
 

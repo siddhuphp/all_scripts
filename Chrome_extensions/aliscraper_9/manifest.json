@@ -15,7 +15,7 @@
     "permissions":["cookies","tabs","activeTab","storage","https://*.aliexpress.com/","http://*/*","https://*/*"],
 
     "background": {
-        "scripts": ["background.js"],
+        "scripts": ["background.js","apis.js"],
         "persistent": false
     },
     

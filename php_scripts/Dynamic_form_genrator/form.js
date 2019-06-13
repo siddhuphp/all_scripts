@@ -109,13 +109,21 @@ $("body").on("click",".remove",function(){
 
 // For selecting field type
 $('#type').on('change', function() {
-  ary = ['2','3','4','5'];  
-  if(ary.indexOf(this.value) > -1)
+  rsmc = ['radio','select','multi_select','checkbox'];  
+  t = ['text'];  
+  if(rsmc.indexOf(this.value) > -1)
   {
-    $("#show_if_chk_or_radio").show();    
+    $("#show_if_chk_or_radio").show();
+	$("#show_if_text").hide();    
+  }
+  else if(t.indexOf(this.value) > -1)
+  {
+	$("#show_if_text").show();
+	$("#show_if_chk_or_radio").hide();	 
   }
   else
   {
     $("#show_if_chk_or_radio").hide();
+	$("#show_if_text").hide();
   }
 });
