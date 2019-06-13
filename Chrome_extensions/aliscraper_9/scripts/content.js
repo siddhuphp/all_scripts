@@ -25,8 +25,6 @@ document.addEventListener('readystatechange', event => {
 });
 
 
-
-
 function getElementByXpath(path) {
 	if(validate_xpath_only(path))
 	{
@@ -141,7 +139,10 @@ function append_after_page_load()
 	function previewaction() {
 		$('.description-content').summernote('destroy');
 		$('#shrt_desc').summernote('destroy');
-		$('.product-name').replaceWith('<h1 class="product-name">' + $('.product-name').val() +'</h1>');
+		if($('.product-name').val())
+		{
+			$('.product-name').replaceWith('<h1 class="product-name">' + $('.product-name').val() +'</h1>');
+		}		
 		updateaction();
 	}
 }
@@ -182,24 +183,38 @@ function nextaction() {
 
 
 
-function goto_login(url)
-{
-	console.log("Im login");
-   var xhr = new XMLHttpRequest();
-   xhr.open("POST", url, true);
-   xhr.responseType="document";
-   xhr.onreadystatechange = function() {
-   if (xhr.readyState == 4) {
-	   if(xhr.response)
-	   {
-			console.log(xhr.response);		                        
-	   }         
-	  }
-   }
-   xhr.send("email=09trimurthulu81@gmail.com&password=YWRtaW4=");      
-}
+// function goto_login(url)
+// {
+// 	console.log("Im login");
+//    var xhr = new XMLHttpRequest();
+//    xhr.open("POST", url, true);
+//    xhr.responseType="document";
+//    xhr.onreadystatechange = function() {
+//    if (xhr.readyState == 4) {
+// 	   if(xhr.response)
+// 	   {
+// 			console.log(xhr.response);		                        
+// 	   }         
+// 	  }
+//    }
+//    xhr.send("email=09trimurthulu81@gmail.com&password=YWRtaW4=");      
+// }
 
-goto_login('http://glocalkart.australiasoutheast.cloudapp.azure.com/api/token/create');
+
+// function goto_login(url)
+// {
+// 	var myKeyVals = { 'email' : '09trimurthulu81@gmail.com', 'password' : 'YWRtaW4=' };
+// 	var saveData = $.ajax({
+//       type: 'POST',
+//       url: url,
+//       data: myKeyVals,
+//       dataType: "text",
+//       success: function(resultData) { alert("Save Complete") }
+// 	});
+// 	saveData.error(function() { alert("Something went wrong"); });      
+// }
+
+// goto_login('//glocalkart.australiasoutheast.cloudapp.azure.com/api/token/create');
 	
 
 

@@ -98,7 +98,10 @@ function case_2()
     console.log("I'm in case_2");
     for (let index = 0; index < $('ul#list-items li').length; index++) {
         var ul = $('ul#list-items li')[index];
-        ul.insertAdjacentHTML("afterbegin", `<input type="checkbox" value="1" name="bulk_prdct" class="bulk_chk">`);       
+        k = index + 1;
+        val = bring_href_value_case_2(k);
+        ul.insertAdjacentHTML("afterbegin", `<input type="checkbox" value="`+val+`" name="bulk_prdct" class="bulk_chk">`);
+       
     }
 }
 
@@ -111,7 +114,7 @@ function case_3()
         if(contains(ul.innerHTML, "item"))
         {
             k = index + 1;
-            val = bring_href_value(k);          
+            val = bring_href_value_case_3(k);          
             ul.insertAdjacentHTML("afterbegin", `<input type="checkbox" value="`+val+`" name="bulk_prdct" class="bulk_chk">`);       
         }
         
@@ -127,9 +130,23 @@ function contains(str, text)
 }
 
 
-function bring_href_value(position)
+function bring_href_value_case_3(position)
 {
     var dis_xpath = ("//ul[@class='util-clearfix son-list']/li["+position+"]/div[1]/div[1]/div[1]/a[1]/@href");
+    if(validate_xpath_only(dis_xpath))
+    {
+        lnk=document.evaluate(dis_xpath, document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent.split("?")[0];
+        value = "https:"+lnk;
+    }
+    else
+    {
+        value = null; 
+    }
+    return value;
+}
+function bring_href_value_case_2(position)
+{
+    var dis_xpath = ("//ul[@id='list-items']/li["+position+"]/div/div/div/h3/a/@href");
     if(validate_xpath_only(dis_xpath))
     {
         lnk=document.evaluate(dis_xpath, document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent.split("?")[0];
