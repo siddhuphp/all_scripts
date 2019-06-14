@@ -103,13 +103,13 @@ const url_bucket = new Array();
   
    // Below request send data to popup js 
    // Continues 
-   chrome.extension.onConnect.addListener(function(port) {
-      console.log("Connected .....");
-      port.onMessage.addListener(function(msg) {
-           console.log("message recieved" + msg);           
-           port.postMessage(url_bucket);           
-      });
-   });
+   // chrome.extension.onConnect.addListener(function(port) {
+   //    console.log("Connected .....");
+   //    port.onMessage.addListener(function(msg) {
+   //         console.log("message recieved" + msg);           
+   //         port.postMessage(url_bucket);           
+   //    });
+   // });
 
 
 function load_next_url(req)
@@ -119,3 +119,26 @@ function load_next_url(req)
    return url_bucket[0];
 }
  
+function cookie_modify()
+{
+	obj = {
+		"url":window.location.href,
+		"name":"aep_usuc_f"
+	 };
+	 
+	 chrome.cookies.get(obj, function(cookies) {         
+		console.log(cookies);		
+	  });
+
+	  obj_set = {
+		"url":window.location.href,
+		"name":"aep_usuc_f",
+		"value":"site=glo&c_tp=INR&region=IN&b_locale=en_US" //global_cookie[0]
+	  }; 
+
+	 //  console.log(obj_set);
+	 chrome.cookies.set(obj_set, function(cookies) {         
+		console.log(cookies);
+		location.reload();
+	  });    
+}

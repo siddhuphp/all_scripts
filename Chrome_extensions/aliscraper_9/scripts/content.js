@@ -201,26 +201,57 @@ function goto_login(url)
 }
 
 
-// function goto_login(url)
+
+
+function getCookie(cname) {
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i <ca.length; i++) {
+	  var c = ca[i];
+	  while (c.charAt(0) == ' ') {
+		c = c.substring(1);
+	  }
+	  if (c.indexOf(name) == 0) {
+		return c.substring(name.length, c.length);
+	  }
+	}
+	return "";
+  }
+	
+  console.log(getCookie('aep_usuc_f'));
+  coke = getCookie('aep_usuc_f');
+  var res = coke.split('&');
+  if(res)
+  {
+	if(isInArray('c_tp=USD',res) && isInArray('region=IN',res)) //set what u want here
+	{
+		console.log("Cookies already exists");
+	}
+	else
+	{
+		setCookie('aep_usuc_f', 'site=glo&c_tp=USD&region=IN&b_locale=en_US', 1); //set what u want here
+	}
+  }
+  	
+  
+
+  function setCookie(cname, cvalue, exdays) {
+	var d = new Date();
+	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	var expires = "expires="+ d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	location.reload();
+  }
+
+  
+
+// function delete_cookie(name)
 // {
-// 	var myKeyVals = { 'email' : '09trimurthulu81@gmail.com', 'password' : 'YWRtaW4=' };
-// 	var saveData = $.ajax({
-//       type: 'POST',
-//       url: url,
-//       data: myKeyVals,
-//       dataType: "text",
-//       success: function(resultData) { alert("Save Complete") }
-// 	});
-// 	saveData.error(function() { alert("Something went wrong"); });      
+// 	document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=[something];";
 // }
 
-// goto_login('http://glocalkart.australiasoutheast.cloudapp.azure.com/api/token/create');
-	
 
-
-
-
-
-
+// delete_cookie('aep_usuc_f');
 
 
