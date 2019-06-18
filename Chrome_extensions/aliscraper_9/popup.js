@@ -13,23 +13,14 @@ console.log("POPUP js fired");
       }           
     });
 
-
+    //Request sending popup.js to background.js 
     var port = chrome.extension.connect({
       name: "Sample Communication"
     });
-    port.postMessage("Hi BackGround! i'M cOMING FROM pop.JS ");
+    // port.postMessage("Hi BackGround! i'M cOMING FROM pop.JS ");
     port.onMessage.addListener(function(msg) {
-          console.log(msg);
-          msg.forEach(element => {
-            console.log(element);
-            $("#urls").append('<div><p>'+element+'</p><button onclick="test()"> Proceed </button></div>');
-          });
+          console.log(msg);        
     });
-
-    function test()
-    {
-      console.log("Clicked");
-    }
   
   
 
@@ -37,16 +28,35 @@ console.log("POPUP js fired");
       document.querySelector('button').addEventListener('click', loginAction);     
     });
 
-    function loginAction() {
-     var email = $("#email").val();
-      var pwd = $("#pwd").val();
-      console.log(email + pwd);
-      port.postMessage(email + pwd);
+    function loginAction()
+    {
+      var email = $("#email").val();
+      var pwd = $("#pwd").val();      
+      obj = {"email":email,"pwd":pwd};
+      port.postMessage(obj);
     }
     
 
+  //Request receving from background js to popup js
+  chrome.extension.onConnect.addListener(function(port) {      
+      port.onMessage.addListener(function(msg) {
+           console.log(msg);                     
+           port.postMessage('Recevied logged in response');
+           notify_user(msg);                      
+      });
+   });
 
-   
 
-
-   
+   function notify_user(status)
+   {
+      if(status == 200)
+      {
+        $("#notify").html('<h3><font color="green">Logged in Successfully</font></h3>');
+        $("#email").val('');
+        $("#pwd").val('');
+      }
+      else
+      {
+        $("#notify").html('<span id="error"><b><font color="red">Failed</font></b></span>');
+      }
+   }
