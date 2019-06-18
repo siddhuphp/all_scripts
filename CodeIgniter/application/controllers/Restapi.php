@@ -115,5 +115,43 @@ class Restapi extends REST_Controller {
         $this->set_response($message, REST_Controller::HTTP_NO_CONTENT); // NO_CONTENT (204) being the HTTP response code
     }
 
+    public function image_upload_post()
+    {
+        $message = $_FILES;
+            $config['upload_path']          = './uploads/';
+            $config['allowed_types']        = 'gif|jpg|png';
+            $config['max_size']             = 100;
+            $config['max_width']            = 1024;
+            $config['max_height']           = 768;
+
+                $this->load->library('upload', $config);
+
+                if ( ! $this->upload->do_upload('userfile'))
+                {
+                        $data = array('error' => $this->upload->display_errors());                      
+                }
+                else
+                {
+                        $data = array('upload_data' => $this->upload->data()); 
+                        //$this->_create_thumbnail($data['upload_data']['full_path'],50,50);                      
+                }
+        $this->set_response($data, REST_Controller::HTTP_CREATED); 
+    }
+
+    function _create_thumbnail($filePath, $width, $height) 
+    {
+        $this->load->library('image_lib');
+        $config['image_library']  = 'gd2';
+        $config['source_image']   = $filePath;       
+        $config['create_thumb']   = TRUE;
+        $config['maintain_ratio'] = TRUE;
+        $config['width']          = $width;
+        $config['height']         = $height;
+        $config['new_image']      = $filePath;               
+        $this->image_lib->initialize($config);
+        if (! $this->image_lib->resize()) { 
+            echo $this->image_lib->display_errors();
+        }        
+    }
    
 }
