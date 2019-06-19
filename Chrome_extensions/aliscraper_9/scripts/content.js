@@ -121,8 +121,7 @@ function append_after_page_load()
 	document.getElementById ("editor_call").addEventListener("click", editaction, false);
 	function editaction() {
 		remove_div_products();
-		product_title_area();
-		get_user_manf_cate();
+		product_title_area();		
 		$('.description-content').summernote({
 			height: 300,
 			tabsize: 2,
@@ -133,6 +132,8 @@ function append_after_page_load()
 		if(first_click == 1)
 		{
 			$('.product-property-list').parent().append('<div class="ui-box-title">Short Description </div><span id="shrt_desc">'+$('.product-property-list').html()+'</span>');	
+			get_user_manf_cate();
+			manf_cate_html();
 			first_click = 0;
 		}
 		$('#shrt_desc').summernote({
@@ -142,7 +143,7 @@ function append_after_page_load()
 		});
 		
 		$('#preview_call').text('Save');
-		manf_cate_html();	
+			
 	}
 
 	document.getElementById ("preview_call").addEventListener("click", previewaction, false);
