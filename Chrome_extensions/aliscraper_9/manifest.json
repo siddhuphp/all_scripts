@@ -26,7 +26,7 @@
             "matches":["https://www.aliexpress.com/*"],
             "all_frames": true,
             "js":["jquery-3.4.1.min.js","scripts/common.js","sommerat/popper.js","sommerat/bootstrap.js","sommerat/summernote-bs4.js","scripts/scraper.js","scripts/content.js","scripts/bulk_products.js"],
-            "css": ["sommerat/bootstrap.css","sommerat/summernote-bs4.css"]
+            "css": ["sommerat/bootstrap.css","sommerat/summernote-bs4.css","css/common.css"]
         }
     ],
     "web_accessible_resources": [

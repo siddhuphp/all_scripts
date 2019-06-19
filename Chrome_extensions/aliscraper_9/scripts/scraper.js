@@ -294,3 +294,5 @@ function products(){
             // console.log(list_items);
             return list_items;
     }
+
+    products();

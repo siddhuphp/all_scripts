@@ -20,6 +20,7 @@ document.addEventListener('readystatechange', event => {
 				when_page_loads();
 				append_after_page_load();
 				get_checked_urls();
+				window.scrollTo(0,document.body.scrollHeight); // it's scroll down to load the descriptions purpose
 			}			
 	}
 });
@@ -29,6 +30,7 @@ function getElementByXpath(path) {
 	if(validate_xpath_only(path))
 	{
 		return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+		
 	}
 	else
 	{
@@ -38,6 +40,12 @@ function getElementByXpath(path) {
 }
 
 function updateaction() {
+/*	Document.prototype.kjevaluate() = function (a,b,c,d,e) { 
+		element=document.evaluate(a,b,c,d,e);
+		
+		return element;
+	}
+*/
 	final_product = products();
 	final_product.product_title = $(".product-name").text();
 	final_product.product_desc = $(".description-content").html();
@@ -114,6 +122,7 @@ function append_after_page_load()
 	function editaction() {
 		remove_div_products();
 		product_title_area();
+		get_user_manf_cate();
 		$('.description-content').summernote({
 			height: 300,
 			tabsize: 2,
@@ -132,7 +141,8 @@ function append_after_page_load()
 			followingToolbar: true,
 		});
 		
-		
+		$('#preview_call').text('Save');
+		manf_cate_html();	
 	}
 
 	document.getElementById ("preview_call").addEventListener("click", previewaction, false);
@@ -144,6 +154,7 @@ function append_after_page_load()
 			$('.product-name').replaceWith('<h1 class="product-name">' + $('.product-name').val() +'</h1>');
 		}		
 		updateaction();
+		$('#preview_call').text('Product Saved');
 	}
 }
 
@@ -255,3 +266,48 @@ function getCookie(cname) {
 // delete_cookie('aep_usuc_f');
 
 
+//Below function sends request to apis.js
+//For getting user 'manfactures' and 'categories' details
+//User must login to sucsses this request bcoz it needs TOKEN
+function get_user_manf_cate()
+{
+	chrome.runtime.sendMessage({msg: "get_manf_cate"}, function(response) {
+		console.log(response); //response from APIS.js script
+		manf_cate_html_append(response);   
+   }); 
+}
+ 
+
+
+function manf_cate_html()
+{
+	$("#editor_call").after(`
+		<select name="category" id="category">
+		  <option> Select category </option>
+		</select>
+		<select name="manfacture" id="manfacture">
+			<option> Select manfacture </option>
+		  </select>`);
+}
+
+function manf_cate_html_append(response)
+{
+	if(response.cate)
+	{
+		var optionsAsString = "";		
+		$.each(response.cate, function(k, v) {
+			optionsAsString += "<option value='" + v.key + "'>" +v.value + "</option>";
+		  });
+		$( 'select[name="category"]' ).append( optionsAsString );
+	}
+
+	if(response.manf)
+	{
+		var optionsAsString = "";
+		$.each(response.manf, function(k, v) {
+			optionsAsString += "<option value='" + v.key + "'>" +v.value + "</option>";
+		  });
+		$( 'select[name="manfacture"]' ).append( optionsAsString );
+	}
+	
+}

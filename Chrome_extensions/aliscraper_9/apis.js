@@ -1,3 +1,8 @@
+var global_token = "";
+var categories = {};
+var manfactures = {};
+
+
 function goto_login(email,pwd)
 {
    var data = JSON.stringify({
@@ -10,7 +15,10 @@ function goto_login(email,pwd)
    
    xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
-         console.log(this.responseText);       
+         console.log(this.responseText);
+         global_token = this.responseText;
+         get_categories_list(global_token);               
+         get_manfacture_list(global_token);               
       }
       sent_to_response_to_popjs(xhr.status);
    });
@@ -53,3 +61,83 @@ function goto_login(email,pwd)
              console.log(msg);        
        });
    }
+
+   //reciving request from content.js
+   chrome.runtime.onMessage.addListener(
+      function(request, sender, sendResponse) {
+         if (request.msg == "get_manf_cate") 
+         {            
+            sendResponse({status:true,cate:categories,manf:manfactures}); 
+         }   
+   });
+
+
+function get_manfacture_list(token)
+{
+   if(token)
+   {
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      
+      xhr.addEventListener("readystatechange", function () {
+         if (this.readyState === 4) {
+            console.log(this.responseText);           
+            if(this.response)
+            {
+               var s = JSON.parse(this.response);
+               s.value.forEach(function(v,k){
+                  // console.log(v.Name);
+                  // console.log(v.Id);
+                  manfactures[k] = {"key":v.Id,"value":v.Name};
+               });
+            }       
+         }         
+      });
+      
+      xhr.open("GET", "http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/manufacturer");
+      xhr.setRequestHeader("Authorization", "Bearer "+token);
+      xhr.setRequestHeader("Content-Type", "application/json","charset=utf8");
+      xhr.setRequestHeader("Access-Control-Allow-Origin", "*"); 
+      xhr.send();
+   }
+   else
+   {
+      return false;
+   }    
+}
+
+
+function get_categories_list(token)
+{
+   if(token)
+   {
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      
+      xhr.addEventListener("readystatechange", function () {
+         if (this.readyState === 4) {
+            console.log(this.responseText);            
+            if(this.response)
+            {
+               var s = JSON.parse(this.response);
+                 s.value.forEach(function(v,k){
+                  // console.log(v.Name);
+                  // console.log(v.Id);                  
+                  categories[k] = {"key":v.Id,"value":v.Name};
+               });
+            }     
+         }         
+      });
+      
+      xhr.open("GET", "http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/category");
+      xhr.setRequestHeader("Authorization", "Bearer "+token);
+      xhr.setRequestHeader("Content-Type", "application/json","charset=utf8");
+      xhr.setRequestHeader("Access-Control-Allow-Origin", "*"); 
+      xhr.send();
+   }
+   else
+   {
+      return false;
+   }   
+     
+}

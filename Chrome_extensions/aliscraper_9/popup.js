@@ -25,7 +25,7 @@ console.log("POPUP js fired");
   
 
     document.addEventListener('DOMContentLoaded', function () {
-      document.querySelector('button').addEventListener('click', loginAction);     
+      document.getElementById('login').addEventListener('click', loginAction);     
     });
 
     function loginAction()
