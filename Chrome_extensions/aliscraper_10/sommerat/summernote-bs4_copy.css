@@ -1,0 +1,75 @@
+<div id="altImages" class="a-fixed-left-grid-col a-col-left" style="width:40px;margin-left:-40px;float:left;">
+  <ul class="a-unordered-list a-nostyle a-button-list a-vertical a-spacing-top-micro">
+    <li class="a-spacing-small videoCountTemplate aok-hidden">
+      <span class="a-list-item">
+        <span id="videoCount_template" class="a-size-mini a-color-secondary video-count a-text-bold a-nowrap"> <hza:string id="">
+          </hza:string></span>
+      </span>
+    </li>
+    <li class="a-spacing-small 360IngressTemplate aok-hidden">
+      <span class="a-list-item">
+        <span class="a-declarative" data-action="thumb-action" data-thumb-action="{}">
+          <span class="a-button a-button-thumbnail a-button-toggle" id=""><span class="a-button-inner"><input class="a-button-input" type="submit" aria-labelledby=""><span class="a-button-text" aria-hidden="true" id="">
+            <img alt="" src="https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel._V192234675_.gif">
+            </span></span></span>
+        </span>
+      </span>
+    </li>
+    <li class="a-spacing-small template">
+      <span class="a-list-item">
+        <span class="a-button a-button-thumbnail a-button-toggle" id=""><span class="a-button-inner"><input class="a-button-input" type="submit" aria-labelledby=""><span class="a-button-text" aria-hidden="true" id="">
+          <span class="placeHolder"></span>
+          </span></span></span>
+      </span>
+    </li>
+    <li class="a-spacing-small item imageThumbnail a-declarative">
+      <span class="a-list-item">
+        <span class="a-button a-button-thumbnail a-button-toggle" id=""><span class="a-button-inner"><input class="a-button-input" type="submit" aria-labelledby=""><span class="a-button-text" aria-hidden="true" id="">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/51z-npUsEIL._SS40_.jpg">
+          </span></span></span>
+      </span>
+    </li>
+    <li class="a-spacing-small item imageThumbnail a-declarative">
+      <span class="a-list-item">
+        <span class="a-button a-button-thumbnail a-button-toggle" id=""><span class="a-button-inner"><input class="a-button-input" type="submit" aria-labelledby=""><span class="a-button-text" aria-hidden="true" id="">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/41ynTjh3FWL._SS40_.jpg">
+          </span></span></span>
+      </span>
+    </li>
+    <li class="a-spacing-small item imageThumbnail a-declarative">
+      <span class="a-list-item">
+        <span class="a-button a-button-thumbnail a-button-toggle a-button-selected a-button-focus" id=""><span class="a-button-inner"><input class="a-button-input" type="submit" aria-labelledby=""><span class="a-button-text" aria-hidden="true" id="">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/41LA5GSXC4L._SS40_.jpg">
+          </span></span></span>
+      </span>
+    </li>
+    <li class="a-spacing-small item imageThumbnail a-declarative">
+      <span class="a-list-item">
+        <span class="a-button a-button-thumbnail a-button-toggle" id=""><span class="a-button-inner"><input class="a-button-input" type="submit" aria-labelledby=""><span class="a-button-text" aria-hidden="true" id="">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/417HROFymUL._SS40_.jpg">
+          </span></span></span>
+      </span>
+    </li>
+    <li class="a-spacing-small item imageThumbnail a-declarative">
+      <span class="a-list-item">
+        <span class="a-button a-button-thumbnail a-button-toggle" id=""><span class="a-button-inner"><input class="a-button-input" type="submit" aria-labelledby=""><span class="a-button-text" aria-hidden="true" id="">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/411uQmG1UpL._SS40_.jpg">
+          </span></span></span>
+      </span>
+    </li>
+    <li class="a-spacing-small item imageThumbnail a-declarative">
+      <span class="a-list-item">
+        <span class="a-button a-button-thumbnail a-button-toggle" id=""><span class="a-button-inner"><input class="a-button-input" type="submit" aria-labelledby=""><span class="a-button-text" aria-hidden="true" id="">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/41iLbdU%2BMJL._SS40_.jpg">
+          </span></span></span>
+      </span>
+    </li>
+    <li class="a-spacing-small item videoThumbnail videoBlockIngress videoBlockDarkIngress a-declarative">
+      <span class="a-list-item">
+        <span class="a-button a-button-thumbnail a-button-toggle" id=""><span class="a-button-inner"><input class="a-button-input" type="submit" aria-labelledby=""><span class="a-button-text" aria-hidden="true" id="">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/91JMGd25XPS.SS40_BG85,85,85_BR-120_PKdp-play-icon-overlay__.png">
+          </span></span></span>
+      </span>
+    </li>
+  </ul>
+</div>
