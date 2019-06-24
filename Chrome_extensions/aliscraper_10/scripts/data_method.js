@@ -1,31 +1,28 @@
 document.addEventListener('readystatechange', event => {
 
 	if (event.target.readyState === "complete") {
-		// inilize();					
+		inilize();					
 	}
 });
 
 
 function inilize()
 {
-    sku_details = document.evaluate("//script[contains(text(),'window.runParams') and contains(text(),'GaData') and contains(text(),'PAGE_TIMING')]", document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent.trim;
-    console.log(sku_details);
-    data = eval(sku_details).data;
-    console.log(data);
-    getpicscript="Obj=[];data.imageModule.imagePathList.forEach(function(c,i,arr){Ob={};Ob.UploadPictureUrl=c;Ob.DisplayOrder=i;Obj.push(Ob)});Obj";
-    sku="ats=[]; data.skuModule.skuPriceList.forEach(function(c,i,arr){Ob={};Ob.Sku=c.skuId;ats.push(Ob)});ats";
-    ProductSpecificatons = "spc=[]; data.specsModule.props.forEach(function(c,i,arr){Ob={};Ob.SpecificationAttributeInternalName=c.attrName;Ob.SpecificationAttributeOptionInternalName=c.attrValue;spc.push(Ob)});spc";
+    sku_details = document.evaluate("//script[contains(text(),'window.runParams') and contains(text(),'GaData') and contains(text(),'PAGE_TIMING')]", document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+    //console.log(sku_details);
+   //  data = eval(sku_details).data;
 
-    obj = 	{
-                "ProductType": "'SimpleProduct'",
-                "Name": "data.pageModule.title",
-                "Pictures": "eval('"+getpicscript+"')",			
-                "AttributeCombinations": "eval('"+sku+"')",			
-                "ProductSpecificatons": "eval('"+ProductSpecificatons+"')",			
-            };
-        
-        createobject(obj);
-		
+   //  AttributeCombinations="SkuIds = jsonPath(data , \"$.skuModule.skuPriceList[*].skuId\");"
+    
+   //  eval(AttributeCombinations);
+   //    console.log(SkuIds);
+
+   if(sku_details)
+   {
+      data = eval(sku_details).data;
+      get_product_data(data);
+   }
+   
 }
 
 
@@ -38,8 +35,44 @@ function createobject(prd)
     {
         Reflect.set(prd,allkeys[i],eval(Reflect.get(prd,allkeys[i]))); 
     }
-	console.log(prd);
+	console.log(JSON.stringify(prd));
 }
+
+
+function get_product_data(data)
+{
+   getpicscript="Obj=[];data.imageModule.imagePathList.forEach(function(c,i,arr){Ob={};Ob.UploadPictureUrl=c;Ob.DisplayOrder=i;Obj.push(Ob)});Obj";
+
+   AttributeCombinations='function getCombination(t){if(get_combi_arry=[],t)return t.split(",").forEach(function(t,a){aa={},aa.AttributeInternalName=data.skuModule.productSKUPropertyList[a].skuPropertyName,aa.AttributeValueInternalName=g_attr[a][t],get_combi_arry.push(aa)}),get_combi_arry}ats=[],data.skuModule.skuPriceList.forEach(function(t,a,r){Ob={},Ob.Sku=t.skuId,t.skuPropIds&&(Ob.ProductAttributeCombinations=getCombination(t.skuPropIds)),ats.push(Ob)});ats';
+
+
+   ProductSpecificatons = "spc=[]; data.specsModule.props.forEach(function(c,i,arr){Ob={};Ob.SpecificationAttributeInternalName=c.attrName;Ob.SpecificationAttributeOptionInternalName=c.attrValue;spc.push(Ob)});spc";
+
+   eval('type_img = "ImageSquares";');
+   ProductAttributes = "function build(r){return return_arr=[],g_attr_obj={},r.forEach(function(r,t,u){bu={},bu.ProductValueInternalName=r.propertyValueDisplayName,bu.ImageSquaresPictureUrl=r.skuPropertyImageSummPath,bu.PictureUrl=r.skuPropertyImagePath,return_arr.push(bu),g_attr_obj[r.propertyValueId]=r.propertyValueName}),g_attr.push(g_attr_obj),return_arr}pro=[],g_attr=[],data.skuModule.productSKUPropertyList.forEach(function(r,t,u){Ob={},Ob.ProductAttributeInternalName=r.skuPropertyName,Ob.AttributeControlType=type_img,r.skuPropertyValues&&(Ob.ProductAttributeValues=build(r.skuPropertyValues)),pro.push(Ob)});pro";
+
+   obj = {
+            "ProductType": "'SimpleProduct'",
+            "Name": "data.pageModule.title",
+            "Pictures": "eval('"+getpicscript+"')",						
+            "ProductAttributes": "eval('"+ProductAttributes+"')",			
+            "ProductSpecificatons": "eval('"+ProductSpecificatons+"')",
+            "AttributeCombinations": "eval('"+AttributeCombinations+"')",			
+         };
+
+         createobject(obj);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -132,39 +165,3 @@ function jsonPath(obj, expr, arg) {
     }
  } 
 
- 
-
- var store = { "store": {
-    "book": [
-        { "category": "reference",
-        "author": "Nigel Rees",
-        "title": "Sayings of the Century",
-        "price": 8.95
-      },
-        { "category": "fiction",
-        "author": "Evelyn Waugh",
-        "title": "Sword of Honour",
-        "price": 12.99
-      },
-        { "category": "fiction",
-        "author": "Herman Melville",
-        "title": "Moby Dick",
-        "isbn": "0-553-21311-3",
-        "price": 8.99
-      },
-        { "category": "fiction",
-        "author": "J. R. R. Tolkien",
-        "title": "The Lord of the Rings",
-        "isbn": "0-395-19395-8",
-        "price": 22.99
-      }
-    ],
-    "bicycle": {
-      "color": "red",
-      "price": 19.95
-    }
-  }
-};
-
-var response = jsonPath(store , "$..author");
-console.log(response);
