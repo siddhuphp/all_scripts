@@ -236,4 +236,17 @@ class General_model extends CI_Model
         }
         
     }
+
+    // Insert batch into the table
+    public function add_batch($table,$data)
+    {
+        $array = array();
+        if ($this->db->insert_batch($table, $data)) {
+            $array['status'] = TRUE;
+            $array['insert_id'] = $this->db->insert_id();
+        } else {
+            $array['status'] = FALSE;
+        }
+        return $array;
+    }
 }
