@@ -1,5 +1,29 @@
-console.log(" Scraper Js running ");
+console.log(" Scraper 2 Js running ");
 
+function init_requirements()
+{
+   
+    RequiredData=[];
+ 
+    Property={};
+    Property.Name="";
+    Property.Path="path";
+    Property.isarray=true;
+    Property.ArrayType="Object/Base";
+    
+    for(i=0;i<10;i++){
+    item={};
+    item.name="Productattributes";
+    item.path="data.skuModule.productSKUPropertyList";
+    item.isarray=true;
+    item.fields=[];
+    item.fields[0]="skuPropertyName";
+    item.fields[1]="skuPropertyValues";
+    
+    RequiredProperties.push(property);
+    }
+    
+}
 
 function products(){
 
@@ -11,6 +35,7 @@ function products(){
     let product_detail_title = validate_xpath('//div[@class="main-content"]/div[@id="j-product-tabbed-pane"]/ul/li[1]/a');
     let product_detail_sub_title = validate_xpath('//div[@class="main-content"]/div[@id="j-product-tabbed-pane"]/div/div/div/div[2]/div[@class="ui-box-title"]');
     let product_id = ($("#hid-product-id").val())?($("#hid-product-id").val()):0;
+    // let get_data_from_script = get_data_from_script();
     //console.log("product_title"+product_title + "product_price"+product_price + "product_discount_price"+product_discount_price);
     
     let product_images = new Array();
@@ -21,7 +46,7 @@ function products(){
     
     
       var data = {
-          "product_id":product_id,
+          "product_id":productId,
           "product_title":product_title,
           "product_price":product_price,
           "product_discount_price":product_discount_price,
@@ -44,6 +69,7 @@ function products(){
     // This is for item list details
     function list_items()
     {
+        return true;
         if(validate_xpath_only('//*[@id="j-product-info-sku"]')) // check exist or not
         {
             // take list of item options
@@ -122,6 +148,7 @@ function products(){
                     var i = 0; var j = 1;
                     while (thisNode) {
                             if(thisNode.textContent !== null && thisNode.textContent !== '') {
+                                
                             var id = validate_xpath('//*[@id="j-product-info-sku"]/dl['+key+']/dd/ul/li['+j+']/a/@id');
                             var data_sku_id = validate_xpath('//*[@id="j-product-info-sku"]/dl['+key+']/dd/ul/li['+j+']/a/@data-sku-id');
                             var title = validate_xpath('//*[@id="j-product-info-sku"]/dl['+key+']/dd/ul/li['+j+']/a/@title');
@@ -180,6 +207,7 @@ function products(){
 
     function get_product_details()
     {
+        return true;
         var iterator = document.evaluate('//div[@class="main-content"]/div[@id="j-product-tabbed-pane"]/div/div/div/div[2]/div[2]/ul/li', document, null, XPathResult.ANY_TYPE, null );
         try {
             var thisNode = iterator.iterateNext();
@@ -212,6 +240,7 @@ function products(){
 
     function get_sku_details()
     {	
+        return true;
         response_obj = { "status":false}	
         if(validate_xpath_only("//div[@class='detail-wrap'][1]/script[1]"))
         {
@@ -231,6 +260,7 @@ function products(){
 
     function get_package_details()
     {
+        return true;
         var iterator = document.evaluate('//div[@class="ui-box pnl-packaging-main"]/div[2]/ul[1]/li/span[@class="packaging-title"]', document, null, XPathResult.ANY_TYPE, null );
         try {
             var thisNode = iterator.iterateNext();
@@ -258,6 +288,7 @@ function products(){
 
     function get_sold_by()
     {
+        return true;
             var sold_by = validate_xpath('//div[@class="store-info-wrap"]/dl/dd/a');
             var url = validate_xpath('//div[@class="store-info-wrap"]/dl/dd/a/@href');
             var addr = validate_xpath('//div[@class="store-info-wrap"]/dl/dd[@class="store-address"]');
@@ -273,6 +304,7 @@ function products(){
 
     function get_breadcrumb_details()
     {
+        return true;
         var iterator = document.evaluate('//div[@class="ui-breadcrumb"]/div[@class="container"]/a', document, null, XPathResult.ANY_TYPE, null );
         try {
             var thisNode = iterator.iterateNext();
@@ -294,5 +326,28 @@ function products(){
             // console.log(list_items);
             return list_items;
     }
+   
+        
+    function get_data_from_script()
+    {
+        sku_details = document.evaluate("//script[contains(text(),'window.runParams') and contains(text(),'GaData') and contains(text(),'PAGE_TIMING')]", document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent.trim;
+        data = eval(sku_details).data;
+        console.log(data);
+        if(sku_details)
+        {
+            data = eval(sku_details).data;
+            console.log(data);
+        // obj = {
+        //     "productId":data.actionModule.productId,
+        //     "skuPriceList":data.actionModule.skuPriceList,
+        //     "productSKUPropertyList":data.actionModule.productSKUPropertyList,
+        // };
+        // console.log(data.actionModule.productId);
+        // console.log(data.skuModule.skuPriceList);
+        // console.log(data.skuModule.productSKUPropertyList);
+        // return obj;
+        }
+        
+    }
 
-    products();
+    // console.log(products());
