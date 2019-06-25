@@ -1,12 +1,5 @@
-document.addEventListener('readystatechange', event => {
 
-	if (event.target.readyState === "complete") {
-		inilize();					
-	}
-});
-
-
-function inilize()
+function inilize(logn_obj)
 {
     sku_details = document.evaluate("//script[contains(text(),'window.runParams') and contains(text(),'GaData') and contains(text(),'PAGE_TIMING')]", document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
     //console.log(sku_details);
@@ -20,7 +13,7 @@ function inilize()
    if(sku_details)
    {
       data = eval(sku_details).data;
-      get_product_data(data);
+      get_product_data(data,logn_obj);
    }
    
 }
@@ -35,11 +28,11 @@ function createobject(prd)
     {
         Reflect.set(prd,allkeys[i],eval(Reflect.get(prd,allkeys[i]))); 
     }
-	console.log(JSON.stringify(prd));
+	return prd;
 }
 
 
-function get_product_data(data)
+function get_product_data(data,logn_obj)
 {
    getpicscript="Obj=[];data.imageModule.imagePathList.forEach(function(c,i,arr){Ob={};Ob.UploadPictureUrl=c;Ob.DisplayOrder=i;Obj.push(Ob)});Obj";
 
@@ -51,16 +44,29 @@ function get_product_data(data)
    eval('type_img = "ImageSquares";');
    ProductAttributes = "function build(r){return return_arr=[],g_attr_obj={},r.forEach(function(r,t,u){bu={},bu.ProductValueInternalName=r.propertyValueDisplayName,bu.ImageSquaresPictureUrl=r.skuPropertyImageSummPath,bu.PictureUrl=r.skuPropertyImagePath,return_arr.push(bu),g_attr_obj[r.propertyValueId]=r.propertyValueName}),g_attr.push(g_attr_obj),return_arr}pro=[],g_attr=[],data.skuModule.productSKUPropertyList.forEach(function(r,t,u){Ob={},Ob.ProductAttributeInternalName=r.skuPropertyName,Ob.AttributeControlType=type_img,r.skuPropertyValues&&(Ob.ProductAttributeValues=build(r.skuPropertyValues)),pro.push(Ob)});pro";
 
+   productId = "data.actionModule.productId";
+
+   category = logn_obj.category;
+   manfacture = logn_obj.manfacture;
+
+   alert(category);
+   alert(manfacture);
+
    obj = {
             "ProductType": "'SimpleProduct'",
-            "Name": "data.pageModule.title",
+            "Name": "data.pageModule.title",            
+            "Sku": productId,            
             "Pictures": "eval('"+getpicscript+"')",						
             "ProductAttributes": "eval('"+ProductAttributes+"')",			
             "ProductSpecificatons": "eval('"+ProductSpecificatons+"')",
-            "AttributeCombinations": "eval('"+AttributeCombinations+"')",			
+            "AttributeCombinations": "eval('"+AttributeCombinations+"')",           			
          };
 
-         createobject(obj);
+      var final_obj = createobject(obj);
+          final_obj.category = category;
+          final_obj.manfacture = manfacture;
+
+      console.log(JSON.stringify(final_obj));
 }
 
 

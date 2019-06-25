@@ -15,12 +15,12 @@ document.addEventListener('readystatechange', event => {
 
 	if (event.target.readyState === "complete") {
 			console.log("Now external resources are loaded too, like css,src etc... ");
-			if(validate_xpath_only('//div[@class="ui-breadcrumb"]'))
+			if(validate_xpath_only('//div[@class="glodetail-wrap"]'))
 			{
 				when_page_loads();
 				append_after_page_load();
-				get_checked_urls();
-				window.scrollTo(0,document.body.scrollHeight); // it's scroll down to load the descriptions purpose
+				//get_checked_urls();
+				// window.scrollTo(0,document.body.scrollHeight); // it's scroll down to load the descriptions purpose
 			}			
 	}
 });
@@ -40,18 +40,25 @@ function getElementByXpath(path) {
 }
 
 function updateaction() {
-/*	Document.prototype.kjevaluate() = function (a,b,c,d,e) { 
-		element=document.evaluate(a,b,c,d,e);
-		
-		return element;
+	
+	var category = $("#category").val();
+	var manfacture = $("#manfacture").val();
+	
+	if(!category && !manfacture)
+	{
+		alert("please select category and manfacture details");
+		return false;
 	}
-*/
-	final_product = products();
-	final_product.product_title = $(".product-name").text();
-	final_product.product_desc = $(".description-content").html();
-	final_product.product_short_desc = $("#shrt_desc").html();
-	console.log(final_product);
-	console.log(JSON.stringify(final_product));	
+	else
+	{	
+		obj = {
+			"category":category,
+			"manfacture":manfacture,
+		};	
+		inilize(obj);
+		$('#preview_call').text('Product Saved');
+	}
+		
 }
 
 
@@ -104,14 +111,14 @@ function remove_div_products()
 
 function product_title_area()
 {
-	$('.product-name').replaceWith('<textarea name="product-name" class="product-name" rows="3" cols="70">' + $('.product-name').html() +'</textarea>');
+	$('.product-title').replaceWith('<textarea name="product-name" class="product-name" rows="3" cols="70">' + $('.product-title').html() +'</textarea>');
 }
 
 
 
 function when_page_loads()
 {
-	var dd = getElementByXpath('//div[@class="ui-breadcrumb"]');
+	var dd = getElementByXpath('//div[@class="glodetail-wrap"]');
 	dd.insertAdjacentHTML('beforebegin', '<button id="editor_call"> Edit </button> &nbsp; &nbsp; &nbsp; <button id="preview_call"> Save </button>');
 }
 
@@ -120,42 +127,33 @@ function append_after_page_load()
 {
 	document.getElementById ("editor_call").addEventListener("click", editaction, false);
 	function editaction() {
-		remove_div_products();
+		//remove_div_products();
 		product_title_area();		
-		$('.description-content').summernote({
-			height: 300,
-			tabsize: 2,
-			followingToolbar: true,
-		});	
-		
+		// $('.description-content').summernote({
+		// 	height: 300,
+		// 	tabsize: 2,
+		// 	followingToolbar: true,
+		// });		
 		
 		if(first_click == 1)
 		{
-			$('.product-property-list').parent().append('<div class="ui-box-title">Short Description </div><span id="shrt_desc">'+$('.product-property-list').html()+'</span>');	
 			get_user_manf_cate();
 			manf_cate_html();
 			first_click = 0;
-		}
-		$('#shrt_desc').summernote({
-			height: 300,
-			tabsize: 2,
-			followingToolbar: true,
-		});
-		
+		}	
 		$('#preview_call').text('Save');
 			
 	}
 
 	document.getElementById ("preview_call").addEventListener("click", previewaction, false);
 	function previewaction() {
-		$('.description-content').summernote('destroy');
-		$('#shrt_desc').summernote('destroy');
+		// $('.description-content').summernote('destroy');
+		
 		if($('.product-name').val())
 		{
-			$('.product-name').replaceWith('<h1 class="product-name">' + $('.product-name').val() +'</h1>');
+			$('.product-name').replaceWith('<div class="product-title">' + $('.product-name').val() +'</div>');
 		}		
-		updateaction();
-		$('#preview_call').text('Product Saved');
+		updateaction();		
 	}
 }
 
@@ -284,10 +282,10 @@ function manf_cate_html()
 {
 	$("#editor_call").after(`
 		<select name="category" id="category">
-		  <option> Select category </option>
+		  <option value=""> Select category </option>
 		</select>
 		<select name="manfacture" id="manfacture">
-			<option> Select manfacture </option>
+			<option value=""> Select manfacture </option>
 		  </select>`);
 }
 
