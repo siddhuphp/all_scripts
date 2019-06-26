@@ -36,7 +36,7 @@ function get_product_data(data,logn_obj)
 {
    getpicscript="Obj=[];data.imageModule.imagePathList.forEach(function(c,i,arr){Ob={};Ob.UploadPictureUrl=c;Ob.DisplayOrder=i;Obj.push(Ob)});Obj";
 
-   AttributeCombinations='function getCombination(t){if(get_combi_arry=[],t)return t.split(",").forEach(function(t,a){aa={},aa.AttributeInternalName=data.skuModule.productSKUPropertyList[a].skuPropertyName,aa.AttributeValueInternalName=g_attr[a][t],get_combi_arry.push(aa)}),get_combi_arry}ats=[],data.skuModule.skuPriceList.forEach(function(t,a,r){Ob={},Ob.Sku=t.skuId,t.skuPropIds&&(Ob.ProductAttributeCombinations=getCombination(t.skuPropIds)),ats.push(Ob)});ats';
+   AttributeCombinations='function getCombination(t){if(get_combi_arry=[],t)return t.split(",").forEach(function(t,a){aa={},aa.AttributeInternalName=data.skuModule.productSKUPropertyList[a].skuPropertyName,aa.AttributeValueInternalName=g_attr[a][t],get_combi_arry.push(aa)}),get_combi_arry}function getWarehouseInventory(t){if(ware_hos_arr=[],t)return bb={},bb.StockQuantity=t.availQuantity,ware_hos_arr.push(bb),ware_hos_arr}ats=[],data.skuModule.skuPriceList.forEach(function(t,a,r){Ob={},Ob.Sku=t.skuId,t.skuPropIds&&(Ob.ProductAttributeCombinations=getCombination(t.skuPropIds)),ats.push(Ob),t.skuVal&&(Ob.WarehouseInventory=getWarehouseInventory(t.skuVal))});ats';
 
 
    ProductSpecificatons = "spc=[]; data.specsModule.props.forEach(function(c,i,arr){Ob={};Ob.SpecificationAttributeInternalName=c.attrName;Ob.SpecificationAttributeOptionInternalName=c.attrValue;spc.push(Ob)});spc";
@@ -49,8 +49,8 @@ function get_product_data(data,logn_obj)
    category = logn_obj.category;
    manfacture = logn_obj.manfacture;
 
-   alert(category);
-   alert(manfacture);
+   // alert(category);
+   // alert(manfacture);
 
    obj = {
             "ProductType": "'SimpleProduct'",
