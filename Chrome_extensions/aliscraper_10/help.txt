@@ -1,0 +1,317 @@
+data = window.runParams.data;		
+		
+getpicscript="Obj=[];data.imageModule.imagePathList.forEach(function(c,i,arr){Ob={};Ob.UploadPictureUrl=c;Ob.DisplayOrder=i;Obj.push(Ob)});Obj";
+
+WarehouseInventory = "function getSingleAttributeWarehouse(){return wareH=[],data.skuModule.productSKUPropertyList||wareH.push(data.skuModule.skuPriceList[0].skuVal.availQuantity),wareH} getSingleAttributeWarehouse()";
+
+
+AttributeCombinations='function getCombination(t){if(get_combi_arry=[],t)return t.split(",").forEach(function(t,a){aa={},aa.AttributeInternalName=data.skuModule.productSKUPropertyList[a].skuPropertyName,aa.AttributeValueInternalName=g_attr[a][t],get_combi_arry.push(aa)}),get_combi_arry}function getWarehouseInventory(t){return ware_hos_arr=[],t&&data.skuModule.productSKUPropertyList&&(bb={},bb.StockQuantity=t.availQuantity,ware_hos_arr.push(bb)),ware_hos_arr}ats=[],data.skuModule.skuPriceList.forEach(function(t,a,r){Ob={},Ob.Sku=t.skuId,t.skuPropIds&&(Ob.ProductAttributeCombinations=getCombination(t.skuPropIds)),ats.push(Ob),t.skuVal&&(Ob.WarehouseInventory=getWarehouseInventory(t.skuVal))});ats';
+
+
+ProductSpecificatons = "spc=[]; data.specsModule.props.forEach(function(c,i,arr){Ob={};Ob.SpecificationAttributeInternalName=c.attrName;Ob.SpecificationAttributeOptionInternalName=c.attrValue;spc.push(Ob)});spc";
+
+
+eval('type_img = "ImageSquares";');
+
+
+ProductAttributes = "function build(r){return return_arr=[],g_attr_obj={},r.forEach(function(r,t,u){bu={},bu.ProductValueInternalName=r.propertyValueDisplayName,return_arr.push(bu),g_attr_obj[r.propertyValueId]=r.propertyValueName}),g_attr.push(g_attr_obj),return_arr}pro=[],g_attr=[],data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(r,t,u){Ob={},Ob.ProductAttributeInternalName=r.skuPropertyName,r.skuPropertyValues&&(Ob.ProductAttributeValues=build(r.skuPropertyValues)),pro.push(Ob)});pro";
+
+obj = 	{
+			"ProductType": "'SimpleProduct'",
+			"Name": "data.pageModule.title",
+			"MetaKeywords": "data.pageModule.keywords",
+			"MetaDescription": "data.pageModule.description",
+			"MetaTitle": "data.pageModule.title",
+			"Pictures": "eval('"+getpicscript+"')",						
+			"ProductAttributes": "eval('"+ProductAttributes+"')",			
+			"ProductSpecificatons": "eval('"+ProductSpecificatons+"')",
+			"WarehouseInventory": "eval('"+WarehouseInventory+"')",
+			"AttributeCombinations": "eval('"+AttributeCombinations+"')",			
+		};
+		
+
+
+function createobject(prd)
+{
+    allkeys = Reflect.ownKeys(prd);
+    for(i=0;i<allkeys.length;i++)
+    {
+        Reflect.set(prd,allkeys[i],eval(Reflect.get(prd,allkeys[i]))); 
+    }
+	console.log(prd);
+}
+		
+		
+//--------ProductAttributes----------//
+
+pro=[];
+
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 Ob={};
+		 Ob.ProductAttributeInternalName=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);
+			}
+		 
+		 pro.push(Ob);
+	 });
+	
+	
+function build(data_array)
+{
+	return_arr = [];
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 bu.ProductValueInternalName = c.propertyValueDisplayName;
+		 return_arr.push(bu);
+	 });
+	 return return_arr;
+}
+
+//-----------ProductAttributes ends---------//	
+
+//-----------ProductAttributes starts 2 ---------//
+pro=[];
+g_attr = [];
+
+
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 Ob={};
+		 Ob.ProductAttributeInternalName=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);				
+			}
+		 
+		 pro.push(Ob);
+	 });
+	
+	
+function build(data_array)
+{
+	return_arr = [];
+	g_attr_obj = {};
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 bu.ProductValueInternalName = c.propertyValueDisplayName;
+		 return_arr.push(bu);
+        g_attr_obj[c.propertyValueId] = c.propertyValueName; 
+       		 
+	 });
+	 g_attr.push(g_attr_obj);
+	 return return_arr;
+}
+
+//-----------ProductAttributes ends 2 ---------//
+
+
+//-----------ProductAttributes starts 3 ---------//
+pro=[];
+g_attr = [];
+
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 Ob={};
+		 Ob.ProductAttributeInternalName=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);				
+			}
+		 
+		 pro.push(Ob);
+	 });
+}	
+	
+function build(data_array)
+{
+	return_arr = [];
+	g_attr_obj = {};
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 bu.ProductValueInternalName = c.propertyValueDisplayName;
+		 return_arr.push(bu);
+        g_attr_obj[c.propertyValueId] = c.propertyValueName; 
+       		 
+	 });
+	 g_attr.push(g_attr_obj);
+	 return return_arr;
+}
+
+//-----------ProductAttributes ends 3 ---------//	
+
+ 
+//------------------AttributeCombinations starts----------------------------//
+ats = [];
+data.skuModule.skuPriceList.forEach(function(c, i, arr) {
+    Ob = {};
+    Ob.Sku = c.skuId;
+	if(c.skuPropIds)
+	{
+		Ob.ProductAttributeCombinations = getCombination(c.skuPropIds);		
+	}	
+    ats.push(Ob)
+});
+
+
+function getCombination(str)
+{
+	get_combi_arry = [];
+	
+	if(str)
+	{
+		var arr = str.split(",");		
+		arr.forEach(function(cv,i){
+			aa = {};		
+			aa.AttributeInternalName = data.skuModule.productSKUPropertyList[i].skuPropertyName;
+			aa.AttributeValueInternalName = g_attr[i][cv];
+			get_combi_arry.push(aa)
+		});
+		return get_combi_arry;
+	}	
+} 
+//--------------------AttributeCombinations ends--------------------------// 
+
+//--------------------Warehouse starts--------------------------// 
+ats = [];
+data.skuModule.skuPriceList.forEach(function(c, i, arr) {
+    Ob = {};
+    Ob.Sku = c.skuId;
+	if(c.skuPropIds)
+	{
+		Ob.ProductAttributeCombinations = getCombination(c.skuPropIds);		
+	}		
+    ats.push(Ob);
+	
+	if(c.skuVal)
+	{
+		Ob.WarehouseInventory = getWarehouseInventory(c.skuVal);
+	}
+});
+
+
+function getCombination(str)
+{
+	get_combi_arry = [];
+	
+	if(str)
+	{
+		var arr = str.split(",");		
+		arr.forEach(function(cv,i){
+			aa = {};		
+			aa.AttributeInternalName = data.skuModule.productSKUPropertyList[i].skuPropertyName;
+			aa.AttributeValueInternalName = g_attr[i][cv];
+			get_combi_arry.push(aa)
+		});
+		return get_combi_arry;
+	}	
+}
+
+
+function getWarehouseInventory(wstr)
+{
+	ware_hos_arr = [];
+	if(wstr)
+	{
+		bb = {};
+		bb.StockQuantity = wstr.availQuantity;
+		ware_hos_arr.push(bb);
+		return ware_hos_arr;
+	}
+}
+//--------------------Warehouse ends--------------------------// 
+
+
+//--------------------Warehouse starts 2--------------------------// 
+ats = [];
+data.skuModule.skuPriceList.forEach(function(c, i, arr) {
+    Ob = {};
+    Ob.Sku = c.skuId;
+	if(c.skuPropIds)
+	{
+		Ob.ProductAttributeCombinations = getCombination(c.skuPropIds);		
+	}		
+    ats.push(Ob);
+	
+	if(c.skuVal)
+	{
+		Ob.WarehouseInventory = getWarehouseInventory(c.skuVal);
+	}
+});
+
+
+function getCombination(str)
+{
+	get_combi_arry = [];
+	
+	if(str)
+	{
+		var arr = str.split(",");		
+		arr.forEach(function(cv,i){
+			aa = {};		
+			aa.AttributeInternalName = data.skuModule.productSKUPropertyList[i].skuPropertyName;
+			aa.AttributeValueInternalName = g_attr[i][cv];
+			get_combi_arry.push(aa)
+		});
+		return get_combi_arry;
+	}	
+}
+
+
+function getWarehouseInventory(wstr)
+{
+	ware_hos_arr = [];
+	if(wstr  && data.skuModule.productSKUPropertyList)
+	{
+		bb = {};
+		bb.StockQuantity = wstr.availQuantity;
+		ware_hos_arr.push(bb);		
+	}
+	return ware_hos_arr;
+}
+//--------------------Warehouse ends 2--------------------------// 
+
+
+
+
+
+
+	
+//-----------WarehouseInventoryfor no attributes ---------//
+
+function getSingleAttributeWarehouse()
+{
+	 wareH = [];
+	if(!data.skuModule.productSKUPropertyList)
+	{
+		wareH.push(data.skuModule.skuPriceList[0].skuVal.availQuantity);
+	}
+	return wareH;
+}}
+
+	
+//-----------WarehouseInventoryfor no attributes ends ---------//	
+
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/api/token/create
+
+body
+
+{
+    "email":"09trimurthulu81@gmail.com",
+    "password":"YWRtaW4="
+}
+
+
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/category
+NoBody
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/product
+NoBody
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/Manufacturer
+NoBody
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/productattribute

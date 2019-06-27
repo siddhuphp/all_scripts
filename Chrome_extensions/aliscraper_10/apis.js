@@ -88,7 +88,7 @@ function get_manfacture_list(token)
                s.value.forEach(function(v,k){
                   // console.log(v.Name);
                   // console.log(v.Id);
-                  manfactures[k] = {"key":v.Id,"value":v.Name};
+                  manfactures[k] = {"key":v.InternalName,"value":v.Name};
                });
             }       
          }         
@@ -123,7 +123,7 @@ function get_categories_list(token)
                  s.value.forEach(function(v,k){
                   // console.log(v.Name);
                   // console.log(v.Id);                  
-                  categories[k] = {"key":v.Id,"value":v.Name};
+                  categories[k] = {"key":v.InternalName,"value":v.Name};
                });
             }     
          }         
