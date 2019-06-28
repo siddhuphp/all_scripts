@@ -39,7 +39,7 @@ function get_product_data(data,logn_obj)
    WarehouseInventory = "function getSingleAttributeWarehouse(){return wareH=[],data.skuModule.productSKUPropertyList||wareH.push(data.skuModule.skuPriceList[0].skuVal.availQuantity),wareH} getSingleAttributeWarehouse()";
 
 
-   AttributeCombinations='function getCombination(t){if(get_combi_arry=[],t)return t.split(",").forEach(function(t,a){aa={},aa.AttributeInternalName=data.skuModule.productSKUPropertyList[a].skuPropertyName,aa.AttributeValueInternalName=g_attr[a][t],get_combi_arry.push(aa)}),get_combi_arry}function getWarehouseInventory(t){return ware_hos_arr=[],t&&data.skuModule.productSKUPropertyList&&(bb={},bb.StockQuantity=t.availQuantity,ware_hos_arr.push(bb)),ware_hos_arr}ats=[],data.skuModule.skuPriceList.forEach(function(t,a,r){Ob={},Ob.Sku=t.skuId,t.skuPropIds&&(Ob.ProductAttributeCombinations=getCombination(t.skuPropIds)),ats.push(Ob),t.skuVal&&(Ob.WarehouseInventory=getWarehouseInventory(t.skuVal))});ats';
+   AttributeCombinations='function getCombination(t){if(get_combi_arry=[],t)return t.split(",").forEach(function(t,r){aa={},"Ships From"!=data.skuModule.productSKUPropertyList[r].skuPropertyName&&(aa.AttributeInternalName=data.skuModule.productSKUPropertyList[r].skuPropertyName,aa.AttributeValueInternalName=g_attr[r][t],get_combi_arry.push(aa))}),get_combi_arry}function getWarehouseInventory(t){return ware_hos_arr=[],t&&data.skuModule.productSKUPropertyList&&(bb={},bb.StockQuantity=t.availQuantity,ware_hos_arr.push(bb)),ware_hos_arr}ats=[],data.skuModule.skuPriceList.forEach(function(t,r,a){Ob={},Ob.Sku=t.skuId,t.skuPropIds&&(Ob.ProductAttributeCombinations=getCombination(t.skuPropIds)),ats.push(Ob),t.skuVal&&(Ob.WarehouseInventory=getWarehouseInventory(t.skuVal))});ats';
 
 
    ProductSpecificatons = "spc=[]; data.specsModule.props.forEach(function(c,i,arr){Ob={};Ob.SpecificationAttributeInternalName=c.attrName;Ob.SpecificationAttributeOptionInternalName=c.attrValue;spc.push(Ob)});spc";
@@ -72,6 +72,10 @@ function get_product_data(data,logn_obj)
       var final_obj = createobject(obj);
           final_obj.category = category;
           final_obj.manfacture = manfacture;
+          final_obj.Weight = 1;
+          final_obj.Length = 1;
+          final_obj.Width = 1;
+          final_obj.Height = 1;
 
       console.log(JSON.stringify(final_obj));
 }

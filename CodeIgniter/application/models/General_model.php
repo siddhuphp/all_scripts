@@ -8,10 +8,20 @@ class General_model extends CI_Model
     }
  
     // Return all records in the table
-    public function get_all($table)
+    public function get_all($table,$where)
     {
         $array = array();
-        $q = $this->db->get($table);
+        
+		if(isset($where) && !empty($where) && is_array($where))
+        {
+            foreach($where as $data)
+            {
+                $this->db->where($data['column'],$data['value']);
+            }
+			
+        }
+		$q = $this->db->get($table);
+		
         if($q->num_rows() > 0)
         {
             $array['status'] = TRUE;
@@ -202,7 +212,10 @@ class General_model extends CI_Model
             {
                 foreach($data['where'] as $where)
                 {
-                    $this->db->where($where['column'],$where['value']);
+                    if(isset($where['column'],$where['value']))
+					{
+						$this->db->where($where['column'],$where['value']);
+					}
                 }
             }
 
@@ -224,7 +237,7 @@ class General_model extends CI_Model
             }
                    
             $q = $this->db->get(); 
-            // echo $this->db->last_query(); exit;
+             // echo $this->db->last_query(); exit;
             if($q->num_rows() > 0)
             {
                 $array['status'] = TRUE;
