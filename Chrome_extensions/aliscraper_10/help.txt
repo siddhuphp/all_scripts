@@ -130,7 +130,7 @@ function build(data_array)
 	g_attr_obj = {};
 	 data_array.forEach(function(c,i,arr){
 		 bu = {};
-		 bu.ProductValueInternalName = c.propertyValueDisplayName;
+		 bu.ProductValueInternalName = c.propertyValueName;
 		 return_arr.push(bu);
         g_attr_obj[c.propertyValueId] = c.propertyValueName; 
        		 
@@ -140,6 +140,44 @@ function build(data_array)
 }
 
 //-----------ProductAttributes ends 3 ---------//	
+
+
+//-----------ProductAttributes  4 ---------//
+pro=[];
+g_attr = [];
+
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 if(c.skuPropertyName != "Ships From")
+		 {
+			Ob={};
+			Ob.ProductAttributeInternalName=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);				
+			}		 
+			pro.push(Ob);
+		 }
+		 
+	 });
+}	
+	
+function build(data_array)
+{
+	return_arr = [];
+	g_attr_obj = {};
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 bu.ProductValueInternalName = c.propertyValueName;
+		 return_arr.push(bu);
+        g_attr_obj[c.propertyValueId] = c.propertyValueName; 
+       		 
+	 });
+	 g_attr.push(g_attr_obj);
+	 return return_arr;
+}	
+//-----------ProductAttributes ends 4 ---------//	
 
  
 //------------------AttributeCombinations starts----------------------------//
@@ -341,10 +379,65 @@ function getSingleAttributeWarehouse()
 		wareH.push(data.skuModule.skuPriceList[0].skuVal.availQuantity);
 	}
 	return wareH;
-}}
-
-	
+}	
 //-----------WarehouseInventoryfor no attributes ends ---------//	
+
+/-----------WarehouseInventoryfor no attributes 2 ---------//
+
+function getSingleAttributeWarehouse()
+{
+	 wareH = [];
+	if(!data.skuModule.productSKUPropertyList)
+	{
+		wob = {};
+		wob.StockQuantity = data.skuModule.skuPriceList[0].skuVal.availQuantity;
+		wob.InternalName = null;
+		wareH.push(wob);
+	}
+	return wareH;
+}	
+//-----------WarehouseInventoryfor no attributes ends 2---------//	
+
+
+//-----------Attributes Update or insert ---------//
+prodAttr=[];
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 if(c.skuPropertyName != 'Ships From')
+		 {
+			Ob={};
+			Ob.DisplayName=c.skuPropertyName;
+			Ob.InternalName=c.skuPropertyName.replace(" ","_").toLowerCase();
+			if(c.skuPropertyValues)
+			{
+			  Ob.PredefinedProductAttributeValues =	attr_build(c.skuPropertyValues);				
+			}
+		 
+			prodAttr.push(Ob); 
+		 }
+		 
+	 });
+}	
+	
+function attr_build(data_array)
+{
+	return_arr = [];	
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 bu.ProductValueInternalName = c.propertyValueName.replace(" ","_").toLowerCase(); //c.propertyValueDisplayName;
+		 bu.Name=c.propertyValueName;
+		 if(c.skuColorValue)
+		 {
+			 bu.ColorSquaresRgb = c.skuColorValue; 
+		 }		
+		 bu.DisplayOrder = i;
+		 return_arr.push(bu);       		 
+	 });
+	
+	 return return_arr;
+}	
+//-----------Attributes Update or insert ends ---------//	
 
 
 http://glocalkart.australiasoutheast.cloudapp.azure.com/api/token/create
