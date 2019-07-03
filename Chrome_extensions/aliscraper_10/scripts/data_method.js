@@ -47,7 +47,7 @@ function get_product_data(data,logn_obj)
    eval('type_img = "ImageSquares";');
 
 
-   ProductAttributes = 'function build(r){return return_arr=[],g_attr_obj={},r.forEach(function(r,t,u){bu={},bu.ProductValueInternalName=r.propertyValueName,return_arr.push(bu),g_attr_obj[r.propertyValueId]=r.propertyValueName}),g_attr.push(g_attr_obj),return_arr}pro=[],g_attr=[],data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(r,t,u){"Ships From"!=r.skuPropertyName&&(Ob={},Ob.ProductAttributeInternalName=r.skuPropertyName,r.skuPropertyValues&&(Ob.ProductAttributeValues=build(r.skuPropertyValues)),pro.push(Ob))});pro';
+   ProductAttributes = 'function build(r){return return_arr=[],g_attr_obj={},r.forEach(function(r,t,u){bu={},bu.ProductValueInternalName=r.propertyValueName,return_arr.push(bu),g_attr_obj[r.propertyValueId]=r.propertyValueName}),g_attr.push(g_attr_obj),return_arr}pro=[],g_attr=[],data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(r,t,u){"Ships From"!=r.skuPropertyName&&(Ob={},Ob.ProductAttributeInternalName=r.skuPropertyName,Ob.AttributeControlType=type_img,Ob.TextPrompt=r.skuPropertyName,r.skuPropertyValues&&(Ob.ProductAttributeValues=build(r.skuPropertyValues)),pro.push(Ob))});pro';
 
    productId = "data.actionModule.productId.toString()";
    sizeInfo = "data.skuModule.title";

@@ -1,5 +1,6 @@
 var global_token = "";
 var categories = {};
+var g_AttributeSetProductTypes = {};
 var manfactures = {};
 
 
@@ -67,7 +68,7 @@ function goto_login(email,pwd)
       function(request, sender, sendResponse) {
          if (request.msg == "get_manf_cate") 
          {            
-            sendResponse({status:true,cate:categories,manf:manfactures}); 
+            sendResponse({status:true,cate:categories,manf:manfactures,attrProType:g_AttributeSetProductTypes}); 
          }   
    });
 
@@ -123,7 +124,9 @@ function get_categories_list(token)
                  s.value.forEach(function(v,k){
                   // console.log(v.Name);
                   // console.log(v.Id);                  
+                  //  console.log(v.AttributeSetProductTypes.AttributeDataSetId);                  
                   categories[k] = {"key":v.InternalName,"value":v.Name};
+                  g_AttributeSetProductTypes[v.InternalName] = {"attributes":v.AttributeSetProductTypes};                 
                });
             }     
          }         

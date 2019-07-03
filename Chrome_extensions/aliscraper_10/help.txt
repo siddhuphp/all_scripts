@@ -153,6 +153,8 @@ if(data.skuModule.productSKUPropertyList)
 		 {
 			Ob={};
 			Ob.ProductAttributeInternalName=c.skuPropertyName;
+			Ob.AttributeControlType=type_img;
+			Ob.TextPrompt=c.skuPropertyName;
 			if(c.skuPropertyValues)
 			{
 			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);				
@@ -461,3 +463,5 @@ http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/Manufacturer
 NoBody
 
 http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/productattribute
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/AttributeDataSet
