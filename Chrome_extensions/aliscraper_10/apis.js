@@ -2,6 +2,7 @@ var global_token = "";
 var categories = {};
 var g_AttributeSetProductTypes = {};
 var manfactures = {};
+var attrbutes = [];
 
 
 function goto_login(email,pwd)
@@ -20,6 +21,7 @@ function goto_login(email,pwd)
          global_token = this.responseText;
          get_categories_list(global_token);               
          get_manfacture_list(global_token);               
+         get_attributes_list(global_token);               
       }
       sent_to_response_to_popjs(xhr.status);
    });
@@ -70,6 +72,18 @@ function goto_login(email,pwd)
          {            
             sendResponse({status:true,cate:categories,manf:manfactures,attrProType:g_AttributeSetProductTypes}); 
          }   
+         if (request.msg == "get_attributes") 
+         {            
+            // console.log(request.value);
+            // console.log(g_AttributeSetProductTypes);
+            // console.log(JSON.stringify(g_AttributeSetProductTypes));           
+            // console.log(g_AttributeSetProductTypes[request.value].value);
+            v = g_AttributeSetProductTypes[request.value].value;
+            get_attributes_from_id(v, sendResponse );           
+               return true; 
+                      
+         } 
+         
    });
 
 
@@ -126,7 +140,12 @@ function get_categories_list(token)
                   // console.log(v.Id);                  
                   //  console.log(v.AttributeSetProductTypes.AttributeDataSetId);                  
                   categories[k] = {"key":v.InternalName,"value":v.Name};
-                  g_AttributeSetProductTypes[v.InternalName] = {"attributes":v.AttributeSetProductTypes};                 
+                  if(v.AttributeSetProductTypes)
+                  {
+                     var att_data_set_id = get_AttributeDataSetId(v.AttributeSetProductTypes);
+                     g_AttributeSetProductTypes[v.InternalName] = {"value":att_data_set_id};
+                  }
+                  
                });
             }     
          }         
@@ -143,4 +162,89 @@ function get_categories_list(token)
       return false;
    }   
      
+}
+
+function get_attributes_list(token)
+{
+   if(token)
+   {
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      
+      xhr.addEventListener("readystatechange", function () {
+         if (this.readyState === 4) {
+            console.log(this.responseText);            
+            if(this.response)
+            {
+               var s = JSON.parse(this.response);
+               
+            }     
+         }         
+      });
+      
+      xhr.open("GET", "http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/AttributeDataSet");
+      xhr.setRequestHeader("Authorization", "Bearer "+token);
+      xhr.setRequestHeader("Content-Type", "application/json","charset=utf8");
+      xhr.setRequestHeader("Access-Control-Allow-Origin", "*"); 
+      xhr.send();
+   }
+   else
+   {
+      return false;
+   }    
+}
+
+
+
+function get_AttributeDataSetId(data)
+{
+   if(data)
+   {
+      data.forEach(function(v,k){        
+            if(v.ProductType == 'SimpleProduct')
+            {
+               id =  v.AttributeDataSetId;
+            }
+         });
+   }
+   else
+   {
+     id = null;
+   }
+   return id;
+}
+
+
+function get_attributes_from_id(v, sendResponse)
+{
+   if(v)
+   {
+      if(global_token)
+      {
+         var xhr = new XMLHttpRequest();
+         xhr.withCredentials = true;
+         
+         xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+               console.log(this.responseText);           
+               if(this.response)
+               {
+                  var s = JSON.parse(this.response);
+                  attrbutes.push(s); 
+                  sendResponse({status:true,attr:s});                                         
+               }       
+            }         
+         });
+         
+         xhr.open("GET", "http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/AttributeDataSet/"+v);
+         xhr.setRequestHeader("Authorization", "Bearer "+global_token);
+         xhr.setRequestHeader("Content-Type", "application/json","charset=utf8");
+         xhr.setRequestHeader("Access-Control-Allow-Origin", "*"); 
+         xhr.send();
+      }
+      else
+      {
+         return false;
+      } 
+   }    
 }

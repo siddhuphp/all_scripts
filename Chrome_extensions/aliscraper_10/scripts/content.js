@@ -1,5 +1,6 @@
 chrome.runtime.onMessage.addListener(gotMessage);
 function gotMessage(message){
+    console.log(message);
     console.log(message.msg);
     //below request send data to popup js. 
 		chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
@@ -287,6 +288,7 @@ function manf_cate_html()
 		<select name="manfacture" id="manfacture">
 			<option value=""> Select manfacture </option>
 		  </select>`);
+	append_lisener();
 }
 
 function manf_cate_html_append(response)
@@ -309,4 +311,39 @@ function manf_cate_html_append(response)
 		$( 'select[name="manfacture"]' ).append( optionsAsString );
 	}
 	
+}
+
+
+
+function append_lisener()
+{
+	document.getElementById("category").addEventListener("change", category_dropdown, false);
+}
+
+
+function category_dropdown()
+{
+    chrome.runtime.sendMessage({msg:"get_attributes",value:this.value}, function(response) {
+		console.log(response); //response from APIS.js script
+		make_attributes_dropdown(response.attr);			 
+	}); 	
+	console.log("kljotest");
+}
+
+
+function make_attributes_dropdown(res)
+{
+	console.log(JSON.stringify(res));
+	var html = '';
+	if(res.AttributeMappings)
+	{
+		html = '<select>';
+		res.AttributeMappings.forEach(function (v,k) {
+			html += '<option value="'+v.ProductAttributeInternalName+'">'+ v.ProductAttributeInternalName + '</option>';
+		});
+		html += '</select>';
+	}
+	console.log(html);
+	var dd = getElementByXpath('//*[@id="root"]/div/div[2]/div/div[2]/div[6]/div/div/div');
+	dd.insertAdjacentHTML('beforeend', html);
 }
