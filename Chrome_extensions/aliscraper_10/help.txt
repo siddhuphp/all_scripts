@@ -465,3 +465,5 @@ NoBody
 http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/productattribute
 
 http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/AttributeDataSet
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/specificationattribute
