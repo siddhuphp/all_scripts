@@ -337,58 +337,48 @@ function category_dropdown()
 
 function make_attributes_dropdown(res)
 {
-	if(document.getElementById("g_attributes"))
+	var chk_class = document.getElementsByClassName("g_attributes");
+	if(chk_class.length > 0)
 	{
-		document.querySelector( '#g_attributes' ).remove();
-	}
-	
-	console.log(JSON.stringify(res));
-	var html = '';
-	if(res.AttributeMappings)
-	{
-		html = '<select id="g_attributes">';
-		res.AttributeMappings.forEach(function (v,k) {
-			if(check_matches(v.ProductAttributeInternalName))
-			{
-				html += '<option value="'+v.ProductAttributeInternalName+'">'+ v.ProductAttributeInternalName + '</option>';
-			}
-			
-		});
-		html += '</select>';
-	}
-	console.log(html);
-	// var dd = getElementByXpath('//*[@id="root"]/div/div[2]/div/div[2]/div[6]/div/div/div');
-	// dd.insertAdjacentHTML('beforeend', html);
-	// x = document.getElementsByClassName('.sku-title');
+		$(".g_attributes").remove();
+	}	
+	// console.log(JSON.stringify(res));
 	c = document.querySelectorAll('.sku-title').length;
 	console.log(c);
 	for(i=1;i<=c;i++)
 	{
-		var dd =  getElementByXpath("//div[@class='product-sku']/div[@class='sku-wrap']/div[@class='sku-property']["+i+"]/div");
-		dd.insertAdjacentHTML('beforeend', html);		
+		var html = '';
+		page_attribute_txt = validate_xpath("//div[@class='product-sku']/div[@class='sku-wrap']/div[@class='sku-property']["+i+"]/div").toLowerCase().replace(':','').trim();
+		if(res.AttributeMappings && (page_attribute_txt != 'ships from'))
+		{
+			html = '<select class="g_attributes">';
+			show_all = true;
+			res.AttributeMappings.forEach(function (v,k) {
+				if(page_attribute_txt)
+				{
+					if(v.ProductAttributeInternalName.includes(page_attribute_txt))
+					{
+						html += '<option value="'+v.ProductAttributeInternalName+'">'+ v.ProductAttributeInternalName + '</option>';
+						show_all = false;
+					}					
+				}						
+			});
+
+			if(show_all)
+			{
+				res.AttributeMappings.forEach(function (v,k) {
+					html += '<option value="'+v.ProductAttributeInternalName+'">'+ v.ProductAttributeInternalName + '</option>';
+				});	
+			}
+			html += '</select>';
+		}
+
+		if(validate_xpath_only("//div[@class='product-sku']/div[@class='sku-wrap']/div[@class='sku-property']["+i+"]/div"))
+		{
+			var dd =  getElementByXpath("//div[@class='product-sku']/div[@class='sku-wrap']/div[@class='sku-property']["+i+"]/div");
+			dd.insertAdjacentHTML('beforeend', html);
+		}
+				
 	}
 }
 
-function check_matches(str)
-{
-	c = document.querySelectorAll('.sku-title').length;
-	yes_word_matched = false;
-	if(c)
-	{
-		for(i=1;i<=c;i++)
-		{
-			page_attribute_txt = validate_xpath("//div[@class='product-sku']/div[@class='sku-wrap']/div[@class='sku-property']["+i+"]/div").toLowerCase().replace(':','').trim();
-			console.log(str+"------"+page_attribute_txt);
-			if(page_attribute_txt)
-			{
-				if(str.includes(page_attribute_txt))
-				{
-					yes_word_matched = true;
-					break;
-				}								
-			}
-		}
-	}
-	return yes_word_matched;
-	
-}
