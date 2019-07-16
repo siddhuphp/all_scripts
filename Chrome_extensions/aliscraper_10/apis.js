@@ -2,6 +2,7 @@ var global_token = "";
 var categories = {};
 var g_AttributeSetProductTypes = {};
 var manfactures = {};
+var wareHouseInternalName = '';
 var attrbutes = [];
 
 
@@ -21,7 +22,8 @@ function goto_login(email,pwd)
          global_token = this.responseText;
          get_categories_list(global_token);               
          get_manfacture_list(global_token);               
-         get_attributes_list(global_token);               
+         get_vendor_details(global_token);               
+         //get_attributes_list(global_token);               
       }
       sent_to_response_to_popjs(xhr.status);
    });
@@ -70,7 +72,7 @@ function goto_login(email,pwd)
       function(request, sender, sendResponse) {
          if (request.msg == "get_manf_cate") 
          {            
-            sendResponse({status:true,cate:categories,manf:manfactures,attrProType:g_AttributeSetProductTypes}); 
+            sendResponse({status:true,cate:categories,manf:manfactures,wareHouseInternalName:wareHouseInternalName}); 
          }   
          if (request.msg == "get_attributes") 
          {            
@@ -121,6 +123,42 @@ function get_manfacture_list(token)
    }    
 }
 
+function get_vendor_details(token)
+{
+   if(token)
+   {
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      
+      xhr.addEventListener("readystatechange", function () {
+         if (this.readyState === 4) {
+            console.log(this.responseText);           
+            if(this.response)
+            {
+               var s = JSON.parse(this.response);
+               console.log(s.WarehouseList);
+               if(s.WarehouseList)
+               {
+                  d = s.WarehouseList.sort(function(a, b){ //sorting by Priority for take lowest value, and take that Warehouse name 
+                     return a.Priority-b.Priority
+                 });
+                 wareHouseInternalName = d[0].Warehouse;
+               }               
+            }       
+         }         
+      });
+      
+      xhr.open("GET", "http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/vendor/ravi_vendor");
+      xhr.setRequestHeader("Authorization", "Bearer "+token);
+      xhr.setRequestHeader("Content-Type", "application/json","charset=utf8");
+      xhr.setRequestHeader("Access-Control-Allow-Origin", "*"); 
+      xhr.send();
+   }
+   else
+   {
+      return false;
+   }    
+}
 
 function get_categories_list(token)
 {

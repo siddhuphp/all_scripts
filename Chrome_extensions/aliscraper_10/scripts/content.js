@@ -287,7 +287,9 @@ function manf_cate_html()
 		</select>
 		<select name="manfacture" id="manfacture">
 			<option value=""> Select manfacture </option>
-		  </select>`);
+		  </select>
+		 <input type="text" id="wareHouseInternalName" name="wareHouseInternalName" disabled /> 
+		  `);
 	append_lisener();
 }
 
@@ -310,7 +312,11 @@ function manf_cate_html_append(response)
 		  });
 		$( 'select[name="manfacture"]' ).append( optionsAsString );
 	}
-	
+
+	if(response.wareHouseInternalName)
+	{
+		$( '#wareHouseInternalName' ).val( response.wareHouseInternalName );
+	}	
 }
 
 
