@@ -76,13 +76,15 @@ function get_product_data(data,logn_obj)
 
       var final_obj = createobject(obj);
           //final_obj.category = category;
-          final_obj.Manufacturers = [];
+          final_obj.Manufacturers = [$( "#manfacture" ).val()];
           final_obj.Weight = 1;
           final_obj.Length = 1;
           final_obj.Width = 1;
           final_obj.Height = 1;
           final_obj.ShortDescription = "siddhu-sample-desc";
           final_obj.SeName = "siddhu-siddhartha-roy";
+          final_obj.PrimaryCategeryName = $( "#category" ).val();
+          
 
 
           
