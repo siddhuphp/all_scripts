@@ -23,7 +23,7 @@ function goto_login(email,pwd)
          get_categories_list(global_token);               
          get_manfacture_list(global_token);               
          get_vendor_details(global_token);               
-         //get_attributes_list(global_token);               
+         get_attributes_list(global_token);               
       }
       sent_to_response_to_popjs(xhr.status);
    });
@@ -72,7 +72,7 @@ function goto_login(email,pwd)
       function(request, sender, sendResponse) {
          if (request.msg == "get_manf_cate") 
          {            
-            sendResponse({status:true,cate:categories,manf:manfactures,wareHouseInternalName:wareHouseInternalName}); 
+            sendResponse({status:true,cate:categories,manf:manfactures,attrProType:g_AttributeSetProductTypes,wareHouseInternalName:wareHouseInternalName}); 
          }   
          if (request.msg == "get_attributes") 
          {            
@@ -233,7 +233,7 @@ function get_attributes_list(token)
 }
 
 
-
+// You need to take 'SimpleProduct' ProductType only. For that below function will return that Id only :)
 function get_AttributeDataSetId(data)
 {
    if(data)

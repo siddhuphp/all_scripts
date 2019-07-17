@@ -566,3 +566,5 @@ http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/productattribute
 http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/AttributeDataSet
 
 http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/specificationattribute
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/productattribute?$filter=InternalName in ('color','size')
