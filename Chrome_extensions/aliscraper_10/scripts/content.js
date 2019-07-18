@@ -52,11 +52,7 @@ function updateaction() {
 	}
 	else
 	{	
-		obj = {
-			"category":category,
-			"manfacture":manfacture,
-		};	
-		inilize(obj);
+		inilize();
 		$('#preview_call').text('Product Saved');
 	}
 		

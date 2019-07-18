@@ -1,5 +1,5 @@
 
-function inilize(logn_obj)
+function inilize()
 {
     sku_details = document.evaluate("//script[contains(text(),'window.runParams') and contains(text(),'GaData') and contains(text(),'PAGE_TIMING')]", document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
     //console.log(sku_details);
@@ -13,7 +13,7 @@ function inilize(logn_obj)
    if(sku_details)
    {
       data = eval(sku_details).data;
-      get_product_data(data,logn_obj);
+      get_product_data();
       get_attribute_data();  //making attribute data set for inserting or updating 
    }
    
@@ -33,7 +33,7 @@ function createobject(prd)
 }
 
 
-function get_product_data(data,logn_obj)
+function get_product_data()
 {
   
    eval('man = $( "#wareHouseInternalName" ).val()');
@@ -49,13 +49,12 @@ function get_product_data(data,logn_obj)
    eval('type_img = "ImageSquares";');
 
 
-   ProductAttributes = 'function build(r){return return_arr=[],g_attr_obj={},r.forEach(function(r,t,u){bu={},bu.ProductValueInternalName=r.propertyValueName,return_arr.push(bu),g_attr_obj[r.propertyValueId]=r.propertyValueName}),g_attr.push(g_attr_obj),return_arr}pro=[],g_attr=[],data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(r,t,u){"Ships From"!=r.skuPropertyName&&(Ob={},Ob.ProductAttributeInternalName=r.skuPropertyName,Ob.AttributeControlType=type_img,Ob.TextPrompt=r.skuPropertyName,r.skuPropertyValues&&(Ob.ProductAttributeValues=build(r.skuPropertyValues)),pro.push(Ob))});pro';
+   ProductAttributes = 'function build(r,t){return return_arr=[],g_attr_obj={},g_pa_pd=[],r.forEach(function(r,t,e){bu={},mti=modify_to_internalname(r.propertyValueName),bu.ProductValueInternalName=mti,return_arr.push(bu),g_attr_obj[r.propertyValueId]=mti,g_pa_pd.push(mti)}),g_attr.push(g_attr_obj),g_pro_attr_and_pre_define[t]=g_pa_pd,return_arr}function modify_to_internalname(r){return"g_"+r.split(" ").join("_").toLowerCase()}pro=[],g_attr=[],g_pro_attr_and_pre_define=[],data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(r,t,e){"Ships From"!=r.skuPropertyName&&(Ob={},Ob.ProductAttributeInternalName=r.skuPropertyName,Ob.AttributeControlType=type_img,Ob.TextPrompt=r.skuPropertyName,r.skuPropertyValues&&(Ob.ProductAttributeValues=build(r.skuPropertyValues,r.skuPropertyName)),pro.push(Ob))});pro';
+   
 
    productId = "data.actionModule.productId.toString()";
    sizeInfo = "data.skuModule.title";
-
-   category = logn_obj.category;
-   manfacture = logn_obj.manfacture;
+   ajax_check_proAttr_and_proAttrVal = "g_pro_attr_and_pre_define";
 
    // alert(category);
    // alert(manfacture);
@@ -71,10 +70,15 @@ function get_product_data(data,logn_obj)
       "ProductAttributes": "eval('"+ProductAttributes+"')",			
       "ProductSpecificatons": "eval('"+ProductSpecificatons+"')",
       "WarehouseInventory": "eval('"+WarehouseInventory+"')",
-      "AttributeCombinations": "eval('"+AttributeCombinations+"')",			
+      "AttributeCombinations": "eval('"+AttributeCombinations+"')",    			
+   };
+
+   obj1 = 	{
+      "ajax_check_proAttr_and_proAttrVal": "eval('"+ajax_check_proAttr_and_proAttrVal+"')"
    };
 
       var final_obj = createobject(obj);
+      
           //final_obj.category = category;
           final_obj.Manufacturers = [$( "#manfacture" ).val()];
           final_obj.Weight = 1;
@@ -84,6 +88,11 @@ function get_product_data(data,logn_obj)
           final_obj.ShortDescription = "siddhu-sample-desc";
           final_obj.SeName = "siddhu-siddhartha-roy";
           final_obj.PrimaryCategeryName = $( "#category" ).val();
+          if(final_obj)
+          {
+            final_obj.ajaxs = createobject(obj1);
+          }
+         
           
 
 

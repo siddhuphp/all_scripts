@@ -181,6 +181,107 @@ function build(data_array)
 }	
 //-----------ProductAttributes ends 4 ---------//	
 
+//-----------ProductAttributes starts 5 ---------//	
+pro=[];
+g_attr = [];
+
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 if(c.skuPropertyName != "Ships From")
+		 {
+			Ob={};
+			Ob.ProductAttributeInternalName=c.skuPropertyName;
+			Ob.AttributeControlType=type_img;
+			Ob.TextPrompt=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);				
+			}		 
+			pro.push(Ob);
+		 }
+		 
+	 });
+}	
+	
+function build(data_array)
+{
+	return_arr = [];
+	g_attr_obj = {};
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 mti = modify_to_internalname(c.propertyValueName);
+		 bu.ProductValueInternalName = mti;
+		 return_arr.push(bu);
+        g_attr_obj[c.propertyValueId] = mti; 
+       		 
+	 });
+	 g_attr.push(g_attr_obj);
+	 return return_arr;
+}
+
+function modify_to_internalname(v)
+{
+	/*As per our internalname storing system, You need to modify the 'c.propertyValueName' value.
+	
+	ex: 'Sky Blue' to 'g_sky_blue' */
+	return "g_"+v.split(' ').join('_').toLowerCase();
+}
+//-----------ProductAttributes ends 5 ---------//	
+//-----------ProductAttributes starts 6 ---------//
+pro=[];
+g_attr = [];
+g_pro_attr_and_pre_define = [];
+
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 if(c.skuPropertyName != "Ships From")
+		 {
+			Ob={};
+			Ob.ProductAttributeInternalName=c.skuPropertyName;
+			Ob.AttributeControlType=type_img;
+			Ob.TextPrompt=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues,c.skuPropertyName);				
+			}		 
+			pro.push(Ob);
+		 }
+		 
+	 });
+}	
+	
+function build(data_array,pro_name)
+{
+	return_arr = [];
+	g_attr_obj = {};
+	g_pa_pd = [];
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 mti = modify_to_internalname(c.propertyValueName);
+		 bu.ProductValueInternalName = mti;
+		 return_arr.push(bu);
+         g_attr_obj[c.propertyValueId] = mti;
+		 g_pa_pd.push(mti);
+       		 
+	 });
+	 /* 'g_attr' array will help at AttributeCombination array form building */
+	 g_attr.push(g_attr_obj);
+	 /* 'g_pro_attr_and_pre_define' this will help at to check productAttributes and ProductAttributeValues for Ajax fire */
+	 g_pro_attr_and_pre_define[pro_name] = g_pa_pd;
+	 return return_arr;
+}
+
+function modify_to_internalname(v)
+{
+	/*As per our internalname storing system, You need to modify the 'c.propertyValueName' value.
+	
+	ex: 'Sky Blue' to 'g_sky_blue' */
+	return "g_"+v.split(' ').join('_').toLowerCase();
+}	
+//-----------ProductAttributes ends 6 ---------//	
+
  
 //------------------AttributeCombinations starts----------------------------//
 ats = [];
