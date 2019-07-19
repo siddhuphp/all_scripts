@@ -84,7 +84,11 @@ function goto_login(email,pwd)
             get_attributes_from_id(v, sendResponse );           
                return true; 
                       
-         } 
+         }
+         if (request.msg == "product_data_from_scraping") 
+         {            
+            product_submit_process(request.data, sendResponse); 
+         }  
          
    });
 
@@ -238,10 +242,11 @@ function get_AttributeDataSetId(data)
 {
    if(data)
    {
+      console.log(data);
       data.forEach(function(v,k){        
             if(v.ProductType == 'SimpleProduct')
             {
-               id =  v.AttributeDataSetId;
+               id =  v.AttributeDataSetName;
             }
          });
    }
@@ -285,4 +290,121 @@ function get_attributes_from_id(v, sendResponse)
          return false;
       } 
    }    
+}
+
+
+
+/* 
+   Product submit process
+
+   You need to check productAttributesValues exist or not before hitting product submit.
+
+   If productAttributesvalues not exit, You can add those values using 'PATCH' concept.
+    After update only you can submit the product, bcoz it will generate error attributesvalues are not matched
+
+   Here I'm bring 'ajax_check_proAttr_and_proAttrVal' from client side to check productAttributesValues easily.
+
+
+
+    
+*/
+
+function product_submit_process(pro_data, sendResponse)
+{
+   if(pro_data)
+   {
+      // console.log(pro_data);
+      var s = JSON.parse(pro_data);
+      toCheck = s.ajax_check_proAttr_and_proAttrVal;
+      sendResponse({status:true,datas:s.ajax_check_proAttr_and_proAttrVal});//later work
+      if(toCheck)
+      {
+         for (var key in toCheck) {
+            // console.log(key);
+            // console.log(toCheck[key]);
+            //ajax fire                     
+            if(key == 'Color')
+            {
+               attrVal = toCheck[key];
+               a1 = check_attribute(key.toLocaleLowerCase());
+               $.when(a1).then(function( data, textStatus, jqXHR ) {
+                  console.log(data); 
+                  console.log(jqXHR.status);
+                  if(jqXHR.status != 500)
+                  {
+                     check_serverData_and_clientSideData(data,attrVal);
+                  }               
+               });
+            }           
+         }
+         
+      }      
+   }
+}
+
+
+function check_attribute(attr)
+{
+   if(attr)
+   {
+      if(global_token)
+      {
+        return $.ajax({
+            url:"http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/productattribute('"+attr+"')",
+            headers: {
+               'Authorization':"Bearer "+global_token,               
+               'Content-Type':'application/json'
+           },
+            type: "GET",
+            data:'',
+            dataType: "json",           
+         });  
+      }   
+      else
+      {
+         return false;
+      } 
+   }    
+}
+
+
+function check_serverData_and_clientSideData(serverData,clientSideData)
+{
+   // console.log(serverData.PredefinedProductAttributeValues);
+   h = serverData.PredefinedProductAttributeValues;
+   if(h)
+   {
+      server_attr_vals = [];
+      h.forEach(function(v,k){
+         //console.log(v.ProductValueInternalName);
+         server_attr_vals.push(v.ProductValueInternalName);
+      });
+      console.log(server_attr_vals);
+      console.log(clientSideData);
+
+      array1 = ["g_m", "g_l", "g_xl", "g_xxl", "g_xxxl","ddd"];  //client
+      array2 = ["g_m", "g_l", "g_xl", "g_xxl", "g_xxxl","ssss"]; // server
+
+      var unique = [];
+      for(var i = 0; i < array1.length; i++)
+      {
+         var found = false;
+
+         for(var j = 0; j < array2.length; j++){ // j < is missed;
+         if(array1[i] == array2[j]){
+            found = true;
+            break; 
+         }
+         }
+         if(found === false)
+         {
+          unique.push(array1[i]);
+         }
+      }
+
+      console.log(unique);
+
+
+   }
+   
 }

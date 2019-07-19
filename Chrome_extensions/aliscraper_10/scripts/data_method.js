@@ -49,16 +49,14 @@ function get_product_data()
    eval('type_img = "ImageSquares";');
 
 
-   ProductAttributes = 'function build(r,t){return return_arr=[],g_attr_obj={},g_pa_pd=[],r.forEach(function(r,t,e){bu={},mti=modify_to_internalname(r.propertyValueName),bu.ProductValueInternalName=mti,return_arr.push(bu),g_attr_obj[r.propertyValueId]=mti,g_pa_pd.push(mti)}),g_attr.push(g_attr_obj),g_pro_attr_and_pre_define[t]=g_pa_pd,return_arr}function modify_to_internalname(r){return"g_"+r.split(" ").join("_").toLowerCase()}pro=[],g_attr=[],g_pro_attr_and_pre_define=[],data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(r,t,e){"Ships From"!=r.skuPropertyName&&(Ob={},Ob.ProductAttributeInternalName=r.skuPropertyName,Ob.AttributeControlType=type_img,Ob.TextPrompt=r.skuPropertyName,r.skuPropertyValues&&(Ob.ProductAttributeValues=build(r.skuPropertyValues,r.skuPropertyName)),pro.push(Ob))});pro';
+   ProductAttributes = 'function build(t,r){return return_arr=[],g_attr_obj={},t.forEach(function(t,r,e){bu={},mti=modify_to_internalname(t.propertyValueName),bu.ProductValueInternalName=mti,return_arr.push(bu),g_attr_obj[t.propertyValueId]=mti}),g_attr.push(g_attr_obj),return_arr}function modify_to_internalname(t){return"g_"+t.split(" ").join("_").toLowerCase()}pro=[],g_attr=[],data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(t,r,e){"Ships From"!=t.skuPropertyName&&(Ob={},Ob.ProductAttributeInternalName=t.skuPropertyName,Ob.AttributeControlType=type_img,Ob.TextPrompt=t.skuPropertyName,t.skuPropertyValues&&(Ob.ProductAttributeValues=build(t.skuPropertyValues,t.skuPropertyName)),pro.push(Ob))});pro';
    
 
    productId = "data.actionModule.productId.toString()";
    sizeInfo = "data.skuModule.title";
-   ajax_check_proAttr_and_proAttrVal = "g_pro_attr_and_pre_define";
+   ajax_check_proAttr_and_proAttrVal = 'function build_g_pro_attr_and_pre_define(r,_){g_pa_pd=[],r.forEach(function(r,_,e){mti=modify_to_internalname_2(r.propertyValueName),g_pa_pd.push(mti)}),g_pro_attr_and_pre_define[_]=g_pa_pd}function modify_to_internalname_2(r){return"g_"+r.split(" ").join("_").toLowerCase()}g_pro_attr_and_pre_define={},data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(r,_,e){"Ships From"!=r.skuPropertyName&&r.skuPropertyValues&&build_g_pro_attr_and_pre_define(r.skuPropertyValues,r.skuPropertyName)});g_pro_attr_and_pre_define;';
 
-   // alert(category);
-   // alert(manfacture);
-
+   
    obj = 	{
       "Sku": productId,
       "ProductType": "'SimpleProduct'",
@@ -70,12 +68,10 @@ function get_product_data()
       "ProductAttributes": "eval('"+ProductAttributes+"')",			
       "ProductSpecificatons": "eval('"+ProductSpecificatons+"')",
       "WarehouseInventory": "eval('"+WarehouseInventory+"')",
-      "AttributeCombinations": "eval('"+AttributeCombinations+"')",    			
+      "AttributeCombinations": "eval('"+AttributeCombinations+"')",
+      "ajax_check_proAttr_and_proAttrVal": "eval('"+ajax_check_proAttr_and_proAttrVal+"')"    			
    };
-
-   obj1 = 	{
-      "ajax_check_proAttr_and_proAttrVal": "eval('"+ajax_check_proAttr_and_proAttrVal+"')"
-   };
+   
 
       var final_obj = createobject(obj);
       
@@ -87,18 +83,11 @@ function get_product_data()
           final_obj.Height = 1;
           final_obj.ShortDescription = "siddhu-sample-desc";
           final_obj.SeName = "siddhu-siddhartha-roy";
-          final_obj.PrimaryCategeryName = $( "#category" ).val();
-          if(final_obj)
-          {
-            final_obj.ajaxs = createobject(obj1);
-          }
-         
-          
-
-
-          
-
-      console.log(JSON.stringify(final_obj));
+          final_obj.PrimaryCategeryName = $( "#category" ).val();          
+      
+          final_product =JSON.stringify(final_obj);
+            console.log(final_product);
+            send_product_data(final_product);
 }
 
 
@@ -114,3 +103,12 @@ function get_attribute_data()
    console.log(final_attr_obj);
    console.log(JSON.stringify(final_attr_obj));
 }
+
+// Below function send request to api.js background script
+// We are sending product data and few manual data for verfiying script in ajax calls
+function send_product_data(data)
+{
+	chrome.runtime.sendMessage({msg: "product_data_from_scraping",data:data}, function(response) {
+		console.log(response); //response from APIS.js script		   
+   }); 
+} 

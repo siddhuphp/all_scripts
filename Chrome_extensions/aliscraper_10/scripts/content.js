@@ -58,54 +58,6 @@ function updateaction() {
 		
 }
 
-
-function remove_div_products()
-{
-
-	try
-	{
-		var allListElements = $( 'div' );
-		var t = $( ".origin-part" ).find( allListElements );
-		
-
-		if ($('.detailmodule_dynamic').length) {
-			$('.detailmodule_dynamic').remove();// to remove unwated data
-		}
-		else if(t.length > 0)
-		{
-			
-			//t.first().css( "background-color", "red" );
-			x=t.first().attr('style');
-			
-			if (x)
-			{
-			if(x.indexOf("overflow:")>0){
-				t.first().remove(); 
-			}  
-		}  
-		}	
-		else 
-		{
-			if ($('.origin-part div').length)
-			{
-				var styletext=$('.origin-part div').attr('style');
-				if (styletext.length>0)
-				{
-				if (styletext.indexOf("overflow")==0)
-				{
-					$('.origin-part div').remove();
-				}
-			}
-			}
-		}
-	}
-	catch (e)
-	{
-		console.log( e);	
-	}
-}
-
-
 function product_title_area()
 {
 	$('.product-title').replaceWith('<textarea name="product-name" class="product-name" rows="3" cols="70">' + $('.product-title').html() +'</textarea>');
@@ -330,10 +282,8 @@ function category_dropdown()
 		if(response)
 		{
 			make_attributes_dropdown(response.attr);
-		}
-					 
-	}); 	
-	console.log("kljotest");
+		}					 
+	});	
 }
 
 

@@ -1,0 +1,344 @@
+{
+    "@odata.context": "http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/$metadata#Product/$entity",
+    "AppliedDiscounts": [],
+    "ShippingTime": 1,
+    "IsHazMaterial": true,
+    "IsPerishable": false,
+    "TransferPrice": 1.23,
+    "ProductType": "SimpleProduct", ######
+    "Name": "M shirt11-kjo test - testsku1085", ######
+    "SeName": "m-shirt11-kjo-test-65c61b2e-d6f704ae",
+    "ShortDescription": "fhxtgs", #####
+    "FullDescription": null, #####
+    "AdminComment": null,
+    "MetaKeywords": null, #####
+    "MetaDescription": null, #####
+    "MetaTitle": null, #####
+    "ExternalId": "",
+    "Sku": "testsku1085", #####
+    "ManufacturerPartNumber": null,
+    "Gtin": "gtn2",
+    "IsFreeShipping": false, #####
+    "ShipSeparately": false,
+    "TaxCategoryId": null,
+    "IsTelecommunicationsOrBroadcastingOrElectronicServices": false,
+    "AllowedQuantities": null,
+    "Price": 10.2, #####
+    "OldPrice": 10, #######
+    "CatalogPrice": 10,
+    "ProductCost": 10,
+    "UnitName": null,
+    "Weight": 400, ######
+    "Length": 200,
+    "Width": 400,
+    "Height": 300,
+    "Categories": [ ######
+        "5ce3d47da2f5174e8cf551f4", (user map) //http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/category (login ) #####
+        "5ced2fee7eca6b3bfa850ec2"
+    ],
+    "Manufacturers": [ (user map) //http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/manufacturer (login ) ########
+        "HP"
+    ],
+    "PrimaryCategeryId": "5ced2fee7eca6b3bfa850ec2", 
+    "CrossSellProduct": [
+        "testsku1080"
+    ],
+    "RelatedProducts": [
+        "testsku1080"
+    ],
+    "BundleProducts": [],
+    "Id": "5cf543cab3cc220001bfa2df",
+    "Pictures": [
+        {
+            "PictureId": "5cf543cab3cc220001bfa303",
+            "UploadPictureUrl": "https://ae01.alicdn.com/kf/HTB1ZDyqO3HqK1RjSZFgq6y7JXXa9/Band-For-Apple-Watch-Series-3-2-1-38MM-42MM-Nylon-Soft-Breathable-Replacement-Strap-Sport.jpg",
+            "DisplayOrder": 1,
+            "MimeType": "image/jpg",
+            "SeoFilename": null,
+            "AltAttribute": "kjo",
+            "TitleAttribute": "title test"
+        },
+        {
+            "PictureId": "5cf543cab3cc220001bfa302",
+            "UploadPictureUrl": "https://ae01.alicdn.com/kf/HTB1RLKxOVzqK1RjSZFvq6AB7VXab/Band-For-Apple-Watch-Series-3-2-1-38MM-42MM-Nylon-Soft-Breathable-Replacement-Strap-Sport.jpg",
+            "DisplayOrder": 2,
+            "MimeType": "image/png",
+            "SeoFilename": null,
+            "AltAttribute": "kjo",
+            "TitleAttribute": "title test"
+        },
+        {
+            "PictureId": "5cf543cab3cc220001bfa305",
+            "UploadPictureUrl": "https://ae01.alicdn.com/kf/HTB1pVFPSsfpK1RjSZFOq6y6nFXaG/Band-For-Apple-Watch-Series-3-2-1-38MM-42MM-Nylon-Soft-Breathable-Replacement-Strap-Sport.jpg",
+            "DisplayOrder": 3,
+            "MimeType": "image/jpg",
+            "SeoFilename": null,
+            "AltAttribute": "kjo",
+            "TitleAttribute": "title test"
+        },
+        {
+            "PictureId": "5cf543cab3cc220001bfa301",
+            "UploadPictureUrl": "https://ae01.alicdn.com/kf/HTB14aWoO4TpK1RjSZR0q6zEwXXaG/Band-For-Apple-Watch-Series-3-2-1-38MM-42MM-Nylon-Soft-Breathable-Replacement-Strap-Sport.jpg",
+            "DisplayOrder": 3,
+            "MimeType": "image/jpg",
+            "SeoFilename": null,
+            "AltAttribute": "kjo",
+            "TitleAttribute": "title test"
+        },
+        {
+            "PictureId": "5cf543cab3cc220001bfa304",
+            "UploadPictureUrl": "https://ae01.alicdn.com/kf/HTB1N39rOVYqK1RjSZLeq6zXppXal/Band-For-Apple-Watch-Series-3-2-1-38MM-42MM-Nylon-Soft-Breathable-Replacement-Strap-Sport.jpg",
+            "DisplayOrder": 4,
+            "MimeType": "image/jpg",
+            "SeoFilename": null,
+            "AltAttribute": "kjo",
+            "TitleAttribute": "title test"
+        },
+        {
+            "PictureId": "5cf543cab3cc220001bfa300",
+            "UploadPictureUrl": "https://ae01.alicdn.com/kf/HTB16jqqO9zqK1RjSZFHq6z3CpXaO/Band-For-Apple-Watch-Series-3-2-1-38MM-42MM-Nylon-Soft-Breathable-Replacement-Strap-Sport.jpg",
+            "DisplayOrder": 5,
+            "MimeType": "image/jpg",
+            "SeoFilename": null,
+            "AltAttribute": "kjo",
+            "TitleAttribute": "title test"
+        },
+        {
+            "PictureId": "5cf543cab3cc220001bfa2ff",
+            "UploadPictureUrl": "https://ae01.alicdn.com/kf/HTB1N39rOVYqK1RjSZLeq6zXppXal/Band-For-Apple-Watch-Series-3-2-1-38MM-42MM-Nylon-Soft-Breathable-Replacement-Strap-Sport.jpg",
+            "DisplayOrder": 6,
+            "MimeType": "image/jpg",
+            "SeoFilename": null,
+            "AltAttribute": "kjo",
+            "TitleAttribute": "title test"
+        }
+    ],
+    "TierPrices": [
+        {
+            "TransferPrice": 3.4,
+            "StoreName": "Ravi Store",
+            "CustomerRoleName": "Administrators",
+            "Quantity": 1,
+            "Price": 12,
+            "StartDateTimeUtc": null,
+            "EndDateTimeUtc": null,
+            "FreeShipping": false
+        }
+    ],
+    "WarehouseInventory": [],
+    "AttributeCombinations": [
+        {
+            "Text": "storge1",
+            "Sku": "testsku1085.1",
+            "ManufacturerPartNumber": "",
+            "Gtin": "gtn2",
+            "OverriddenPrice": null,
+            "PictureId": "",
+            "ExternalId": null,
+            "WarehouseInventory": [
+                {
+                    "WarehouseId": "5cf0c2a4c5d150000188cd19",
+                    "StockQuantity": 0,
+                    "ReservedQuantity": 10
+                }
+            ],
+            "TierPrices": [],
+            "ProductAttributeCombinations": [
+                {
+                    "AttributeInternalName": "ravi_color",
+                    "AttributeValueInternalName": "red"
+                },
+                {
+                    "AttributeInternalName": "ravi_size",
+                    "AttributeValueInternalName": "small"
+                }
+            ]
+        },
+        {
+            "Text": "storge1",
+            "Sku": "testsku1085.2",
+            "ManufacturerPartNumber": "",
+            "Gtin": "gtn2",
+            "OverriddenPrice": null,
+            "PictureId": "",
+            "ExternalId": null,
+            "WarehouseInventory": [
+                {
+                    "WarehouseId": "5cf0c2a4c5d150000188cd19",
+                    "StockQuantity": 1000,
+                    "ReservedQuantity": 10
+                }
+            ],
+            "TierPrices": [],
+            "ProductAttributeCombinations": [
+                {
+                    "AttributeInternalName": "ravi_color",
+                    "AttributeValueInternalName": "green"
+                },
+                {
+                    "AttributeInternalName": "ravi_size",
+                    "AttributeValueInternalName": "small"
+                }
+            ]
+        },
+        {
+            "Text": "storge1",
+            "Sku": "testsku1085.3",
+            "ManufacturerPartNumber": "",
+            "Gtin": "gtn2",
+            "OverriddenPrice": null,
+            "PictureId": "",
+            "ExternalId": null,
+            "WarehouseInventory": [
+                {
+                    "WarehouseId": "5cf0c2a4c5d150000188cd19",
+                    "StockQuantity": 0,
+                    "ReservedQuantity": 10
+                }
+            ],
+            "TierPrices": [],
+            "ProductAttributeCombinations": [
+                {
+                    "AttributeInternalName": "ravi_color",
+                    "AttributeValueInternalName": "blue"
+                },
+                {
+                    "AttributeInternalName": "ravi_size",
+                    "AttributeValueInternalName": "large"
+                }
+            ]
+        },
+        {
+            "Text": "storge1",
+            "Sku": "testsku1085.4",
+            "ManufacturerPartNumber": "",
+            "Gtin": "gtn2",
+            "OverriddenPrice": null,
+            "PictureId": "",
+            "ExternalId": null,
+            "WarehouseInventory": [
+                {
+                    "WarehouseId": "5cf0c2a4c5d150000188cd19",
+                    "StockQuantity": 1000,
+                    "ReservedQuantity": 11
+                }
+            ],
+            "TierPrices": [],
+            "ProductAttributeCombinations": [
+                {
+                    "AttributeInternalName": "ravi_color",
+                    "AttributeValueInternalName": "red"
+                },
+                {
+                    "AttributeInternalName": "ravi_size",
+                    "AttributeValueInternalName": "large"
+                }
+            ]
+        }
+    ],
+    "ProductAttributes": [
+        {
+            "ProductAttributeInternalName": "ravi_size",
+            "AttributeControlType": "ImageSquares",
+            "TextPrompt": "",
+            "ProductAttributeValues": [
+                {
+                    "ProductValueInternalName": "small",
+                    "ImageSquaresPictureId": "5cf543cbb3cc220001bfa307",
+                    "ImageSquaresPictureUrl": "https://ae01.alicdn.com/kf/HTB1RLKxOVzqK1RjSZFvq6AB7VXab/Band-For-Apple-Watch-Series-3-2-1-38MM-42MM-Nylon-Soft-Breathable-Replacement-Strap-Sport.jpg",
+                    "PriceAdjustment": 0,
+                    "WeightAdjustment": 0,
+                    "Cost": 0,
+                    "IsPreSelected": true,
+                    "DisplayOrder": 1,
+                    "PictureId": "5cf543cbb3cc220001bfa307"
+                },
+                {
+                    "ProductValueInternalName": "medium",
+                    "ImageSquaresPictureId": "5cf543cab3cc220001bfa306",
+                    "ImageSquaresPictureUrl": "https://ae01.alicdn.com/kf/HTB1RLKxOVzqK1RjSZFvq6AB7VXab/Band-For-Apple-Watch-Series-3-2-1-38MM-42MM-Nylon-Soft-Breathable-Replacement-Strap-Sport.jpg",
+                    "PriceAdjustment": 0,
+                    "WeightAdjustment": 0,
+                    "Cost": 0,
+                    "IsPreSelected": false,
+                    "DisplayOrder": 2,
+                    "PictureId": "5cf543cab3cc220001bfa306"
+                },
+                {
+                    "ProductValueInternalName": "large",
+                    "ImageSquaresPictureId": "5cf543cbb3cc220001bfa308",
+                    "ImageSquaresPictureUrl": "https://ae01.alicdn.com/kf/HTB1RLKxOVzqK1RjSZFvq6AB7VXab/Band-For-Apple-Watch-Series-3-2-1-38MM-42MM-Nylon-Soft-Breathable-Replacement-Strap-Sport.jpg",
+                    "PriceAdjustment": 0,
+                    "WeightAdjustment": 0,
+                    "Cost": 0,
+                    "IsPreSelected": false,
+                    "DisplayOrder": 3,
+                    "PictureId": "5cf543cbb3cc220001bfa308"
+                }
+            ]
+        },
+        {
+            "ProductAttributeInternalName": "ravi_color",
+            "AttributeControlType": "ColorSquares",
+            "TextPrompt": null,
+            "ProductAttributeValues": [
+                {
+                    "ProductValueInternalName": "red",
+                    "ImageSquaresPictureId": "sdfsdfsdf",
+                    "ImageSquaresPictureUrl": null,
+                    "PriceAdjustment": 0,
+                    "WeightAdjustment": 0,
+                    "Cost": 0,
+                    "IsPreSelected": true,
+                    "DisplayOrder": 1,
+                    "PictureId": ""
+                },
+                {
+                    "ProductValueInternalName": "blue",
+                    "ImageSquaresPictureId": "",
+                    "ImageSquaresPictureUrl": null,
+                    "PriceAdjustment": 0,
+                    "WeightAdjustment": 0,
+                    "Cost": 0,
+                    "IsPreSelected": false,
+                    "DisplayOrder": 2,
+                    "PictureId": ""
+                },
+                {
+                    "ProductValueInternalName": "green",
+                    "ImageSquaresPictureId": "",
+                    "ImageSquaresPictureUrl": null,
+                    "PriceAdjustment": 0,
+                    "WeightAdjustment": 0,
+                    "Cost": 0,
+                    "IsPreSelected": false,
+                    "DisplayOrder": 3,
+                    "PictureId": ""
+                }
+            ]
+        },
+        {
+            "ProductAttributeInternalName": "test_color",
+            "AttributeControlType": "MultilineTextbox",
+            "TextPrompt": null,
+            "ProductAttributeValues": []
+        }
+    ],
+    "ProductSpecificatons": [
+        {
+            "SpecificationAttributeInternalName": "ravi_car",
+            "SpecificationAttributeOptionInternalName": "benz",
+            "CustomValueorHtml": ""
+        },
+        {
+            "SpecificationAttributeInternalName": "ravi_bike",
+            "SpecificationAttributeOptionInternalName": "hero",
+            "CustomValueorHtml": ""
+        },
+        {
+            "SpecificationAttributeInternalName": "ravi_text",
+            "SpecificationAttributeOptionInternalName": "",
+            "CustomValueorHtml": "sample Text"
+        }
+    ]
+}
