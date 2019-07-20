@@ -37,7 +37,7 @@ function get_product_data()
 {
   
    eval('man = $( "#wareHouseInternalName" ).val()');
-   getpicscript="Obj=[];data.imageModule.imagePathList.forEach(function(c,i,arr){Ob={};Ob.UploadPictureUrl=c;Ob.DisplayOrder=i;Obj.push(Ob)});Obj";
+   getpicscript='function get_mime_type(e){if(e){switch(ext=e.split(".").pop(),ext){case"png":mime="image/png";break;case"jpg":case"jpeg":mime="image/jpeg";break;default:mime=""}return mime}return""}Obj=[],data.imageModule.imagePathList.forEach(function(e,i,m){Ob={},Ob.UploadPictureUrl=e,Ob.DisplayOrder=i,Ob.MimeType=get_mime_type(e),Obj.push(Ob)});Obj';
 
    WarehouseInventory = "function getSingleAttributeWarehouse(){return wareH=[],data.skuModule.productSKUPropertyList||(wob={},wob.StockQuantity=data.skuModule.skuPriceList[0].skuVal.availQuantity,wob.InternalName=null,wareH.push(wob)),wareH} getSingleAttributeWarehouse()";
 
@@ -84,6 +84,7 @@ function get_product_data()
           final_obj.ShortDescription = "siddhu-sample-desc";
           final_obj.SeName = "siddhu-siddhartha-roy";
           final_obj.PrimaryCategeryName = $( "#category" ).val();          
+          final_obj.get_attributes_of_user_select = get_attributes_of_user_select();          
       
           final_product =JSON.stringify(final_obj);
             console.log(final_product);
@@ -112,3 +113,14 @@ function send_product_data(data)
 		console.log(response); //response from APIS.js script		   
    }); 
 } 
+
+
+function get_attributes_of_user_select()
+{
+   $a = [];
+   $(".g_attributes").each(function() {
+      $s = $(this).val();     
+      $a.push($s);
+   });
+   return $a;
+}

@@ -240,3 +240,67 @@
   "PrimaryCategeryName": "mens_shirts"
 }
 /* Ends */
+
+
+/* Adding category attributes  */
+URL: http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/category/electronics
+method: PUT
+
+//sample data
+/*    {
+            "Name": "Electronics",
+            "Description": null,
+            "CategoryTemplateId": "5d32cf951ad5b6000173d26a",
+            "MetaKeywords": null,
+            "MetaDescription": null,
+            "MetaTitle": null,
+            "SeName": "electronics",
+            "ParentCategoryName": null,
+            "PictureId": null,
+            "PageSize": 0,
+            "AllowCustomersToSelectPageSize": true,
+            "PageSizeOptions": "6, 3, 9",
+            "PriceRanges": null,
+            "ShowOnHomePage": false,
+            "FeaturedProductsOnHomaPage": false,
+            "IncludeInTopMenu": true,
+            "Published": true,
+            "DisplayOrder": 0,
+            "Flag": null,
+            "FlagStyle": null,
+            "Icon": null,
+            "HideOnCatalog": false,
+            "ShowOnSearchBox": false,
+            "SearchBoxDisplayOrder": 0,
+            "InternalName": "electronics",
+            "BreadCrumb": "Electronics",
+            "CreatedOnUtc": "2019-07-20T09:23:41.736Z",
+            "UpdatedOnUtc": "2019-07-20T09:23:41.736Z",
+            "AttributeSetProductTypes": [ */
+            	{
+            		"ProductType":"SimpleProduct",
+            		"AttributeDataSetName":"g_clothing",
+            		"ProductTempleteId":"5d32cf951ad5b6000173d268"
+            	}
+/*             	],
+            "Locales": []
+        } */
+
+//Remove above comments if u wanna do
+/* END */
+
+
+/* 
+url: http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/ProductAttribute('ravi_size')/UpsertProductAttributeValue?InternalName=siddhu
+method:Post */
+//Sample Data
+{
+	"ProductValueInternalName": "medium2348",
+	"Name": "MArch8",
+	"ColorSquaresRgb": "#FFFFFF",
+	"IsPreSelected": false,
+	"DisplayOrder": 0,
+	"Locales": []
+}
+
+ /* Ends */
