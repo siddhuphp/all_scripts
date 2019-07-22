@@ -17,8 +17,11 @@ function build_g_pro_attr_and_pre_define(data_array,pro_name)
 {	
 	g_pa_pd = [];
 	data_array.forEach(function(c,i,arr){		 
-		 mti = modify_to_internalname_2(c.propertyValueName);		
-		 g_pa_pd.push(mti);       		 
+		 mti = modify_to_internalname_2(c.propertyValueName);
+		 af = {};
+		 af.internalName = mti;       		 
+		 af.displayName = c.propertyValueDisplayName;
+		 g_pa_pd.push(af);
 	 });	
 	 /* 'g_pro_attr_and_pre_define' this will help at to check productAttributes and ProductAttributeValues for Ajax fire */
 	 g_pro_attr_and_pre_define[pro_name] = g_pa_pd;	 

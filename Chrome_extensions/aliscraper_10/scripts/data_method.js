@@ -54,7 +54,7 @@ function get_product_data()
 
    productId = "data.actionModule.productId.toString()";
    sizeInfo = "data.skuModule.title";
-   ajax_check_proAttr_and_proAttrVal = 'function build_g_pro_attr_and_pre_define(r,_){g_pa_pd=[],r.forEach(function(r,_,e){mti=modify_to_internalname_2(r.propertyValueName),g_pa_pd.push(mti)}),g_pro_attr_and_pre_define[_]=g_pa_pd}function modify_to_internalname_2(r){return"g_"+r.split(" ").join("_").toLowerCase()}g_pro_attr_and_pre_define={},data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(r,_,e){"Ships From"!=r.skuPropertyName&&r.skuPropertyValues&&build_g_pro_attr_and_pre_define(r.skuPropertyValues,r.skuPropertyName)});g_pro_attr_and_pre_define;';
+   ajax_check_proAttr_and_proAttrVal = 'function build_g_pro_attr_and_pre_define(e,a){g_pa_pd=[],e.forEach(function(e,a,r){mti=modify_to_internalname_2(e.propertyValueName),af={},af.internalName=mti,af.displayName=e.propertyValueDisplayName,g_pa_pd.push(af)}),g_pro_attr_and_pre_define[a]=g_pa_pd}function modify_to_internalname_2(e){return"g_"+e.split(" ").join("_").toLowerCase()}g_pro_attr_and_pre_define={},data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(e,a,r){"Ships From"!=e.skuPropertyName&&e.skuPropertyValues&&build_g_pro_attr_and_pre_define(e.skuPropertyValues,e.skuPropertyName)});g_pro_attr_and_pre_define;';
 
    
    obj = 	{

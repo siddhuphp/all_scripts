@@ -315,48 +315,28 @@ function product_submit_process(pro_data, sendResponse)
    {
       // console.log(pro_data);
       var s = JSON.parse(pro_data);
-      toCheck = s.ajax_check_proAttr_and_proAttrVal;
+      check_attribute_and_create(s);
       sendResponse({status:true,datas:s.ajax_check_proAttr_and_proAttrVal});//later work
-      if(toCheck)
-      {
-         for (var key in toCheck) {
-            // console.log(key);
-            // console.log(toCheck[key]);
-            //ajax fire                     
-            if(key == 'Color')
-            {
-               attrVal = toCheck[key];
-               a1 = check_attribute(key.toLocaleLowerCase());
-               $.when(a1).then(function( data, textStatus, jqXHR ) {
-                  console.log(data); 
-                  console.log(jqXHR.status);
-                  if(jqXHR.status != 500)
-                  {
-                     check_serverData_and_clientSideData(data,attrVal);
-                  }               
-               });
-            }           
-         }
-         
-      }      
+          
    }
 }
 
 
-function check_attribute(attr)
+function check_attribute(productIntenal,attrInternalNAme,data)
 {
-   if(attr)
+   if(productIntenal,attrInternalNAme,data)
    {
       if(global_token)
       {
         return $.ajax({
-            url:"http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/productattribute('"+attr+"')",
+            //url:"http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/productattribute('"+attr+"')",
+            url:"http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/ProductAttribute('"+productIntenal+"')/UpsertProductAttributeValue?InternalName="+attrInternalNAme,
             headers: {
                'Authorization':"Bearer "+global_token,               
                'Content-Type':'application/json'
            },
-            type: "GET",
-            data:'',
+            type: "POST",
+            data:data,
             dataType: "json",           
          });  
       }   
@@ -368,43 +348,61 @@ function check_attribute(attr)
 }
 
 
-function check_serverData_and_clientSideData(serverData,clientSideData)
+function check_attribute_and_create(s)
 {
-   // console.log(serverData.PredefinedProductAttributeValues);
-   h = serverData.PredefinedProductAttributeValues;
-   if(h)
+   /* 
+      This function will change the 'ProductAttributeInternalName' value based on 'get_attributes_of_user_select'
+      As well as it's change the 'ajax_check_proAttr_and_proAttrVal' object key name for preparing ajax call to check.
+
+   */
+
+   if(s)
    {
-      server_attr_vals = [];
-      h.forEach(function(v,k){
-         //console.log(v.ProductValueInternalName);
-         server_attr_vals.push(v.ProductValueInternalName);
-      });
-      console.log(server_attr_vals);
-      console.log(clientSideData);
+      //console.log(s.get_attributes_of_user_select);
+      //console.log(s.ProductAttributes[0].ProductAttributeInternalName);
 
-      array1 = ["g_m", "g_l", "g_xl", "g_xxl", "g_xxxl","ddd"];  //client
-      array2 = ["g_m", "g_l", "g_xl", "g_xxl", "g_xxxl","ssss"]; // server
-
-      var unique = [];
-      for(var i = 0; i < array1.length; i++)
+      if(s.get_attributes_of_user_select)
       {
-         var found = false;
-
-         for(var j = 0; j < array2.length; j++){ // j < is missed;
-         if(array1[i] == array2[j]){
-            found = true;
-            break; 
-         }
-         }
-         if(found === false)
-         {
-          unique.push(array1[i]);
-         }
+         s.get_attributes_of_user_select.forEach(function(v,k){
+            // console.log(v,k);
+            //console.log(s.ProductAttributes[k].ProductAttributeInternalName);
+            //console.log(s.ajax_check_proAttr_and_proAttrVal[s.ProductAttributes[k].ProductAttributeInternalName]);
+            z = s.ajax_check_proAttr_and_proAttrVal[s.ProductAttributes[k].ProductAttributeInternalName];
+            s.ajax_check_proAttr_and_proAttrVal[v] = z;
+            delete s.ajax_check_proAttr_and_proAttrVal[s.ProductAttributes[k].ProductAttributeInternalName];
+            s.ProductAttributes[k].ProductAttributeInternalName = v;
+            add_or_update_productAttrVals(v,z);
+         });
       }
-
-      console.log(unique);
-
-
+      // console.log(s.ProductAttributes);
+      // console.log(s.ajax_check_proAttr_and_proAttrVal);
+      // console.log(JSON.stringify(s.ajax_check_proAttr_and_proAttrVal));
    }
-   
+}
+
+
+function add_or_update_productAttrVals(productIntenal,attrVals)
+{
+   // console.log(productIntenal);    
+   // console.log(JSON.stringify(attrVals));
+   if(attrVals && productIntenal)
+   {  
+         attrVals.forEach(function(v1,k1){
+         // console.log(v1); 
+         data = {};
+         data.ProductValueInternalName = v1.internalName;
+         data.Name = v1.displayName;
+         data.ColorSquaresRgb = '';
+         data.IsPreSelected = false;
+         data.DisplayOrder = k1;
+         data.Locales = [];
+
+         a1 = check_attribute(productIntenal,v1.internalName,JSON.stringify(data));
+               $.when(a1).then(function( data, textStatus, jqXHR ) {
+                  console.log(data); 
+                  console.log(jqXHR.status);                              
+               });
+         
+       });
+   }
 }
