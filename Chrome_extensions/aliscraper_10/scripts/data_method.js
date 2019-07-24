@@ -1,31 +1,22 @@
-document.addEventListener('readystatechange', event => {
-
-	if (event.target.readyState === "complete") {
-		// inilize();					
-	}
-});
-
 
 function inilize()
 {
-    sku_details = document.evaluate("//script[contains(text(),'window.runParams') and contains(text(),'GaData') and contains(text(),'PAGE_TIMING')]", document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent.trim;
-    console.log(sku_details);
-    data = eval(sku_details).data;
-    console.log(data);
-    getpicscript="Obj=[];data.imageModule.imagePathList.forEach(function(c,i,arr){Ob={};Ob.UploadPictureUrl=c;Ob.DisplayOrder=i;Obj.push(Ob)});Obj";
-    sku="ats=[]; data.skuModule.skuPriceList.forEach(function(c,i,arr){Ob={};Ob.Sku=c.skuId;ats.push(Ob)});ats";
-    ProductSpecificatons = "spc=[]; data.specsModule.props.forEach(function(c,i,arr){Ob={};Ob.SpecificationAttributeInternalName=c.attrName;Ob.SpecificationAttributeOptionInternalName=c.attrValue;spc.push(Ob)});spc";
+    sku_details = document.evaluate("//script[contains(text(),'window.runParams') and contains(text(),'GaData') and contains(text(),'PAGE_TIMING')]", document, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+    //console.log(sku_details);
+   //  data = eval(sku_details).data;
 
-    obj = 	{
-                "ProductType": "'SimpleProduct'",
-                "Name": "data.pageModule.title",
-                "Pictures": "eval('"+getpicscript+"')",			
-                "AttributeCombinations": "eval('"+sku+"')",			
-                "ProductSpecificatons": "eval('"+ProductSpecificatons+"')",			
-            };
-        
-        createobject(obj);
-		
+   //  AttributeCombinations="SkuIds = jsonPath(data , \"$.skuModule.skuPriceList[*].skuId\");"
+    
+   //  eval(AttributeCombinations);
+   //    console.log(SkuIds);
+
+   if(sku_details)
+   {
+      data = eval(sku_details).data;
+      get_product_data();
+      get_attribute_data();  //making attribute data set for inserting or updating 
+   }
+   
 }
 
 
@@ -38,133 +29,98 @@ function createobject(prd)
     {
         Reflect.set(prd,allkeys[i],eval(Reflect.get(prd,allkeys[i]))); 
     }
-	console.log(prd);
+	return prd;
 }
 
 
+function get_product_data()
+{
+  
+   eval('man = $( "#wareHouseInternalName" ).val()');
+   getpicscript='function get_mime_type(e){if(e){switch(ext=e.split(".").pop(),ext){case"png":mime="image/png";break;case"jpg":case"jpeg":mime="image/jpeg";break;default:mime=""}return mime}return""}Obj=[],data.imageModule.imagePathList.forEach(function(e,i,m){Ob={},Ob.UploadPictureUrl=e,Ob.DisplayOrder=i,Ob.MimeType=get_mime_type(e),Obj.push(Ob)});Obj';
+
+   WarehouseInventory = "function getSingleAttributeWarehouse(){return wareH=[],data.skuModule.productSKUPropertyList||(wob={},wob.StockQuantity=data.skuModule.skuPriceList[0].skuVal.availQuantity,wob.InternalName=null,wareH.push(wob)),wareH} getSingleAttributeWarehouse()";
 
 
-/* JSONPath 0.8.0 - XPath for JSON
- *
- * Copyright (c) 2007 Stefan Goessner (goessner.net)
- * Licensed under the MIT (MIT-LICENSE.txt) licence.
- */
-function jsonPath(obj, expr, arg) {
-    var P = {
-       resultType: arg && arg.resultType || "VALUE",
-       result: [],
-       normalize: function(expr) {
-          var subx = [];
-          return expr.replace(/[\['](\??\(.*?\))[\]']/g, function($0,$1){return "[#"+(subx.push($1)-1)+"]";})
-                     .replace(/'?\.'?|\['?/g, ";")
-                     .replace(/;;;|;;/g, ";..;")
-                     .replace(/;$|'?\]|'$/g, "")
-                     .replace(/#([0-9]+)/g, function($0,$1){return subx[$1];});
-       },
-       asPath: function(path) {
-          var x = path.split(";"), p = "$";
-          for (var i=1,n=x.length; i<n; i++)
-             p += /^[0-9*]+$/.test(x[i]) ? ("["+x[i]+"]") : ("['"+x[i]+"']");
-          return p;
-       },
-       store: function(p, v) {
-          if (p) P.result[P.result.length] = P.resultType == "PATH" ? P.asPath(p) : v;
-          return !!p;
-       },
-       trace: function(expr, val, path) {
-          if (expr) {
-             var x = expr.split(";"), loc = x.shift();
-             x = x.join(";");
-             if (val && val.hasOwnProperty(loc))
-                P.trace(x, val[loc], path + ";" + loc);
-             else if (loc === "*")
-                P.walk(loc, x, val, path, function(m,l,x,v,p) { P.trace(m+";"+x,v,p); });
-             else if (loc === "..") {
-                P.trace(x, val, path);
-                P.walk(loc, x, val, path, function(m,l,x,v,p) { typeof v[m] === "object" && P.trace("..;"+x,v[m],p+";"+m); });
-             }
-             else if (/,/.test(loc)) { // [name1,name2,...]
-                for (var s=loc.split(/'?,'?/),i=0,n=s.length; i<n; i++)
-                   P.trace(s[i]+";"+x, val, path);
-             }
-             else if (/^\(.*?\)$/.test(loc)) // [(expr)]
-                P.trace(P.eval(loc, val, path.substr(path.lastIndexOf(";")+1))+";"+x, val, path);
-             else if (/^\?\(.*?\)$/.test(loc)) // [?(expr)]
-                P.walk(loc, x, val, path, function(m,l,x,v,p) { if (P.eval(l.replace(/^\?\((.*?)\)$/,"$1"),v[m],m)) P.trace(m+";"+x,v,p); });
-             else if (/^(-?[0-9]*):(-?[0-9]*):?([0-9]*)$/.test(loc)) // [start:end:step]  phyton slice syntax
-                P.slice(loc, x, val, path);
-          }
-          else
-             P.store(path, val);
-       },
-       walk: function(loc, expr, val, path, f) {
-          if (val instanceof Array) {
-             for (var i=0,n=val.length; i<n; i++)
-                if (i in val)
-                   f(i,loc,expr,val,path);
-          }
-          else if (typeof val === "object") {
-             for (var m in val)
-                if (val.hasOwnProperty(m))
-                   f(m,loc,expr,val,path);
-          }
-       },
-       slice: function(loc, expr, val, path) {
-          if (val instanceof Array) {
-             var len=val.length, start=0, end=len, step=1;
-             loc.replace(/^(-?[0-9]*):(-?[0-9]*):?(-?[0-9]*)$/g, function($0,$1,$2,$3){start=parseInt($1||start);end=parseInt($2||end);step=parseInt($3||step);});
-             start = (start < 0) ? Math.max(0,start+len) : Math.min(len,start);
-             end   = (end < 0)   ? Math.max(0,end+len)   : Math.min(len,end);
-             for (var i=start; i<end; i+=step)
-                P.trace(i+";"+expr, val, path);
-          }
-       },
-       eval: function(x, _v, _vname) {
-          try { return $ && _v && eval(x.replace(/@/g, "_v")); }
-          catch(e) { throw new SyntaxError("jsonPath: " + e.message + ": " + x.replace(/@/g, "_v").replace(/\^/g, "_a")); }
-       }
-    };
- 
-    var $ = obj;
-    if (expr && obj && (P.resultType == "VALUE" || P.resultType == "PATH")) {
-       P.trace(P.normalize(expr).replace(/^\$;/,""), obj, "$");
-       return P.result.length ? P.result : false;
-    }
- } 
+   AttributeCombinations='function getCombination(t){if(get_combi_arry=[],t)return t.split(",").forEach(function(t,r){aa={},"Ships From"!=data.skuModule.productSKUPropertyList[r].skuPropertyName&&(aa.AttributeInternalName=data.skuModule.productSKUPropertyList[r].skuPropertyName,aa.AttributeValueInternalName=g_attr[r][t],get_combi_arry.push(aa))}),get_combi_arry}function getWarehouseInventory(t){return ware_hos_arr=[],t&&data.skuModule.productSKUPropertyList&&(bb={},bb.StockQuantity=t.availQuantity,bb.InternalName=man,ware_hos_arr.push(bb)),ware_hos_arr}function check_shiping_from(t){if(t)return first_id={},t.forEach(function(t,r){"Ships From"==t.skuPropertyName&&(first_id={warehouse_id:t.skuPropertyValues[0].propertyValueId,obj_key_at:r,warehousename:t.skuPropertyValues[0].propertyValueDisplayName})}),first_id}ats=[],data.skuModule.skuPriceList.forEach(function(t,r,e){var a=t.skuPropIds.split(",");manf_id=check_shiping_from(data.skuModule.productSKUPropertyList),0!=Object.entries(manf_id).length&&a[manf_id.obj_key_at]==manf_id.warehouse_id&&(Ob={},Ob.Sku=t.skuId.toString(),t.skuPropIds&&(Ob.ProductAttributeCombinations=getCombination(t.skuPropIds)),ats.push(Ob),t.skuVal&&(Ob.WarehouseInventory=getWarehouseInventory(t.skuVal))),0===Object.entries(manf_id).length&&(Ob={},Ob.Sku=t.skuId.toString(),t.skuPropIds&&(Ob.ProductAttributeCombinations=getCombination(t.skuPropIds)),ats.push(Ob),t.skuVal&&(Ob.WarehouseInventory=getWarehouseInventory(t.skuVal)))});ats';
 
- 
 
- var store = { "store": {
-    "book": [
-        { "category": "reference",
-        "author": "Nigel Rees",
-        "title": "Sayings of the Century",
-        "price": 8.95
-      },
-        { "category": "fiction",
-        "author": "Evelyn Waugh",
-        "title": "Sword of Honour",
-        "price": 12.99
-      },
-        { "category": "fiction",
-        "author": "Herman Melville",
-        "title": "Moby Dick",
-        "isbn": "0-553-21311-3",
-        "price": 8.99
-      },
-        { "category": "fiction",
-        "author": "J. R. R. Tolkien",
-        "title": "The Lord of the Rings",
-        "isbn": "0-395-19395-8",
-        "price": 22.99
-      }
-    ],
-    "bicycle": {
-      "color": "red",
-      "price": 19.95
-    }
-  }
-};
+   ProductSpecificatons = "spc=[]; data.specsModule.props.forEach(function(c,i,arr){Ob={};Ob.SpecificationAttributeInternalName=c.attrName;Ob.SpecificationAttributeOptionInternalName=c.attrValue;spc.push(Ob)});spc";
+   eval('type_img = "ImageSquares";');
 
-var response = jsonPath(store , "$..author");
-console.log(response);
+
+   ProductAttributes = 'function build(t,r){return return_arr=[],g_attr_obj={},t.forEach(function(t,r,e){bu={},mti=modify_to_internalname(t.propertyValueName),bu.ProductValueInternalName=mti,return_arr.push(bu),g_attr_obj[t.propertyValueId]=mti}),g_attr.push(g_attr_obj),return_arr}function modify_to_internalname(t){return"g_"+t.split(" ").join("_").toLowerCase()}pro=[],g_attr=[],data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(t,r,e){"Ships From"!=t.skuPropertyName&&(Ob={},Ob.ProductAttributeInternalName=t.skuPropertyName,Ob.AttributeControlType=type_img,Ob.TextPrompt=t.skuPropertyName,t.skuPropertyValues&&(Ob.ProductAttributeValues=build(t.skuPropertyValues,t.skuPropertyName)),pro.push(Ob))});pro';
+   
+
+   productId = "data.actionModule.productId.toString()";
+   sizeInfo = "data.skuModule.title";
+   ajax_check_proAttr_and_proAttrVal = 'function build_g_pro_attr_and_pre_define(e,a){g_pa_pd=[],e.forEach(function(e,a,r){mti=modify_to_internalname_2(e.propertyValueName),af={},af.internalName=mti,af.displayName=e.propertyValueDisplayName,g_pa_pd.push(af)}),g_pro_attr_and_pre_define[a]=g_pa_pd}function modify_to_internalname_2(e){return"g_"+e.split(" ").join("_").toLowerCase()}g_pro_attr_and_pre_define={},data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(e,a,r){"Ships From"!=e.skuPropertyName&&e.skuPropertyValues&&build_g_pro_attr_and_pre_define(e.skuPropertyValues,e.skuPropertyName)});g_pro_attr_and_pre_define;';
+
+   
+   obj = 	{
+      "Sku": productId,
+      "ProductType": "'SimpleProduct'",
+      "Name": "data.pageModule.title",
+      "MetaKeywords": "data.pageModule.keywords",
+      "MetaDescription": "data.pageModule.description",
+      "MetaTitle": "data.pageModule.title",
+      "Pictures": "eval('"+getpicscript+"')",						
+      "ProductAttributes": "eval('"+ProductAttributes+"')",			
+      "ProductSpecificatons": "eval('"+ProductSpecificatons+"')",
+      "WarehouseInventory": "eval('"+WarehouseInventory+"')",
+      "AttributeCombinations": "eval('"+AttributeCombinations+"')",
+      "ajax_check_proAttr_and_proAttrVal": "eval('"+ajax_check_proAttr_and_proAttrVal+"')"    			
+   };
+   
+
+      var final_obj = createobject(obj);
+      
+          //final_obj.category = category;
+          final_obj.Manufacturers = [$( "#manfacture" ).val()];
+          final_obj.Weight = 1;
+          final_obj.Length = 1;
+          final_obj.Width = 1;
+          final_obj.Height = 1;
+          final_obj.ShortDescription = "siddhu-sample-desc";
+          final_obj.SeName = "siddhu-siddhartha-roy";
+          final_obj.PrimaryCategeryName = $( "#category" ).val();          
+          final_obj.get_attributes_of_user_select = get_attributes_of_user_select();          
+      
+          final_product =JSON.stringify(final_obj);
+            console.log(final_product);
+            send_product_data(final_product);
+}
+
+
+function get_attribute_data()
+{
+   Attributes_combi = 'function attr_build(r){return return_arr=[],r.forEach(function(r,e,u){bu={},bu.ProductValueInternalName=r.propertyValueName.replace(" ","_").toLowerCase(),bu.Name=r.propertyValueName,r.skuColorValue&&(bu.ColorSquaresRgb=r.skuColorValue),bu.DisplayOrder=e,return_arr.push(bu)}),return_arr}prodAttr=[],data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(r,e,u){"Ships From"!=r.skuPropertyName&&(Ob={},Ob.DisplayName=r.skuPropertyName,Ob.InternalName=r.skuPropertyName.replace(" ","_").toLowerCase(),r.skuPropertyValues&&(Ob.PredefinedProductAttributeValues=attr_build(r.skuPropertyValues)),prodAttr.push(Ob))});prodAttr;';
+
+   attr_obj = {
+      "value":"eval('"+Attributes_combi+"')"
+   };
+
+   var final_attr_obj = createobject(attr_obj);
+   console.log(final_attr_obj);
+   console.log(JSON.stringify(final_attr_obj));
+}
+
+// Below function send request to api.js background script
+// We are sending product data and few manual data for verfiying script in ajax calls
+function send_product_data(data)
+{
+	chrome.runtime.sendMessage({msg: "product_data_from_scraping",data:data}, function(response) {
+		console.log(response); //response from APIS.js script		   
+   }); 
+} 
+
+
+function get_attributes_of_user_select()
+{
+   $a = [];
+   $(".g_attributes").each(function() {
+      $s = $(this).val();     
+      $a.push($s);
+   });
+   return $a;
+}

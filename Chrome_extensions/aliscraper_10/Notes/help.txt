@@ -1,0 +1,747 @@
+data = window.runParams.data;		
+		
+getpicscript="Obj=[];data.imageModule.imagePathList.forEach(function(c,i,arr){Ob={};Ob.UploadPictureUrl=c;Ob.DisplayOrder=i;Obj.push(Ob)});Obj";
+
+WarehouseInventory = "function getSingleAttributeWarehouse(){return wareH=[],data.skuModule.productSKUPropertyList||wareH.push(data.skuModule.skuPriceList[0].skuVal.availQuantity),wareH} getSingleAttributeWarehouse()";
+
+
+AttributeCombinations='function getCombination(t){if(get_combi_arry=[],t)return t.split(",").forEach(function(t,a){aa={},aa.AttributeInternalName=data.skuModule.productSKUPropertyList[a].skuPropertyName,aa.AttributeValueInternalName=g_attr[a][t],get_combi_arry.push(aa)}),get_combi_arry}function getWarehouseInventory(t){return ware_hos_arr=[],t&&data.skuModule.productSKUPropertyList&&(bb={},bb.StockQuantity=t.availQuantity,ware_hos_arr.push(bb)),ware_hos_arr}ats=[],data.skuModule.skuPriceList.forEach(function(t,a,r){Ob={},Ob.Sku=t.skuId,t.skuPropIds&&(Ob.ProductAttributeCombinations=getCombination(t.skuPropIds)),ats.push(Ob),t.skuVal&&(Ob.WarehouseInventory=getWarehouseInventory(t.skuVal))});ats';
+
+
+ProductSpecificatons = "spc=[]; data.specsModule.props.forEach(function(c,i,arr){Ob={};Ob.SpecificationAttributeInternalName=c.attrName;Ob.SpecificationAttributeOptionInternalName=c.attrValue;spc.push(Ob)});spc";
+
+
+eval('type_img = "ImageSquares";');
+
+
+ProductAttributes = "function build(r){return return_arr=[],g_attr_obj={},r.forEach(function(r,t,u){bu={},bu.ProductValueInternalName=r.propertyValueDisplayName,return_arr.push(bu),g_attr_obj[r.propertyValueId]=r.propertyValueName}),g_attr.push(g_attr_obj),return_arr}pro=[],g_attr=[],data.skuModule.productSKUPropertyList&&data.skuModule.productSKUPropertyList.forEach(function(r,t,u){Ob={},Ob.ProductAttributeInternalName=r.skuPropertyName,r.skuPropertyValues&&(Ob.ProductAttributeValues=build(r.skuPropertyValues)),pro.push(Ob)});pro";
+
+obj = 	{
+			"ProductType": "'SimpleProduct'",
+			"Name": "data.pageModule.title",
+			"MetaKeywords": "data.pageModule.keywords",
+			"MetaDescription": "data.pageModule.description",
+			"MetaTitle": "data.pageModule.title",
+			"Pictures": "eval('"+getpicscript+"')",						
+			"ProductAttributes": "eval('"+ProductAttributes+"')",			
+			"ProductSpecificatons": "eval('"+ProductSpecificatons+"')",
+			"WarehouseInventory": "eval('"+WarehouseInventory+"')",
+			"AttributeCombinations": "eval('"+AttributeCombinations+"')",			
+		};
+		
+
+
+function createobject(prd)
+{
+    allkeys = Reflect.ownKeys(prd);
+    for(i=0;i<allkeys.length;i++)
+    {
+        Reflect.set(prd,allkeys[i],eval(Reflect.get(prd,allkeys[i]))); 
+    }
+	console.log(prd);
+}
+		
+		
+//--------ProductAttributes----------//
+
+pro=[];
+
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 Ob={};
+		 Ob.ProductAttributeInternalName=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);
+			}
+		 
+		 pro.push(Ob);
+	 });
+	
+	
+function build(data_array)
+{
+	return_arr = [];
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 bu.ProductValueInternalName = c.propertyValueDisplayName;
+		 return_arr.push(bu);
+	 });
+	 return return_arr;
+}
+
+//-----------ProductAttributes ends---------//	
+
+//-----------ProductAttributes starts 2 ---------//
+pro=[];
+g_attr = [];
+
+
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 Ob={};
+		 Ob.ProductAttributeInternalName=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);				
+			}
+		 
+		 pro.push(Ob);
+	 });
+	
+	
+function build(data_array)
+{
+	return_arr = [];
+	g_attr_obj = {};
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 bu.ProductValueInternalName = c.propertyValueDisplayName;
+		 return_arr.push(bu);
+        g_attr_obj[c.propertyValueId] = c.propertyValueName; 
+       		 
+	 });
+	 g_attr.push(g_attr_obj);
+	 return return_arr;
+}
+
+//-----------ProductAttributes ends 2 ---------//
+
+
+//-----------ProductAttributes starts 3 ---------//
+pro=[];
+g_attr = [];
+
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 Ob={};
+		 Ob.ProductAttributeInternalName=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);				
+			}
+		 
+		 pro.push(Ob);
+	 });
+}	
+	
+function build(data_array)
+{
+	return_arr = [];
+	g_attr_obj = {};
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 bu.ProductValueInternalName = c.propertyValueName;
+		 return_arr.push(bu);
+        g_attr_obj[c.propertyValueId] = c.propertyValueName; 
+       		 
+	 });
+	 g_attr.push(g_attr_obj);
+	 return return_arr;
+}
+
+//-----------ProductAttributes ends 3 ---------//	
+
+
+//-----------ProductAttributes  4 ---------//
+pro=[];
+g_attr = [];
+
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 if(c.skuPropertyName != "Ships From")
+		 {
+			Ob={};
+			Ob.ProductAttributeInternalName=c.skuPropertyName;
+			Ob.AttributeControlType=type_img;
+			Ob.TextPrompt=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);				
+			}		 
+			pro.push(Ob);
+		 }
+		 
+	 });
+}	
+	
+function build(data_array)
+{
+	return_arr = [];
+	g_attr_obj = {};
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 bu.ProductValueInternalName = c.propertyValueName;
+		 return_arr.push(bu);
+        g_attr_obj[c.propertyValueId] = c.propertyValueName; 
+       		 
+	 });
+	 g_attr.push(g_attr_obj);
+	 return return_arr;
+}	
+//-----------ProductAttributes ends 4 ---------//	
+
+//-----------ProductAttributes starts 5 ---------//	
+pro=[];
+g_attr = [];
+
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 if(c.skuPropertyName != "Ships From")
+		 {
+			Ob={};
+			Ob.ProductAttributeInternalName=c.skuPropertyName;
+			Ob.AttributeControlType=type_img;
+			Ob.TextPrompt=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues);				
+			}		 
+			pro.push(Ob);
+		 }
+		 
+	 });
+}	
+	
+function build(data_array)
+{
+	return_arr = [];
+	g_attr_obj = {};
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 mti = modify_to_internalname(c.propertyValueName);
+		 bu.ProductValueInternalName = mti;
+		 return_arr.push(bu);
+        g_attr_obj[c.propertyValueId] = mti; 
+       		 
+	 });
+	 g_attr.push(g_attr_obj);
+	 return return_arr;
+}
+
+function modify_to_internalname(v)
+{
+	/*As per our internalname storing system, You need to modify the 'c.propertyValueName' value.
+	
+	ex: 'Sky Blue' to 'g_sky_blue' */
+	return "g_"+v.split(' ').join('_').toLowerCase();
+}
+//-----------ProductAttributes ends 5 ---------//	
+//-----------ProductAttributes starts 6 ---------//
+pro=[];
+g_attr = [];
+g_pro_attr_and_pre_define = [];
+
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 if(c.skuPropertyName != "Ships From")
+		 {
+			Ob={};
+			Ob.ProductAttributeInternalName=c.skuPropertyName;
+			Ob.AttributeControlType=type_img;
+			Ob.TextPrompt=c.skuPropertyName;
+			if(c.skuPropertyValues)
+			{
+			  Ob.ProductAttributeValues =	build(c.skuPropertyValues,c.skuPropertyName);				
+			}		 
+			pro.push(Ob);
+		 }
+		 
+	 });
+}	
+	
+function build(data_array,pro_name)
+{
+	return_arr = [];
+	g_attr_obj = {};
+	g_pa_pd = [];
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 mti = modify_to_internalname(c.propertyValueName);
+		 bu.ProductValueInternalName = mti;
+		 return_arr.push(bu);
+         g_attr_obj[c.propertyValueId] = mti;
+		 g_pa_pd.push(mti);
+       		 
+	 });
+	 /* 'g_attr' array will help at AttributeCombination array form building */
+	 g_attr.push(g_attr_obj);
+	 /* 'g_pro_attr_and_pre_define' this will help at to check productAttributes and ProductAttributeValues for Ajax fire */
+	 g_pro_attr_and_pre_define[pro_name] = g_pa_pd;
+	 return return_arr;
+}
+
+function modify_to_internalname(v)
+{
+	/*As per our internalname storing system, You need to modify the 'c.propertyValueName' value.
+	
+	ex: 'Sky Blue' to 'g_sky_blue' */
+	return "g_"+v.split(' ').join('_').toLowerCase();
+}	
+//-----------ProductAttributes ends 6 ---------//	
+
+ 
+//------------------AttributeCombinations starts----------------------------//
+ats = [];
+data.skuModule.skuPriceList.forEach(function(c, i, arr) {
+    Ob = {};
+    Ob.Sku = c.skuId;
+	if(c.skuPropIds)
+	{
+		Ob.ProductAttributeCombinations = getCombination(c.skuPropIds);		
+	}	
+    ats.push(Ob)
+});
+
+
+function getCombination(str)
+{
+	get_combi_arry = [];
+	
+	if(str)
+	{
+		var arr = str.split(",");		
+		arr.forEach(function(cv,i){
+			aa = {};		
+			aa.AttributeInternalName = data.skuModule.productSKUPropertyList[i].skuPropertyName;
+			aa.AttributeValueInternalName = g_attr[i][cv];
+			get_combi_arry.push(aa)
+		});
+		return get_combi_arry;
+	}	
+} 
+//--------------------AttributeCombinations ends--------------------------// 
+
+//--------------------Warehouse starts--------------------------// 
+ats = [];
+data.skuModule.skuPriceList.forEach(function(c, i, arr) {
+    Ob = {};
+    Ob.Sku = c.skuId;
+	if(c.skuPropIds)
+	{
+		Ob.ProductAttributeCombinations = getCombination(c.skuPropIds);		
+	}		
+    ats.push(Ob);
+	
+	if(c.skuVal)
+	{
+		Ob.WarehouseInventory = getWarehouseInventory(c.skuVal);
+	}
+});
+
+
+function getCombination(str)
+{
+	get_combi_arry = [];
+	
+	if(str)
+	{
+		var arr = str.split(",");		
+		arr.forEach(function(cv,i){
+			aa = {};		
+			aa.AttributeInternalName = data.skuModule.productSKUPropertyList[i].skuPropertyName;
+			aa.AttributeValueInternalName = g_attr[i][cv];
+			get_combi_arry.push(aa)
+		});
+		return get_combi_arry;
+	}	
+}
+
+
+function getWarehouseInventory(wstr)
+{
+	ware_hos_arr = [];
+	if(wstr)
+	{
+		bb = {};
+		bb.StockQuantity = wstr.availQuantity;
+		ware_hos_arr.push(bb);
+		return ware_hos_arr;
+	}
+}
+//--------------------Warehouse ends--------------------------// 
+
+
+//--------------------Warehouse starts 2--------------------------// 
+ats = [];
+data.skuModule.skuPriceList.forEach(function(c, i, arr) {
+    Ob = {};
+    Ob.Sku = c.skuId;
+	if(c.skuPropIds)
+	{
+		Ob.ProductAttributeCombinations = getCombination(c.skuPropIds);		
+	}		
+    ats.push(Ob);
+	
+	if(c.skuVal)
+	{
+		Ob.WarehouseInventory = getWarehouseInventory(c.skuVal);
+	}
+});
+
+
+function getCombination(str)
+{
+	get_combi_arry = [];
+	
+	if(str)
+	{
+		var arr = str.split(",");		
+		arr.forEach(function(cv,i){
+			aa = {};		
+			aa.AttributeInternalName = data.skuModule.productSKUPropertyList[i].skuPropertyName;
+			aa.AttributeValueInternalName = g_attr[i][cv];
+			get_combi_arry.push(aa)
+		});
+		return get_combi_arry;
+	}	
+}
+
+
+function getWarehouseInventory(wstr)
+{
+	ware_hos_arr = [];
+	if(wstr  && data.skuModule.productSKUPropertyList)
+	{
+		bb = {};
+		bb.StockQuantity = wstr.availQuantity;
+		ware_hos_arr.push(bb);		
+	}
+	return ware_hos_arr;
+}
+//--------------------Warehouse ends 2--------------------------// 
+
+
+//--------------------Warehouse starts 3--------------------------// 
+ats = [];
+data.skuModule.skuPriceList.forEach(function(c, i, arr) {
+    Ob = {};
+    Ob.Sku = c.skuId;
+	if(c.skuPropIds)
+	{
+		Ob.ProductAttributeCombinations = getCombination(c.skuPropIds);		
+	}		
+    ats.push(Ob);
+	
+	if(c.skuVal)
+	{
+		Ob.WarehouseInventory = getWarehouseInventory(c.skuVal);
+	}
+});
+
+
+function getCombination(str)
+{
+	get_combi_arry = [];
+	
+	if(str)
+	{
+		var arr = str.split(",");		
+		arr.forEach(function(cv,i){
+			aa = {};
+			if(data.skuModule.productSKUPropertyList[i].skuPropertyName != 'Ships From')
+			{
+				aa.AttributeInternalName = data.skuModule.productSKUPropertyList[i].skuPropertyName;
+				aa.AttributeValueInternalName = g_attr[i][cv];
+				get_combi_arry.push(aa);
+			}			
+		});
+		return get_combi_arry;
+	}	
+}
+
+
+function getWarehouseInventory(wstr)
+{
+	ware_hos_arr = [];
+	if(wstr  && data.skuModule.productSKUPropertyList)
+	{
+		bb = {};
+		bb.StockQuantity = wstr.availQuantity;
+		ware_hos_arr.push(bb);		
+	}
+	return ware_hos_arr;
+}
+//--------------------Warehouse ends 3--------------------------// 
+
+
+//--------------------Warehouse starts 4--------------------------// 
+ats = [];
+data.skuModule.skuPriceList.forEach(function(c, i, arr) {
+	var arrb = c.skuPropIds.split(",");
+	manf_id = check_shiping_from(data.skuModule.productSKUPropertyList);
+	if(Object.entries(manf_id).length != 0) // for non ships from
+	{
+		if(arrb[manf_id.obj_key_at] == manf_id.warehouse_id)//for ships form. its take 1 shipping country
+		{
+			Ob = {};
+			Ob.Sku = c.skuId;
+			if(c.skuPropIds)
+			{
+				Ob.ProductAttributeCombinations = getCombination(c.skuPropIds);			
+			}		
+			ats.push(Ob);
+			
+			if(c.skuVal)
+			{
+				Ob.WarehouseInventory = getWarehouseInventory(c.skuVal);
+			}
+		}
+	}
+	
+	if(Object.entries(manf_id).length === 0) // for non ships from
+	{
+		Ob = {};
+		Ob.Sku = c.skuId;
+		if(c.skuPropIds)
+		{
+			Ob.ProductAttributeCombinations = getCombination(c.skuPropIds);			
+		}		
+		ats.push(Ob);
+		
+		if(c.skuVal)
+		{
+			Ob.WarehouseInventory = getWarehouseInventory(c.skuVal);
+		}
+	}	
+	
+});
+
+
+function getCombination(str)
+{
+	get_combi_arry = [];
+	
+	if(str)
+	{
+		var arr = str.split(",");				
+		arr.forEach(function(cv,i){
+			aa = {};
+			if(data.skuModule.productSKUPropertyList[i].skuPropertyName != 'Ships From')
+			{
+				aa.AttributeInternalName = data.skuModule.productSKUPropertyList[i].skuPropertyName;
+				aa.AttributeValueInternalName = g_attr[i][cv];
+				get_combi_arry.push(aa);
+			}			
+		});
+		
+		return get_combi_arry;
+	}	
+}
+
+
+function getWarehouseInventory(wstr)
+{
+	ware_hos_arr = [];
+	if(wstr && data.skuModule.productSKUPropertyList)
+	{
+		bb = {};
+		bb.StockQuantity = wstr.availQuantity;
+		ware_hos_arr.push(bb);		
+	}
+	return ware_hos_arr;
+}
+
+
+function check_shiping_from(prds)
+{
+  if(prds)
+  {
+    first_id = {};   
+    prds.forEach(function(v,k){    
+      if(v.skuPropertyName == 'Ships From')
+      {       
+        first_id = {
+						'warehouse_id':v.skuPropertyValues[0].propertyValueId,
+						'obj_key_at':k,
+						'warehousename':v.skuPropertyValues[0].propertyValueDisplayName
+					};        
+      }
+    });
+    return first_id;
+  }
+}
+//--------------------Warehouse ends 4--------------------------//
+
+
+
+
+
+
+	
+//-----------WarehouseInventoryfor no attributes ---------//
+
+function getSingleAttributeWarehouse()
+{
+	 wareH = [];
+	if(!data.skuModule.productSKUPropertyList)
+	{
+		wareH.push(data.skuModule.skuPriceList[0].skuVal.availQuantity);
+	}
+	return wareH;
+}	
+//-----------WarehouseInventoryfor no attributes ends ---------//	
+
+/-----------WarehouseInventoryfor no attributes 2 ---------//
+
+function getSingleAttributeWarehouse()
+{
+	 wareH = [];
+	if(!data.skuModule.productSKUPropertyList)
+	{
+		wob = {};
+		wob.StockQuantity = data.skuModule.skuPriceList[0].skuVal.availQuantity;
+		wob.InternalName = null;
+		wareH.push(wob);
+	}
+	return wareH;
+}	
+//-----------WarehouseInventoryfor no attributes ends 2---------//	
+
+
+//-----------Attributes Update or insert ---------//
+prodAttr=[];
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 if(c.skuPropertyName != 'Ships From')
+		 {
+			Ob={};
+			Ob.DisplayName=c.skuPropertyName;
+			Ob.InternalName=c.skuPropertyName.replace(" ","_").toLowerCase();
+			if(c.skuPropertyValues)
+			{
+			  Ob.PredefinedProductAttributeValues =	attr_build(c.skuPropertyValues);				
+			}
+		 
+			prodAttr.push(Ob); 
+		 }
+		 
+	 });
+}	
+	
+function attr_build(data_array)
+{
+	return_arr = [];	
+	 data_array.forEach(function(c,i,arr){
+		 bu = {};
+		 bu.ProductValueInternalName = c.propertyValueName.replace(" ","_").toLowerCase(); //c.propertyValueDisplayName;
+		 bu.Name=c.propertyValueName;
+		 if(c.skuColorValue)
+		 {
+			 bu.ColorSquaresRgb = c.skuColorValue; 
+		 }		
+		 bu.DisplayOrder = i;
+		 return_arr.push(bu);       		 
+	 });
+	
+	 return return_arr;
+}	
+//-----------Attributes Update or insert ends ---------//	
+
+
+/* Ajax fire ProductAttributes and ProductAttributeValues starts */
+g_pro_attr_and_pre_define = {};
+
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 if(c.skuPropertyName != "Ships From")
+		 {			
+			if(c.skuPropertyValues)
+			{
+			  build_g_pro_attr_and_pre_define(c.skuPropertyValues,c.skuPropertyName);
+			}		
+		 }		 
+	 });
+}	
+	
+function build_g_pro_attr_and_pre_define(data_array,pro_name)
+{	
+	g_pa_pd = [];
+	data_array.forEach(function(c,i,arr){		 
+		 mti = modify_to_internalname_2(c.propertyValueName);		
+		 g_pa_pd.push(mti);       		 
+	 });	
+	 /* 'g_pro_attr_and_pre_define' this will help at to check productAttributes and ProductAttributeValues for Ajax fire */
+	 g_pro_attr_and_pre_define[pro_name] = g_pa_pd;	 
+}
+
+function modify_to_internalname_2(v)
+{
+	/*As per our internalname storing system, You need to modify the 'c.propertyValueName' value.
+	
+	ex: 'Sky Blue' to 'g_sky_blue' */
+	return "g_"+v.split(' ').join('_').toLowerCase();
+}
+/* Ajax fire ProductAttributes and ProductAttributeValues ends */
+
+/* Ajax fire ProductAttributes and ProductAttributeValues starts 02 */
+g_pro_attr_and_pre_define = {};
+
+if(data.skuModule.productSKUPropertyList)
+{
+ data.skuModule.productSKUPropertyList.forEach(function(c,i,arr){
+		 if(c.skuPropertyName != "Ships From")
+		 {			
+			if(c.skuPropertyValues)
+			{
+			  build_g_pro_attr_and_pre_define(c.skuPropertyValues,c.skuPropertyName);
+			}		
+		 }		 
+	 });
+}	
+	
+function build_g_pro_attr_and_pre_define(data_array,pro_name)
+{	
+	g_pa_pd = [];
+	data_array.forEach(function(c,i,arr){		 
+		 mti = modify_to_internalname_2(c.propertyValueName);
+		 af = {};
+		 af.internalName = mti;       		 
+		 af.displayName = c.propertyValueDisplayName;
+		 g_pa_pd.push(af);
+	 });	
+	 /* 'g_pro_attr_and_pre_define' this will help at to check productAttributes and ProductAttributeValues for Ajax fire */
+	 g_pro_attr_and_pre_define[pro_name] = g_pa_pd;	 
+}
+
+function modify_to_internalname_2(v)
+{
+	/*As per our internalname storing system, You need to modify the 'c.propertyValueName' value.
+	
+	ex: 'Sky Blue' to 'g_sky_blue' */
+	return "g_"+v.split(' ').join('_').toLowerCase();
+}
+/* Ajax fire ProductAttributes and ProductAttributeValues ends 02 */
+
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/api/token/create
+
+body
+
+{
+    "email":"09trimurthulu81@gmail.com",
+    "password":"YWRtaW4="
+}
+
+
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/category
+NoBody
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/product
+NoBody
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/Manufacturer
+NoBody
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/productattribute
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/AttributeDataSet
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/specificationattribute
+
+http://glocalkart.australiasoutheast.cloudapp.azure.com/odata/productattribute?$filter=InternalName in ('color','size')
