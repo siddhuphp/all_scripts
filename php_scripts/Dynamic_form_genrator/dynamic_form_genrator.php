@@ -136,31 +136,32 @@
 
           <!-- For check box -->
           <span  id="show_if_chk_or_radio" style="display:none;">
-          <div class="input-group control-group after-add-more">
-            <input type="text" name="options[]" class="form-control" placeholder="Enter Option Name Here">
-            <div class="input-group-btn"> 
-              <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+            <div class="input-group control-group after-add-more">
+              <input type="text" name="options[]" class="form-control" placeholder="Enter Option Name Here">
+              <div class="input-group-btn"> 
+                <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+              </div>
             </div>
-          </div>
 
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="options_appear">Inline 
-            </label>
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="options_appear">Vertical
-            </label>
-          </div>
+            <div class="form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="options_appear"> Inline 
+              </label>
+            </div>
+            
+            <div class="form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="options_appear"> Vertical
+              </label>
+            </div>
           </span>
 
-          <div class="form-group">
+          <div class="form-group placeholder">
             <label for="placeholder" class="col-form-label">Placeholder:</label>
             <input type="text" class="form-control" id="placeholder">
           </div>
 
-          <div class="form-group">
+          <div class="form-group default-value">
             <label for="default-value" class="col-form-label">Default value:</label>
             <input type="text" class="form-control" id="default-value">
           </div>
@@ -180,11 +181,13 @@
               <input type="checkbox" class="form-check-input" value="1" id="readonly">Readonly
             </label>
           </div>
+
           <div class="form-check-inline">
             <label class="form-check-label">
               <input type="checkbox" class="form-check-input" id="disable" value="1">Disable
             </label>
           </div>
+
           <div class="form-check-inline">
             <label class="form-check-label">
               <input type="checkbox" class="form-check-input" value="1" id="requiered">Requiered
@@ -244,7 +247,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="./form.js"></script>
-    <script type="text/javascript" src="https://codesandbox.io/public/sse-hooks/sse-hooks.js"></script>
+    <!-- <script type="text/javascript" src="https://codesandbox.io/public/sse-hooks/sse-hooks.js"></script> -->
   </body>
 </html>
 
