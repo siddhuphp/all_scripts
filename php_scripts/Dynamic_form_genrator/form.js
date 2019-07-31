@@ -32,36 +32,81 @@ function dynamic_form(row_index,column_num,column_order,arr_index=null) {
   if((arr_index != null) && check_value_exists(obj[row_index][arr_index].name))
   {
     visable_nd_invisable(obj[row_index][arr_index].type); // So it will load correct html of that particular field
-    $("#label-name").val(obj[row_index][arr_index].label);
+    $("#label_name").val(obj[row_index][arr_index].label_name);
     $("#type").val(obj[row_index][arr_index].type);
+    $("#prepend").val(obj[row_index][arr_index].prepend);
+    $("#append").val(obj[row_index][arr_index].append);
+    $("#type").val(obj[row_index][arr_index].type);
+    $("#prepend_name").val(obj[row_index][arr_index].prepend_name);
+    $("#append_name").val(obj[row_index][arr_index].append_name);
+    $("#name").val(obj[row_index][arr_index].name);
+    $("#placeholder").val(obj[row_index][arr_index].placeholder);
+    $("#default_value").val(obj[row_index][arr_index].default_value);
+    $("#help_text").val(obj[row_index][arr_index].help_text); 
+    $("#hover_text").val(obj[row_index][arr_index].hover_text);   
+    
+    if(obj[row_index][arr_index].readonly)
+    {
+      $("#readonly").prop('checked', true);
+    } 
+
+    if(obj[row_index][arr_index].disable)
+    {
+      $("#disable").prop('checked', true);
+    } 
+
+    if(obj[row_index][arr_index].requiered)
+    {
+      $("#requiered").prop('checked', true);
+    }
+
+    if(obj[row_index][arr_index].options_appear)
+    {
+       $('input[name="options_appear"][value="'+obj[row_index][arr_index].options_appear+'"]').prop('checked', true);
+    }  
   }  
 };
 
 function make_data()
 {
-   var row_index = $("#row_index").val();// row order
-   var column_num = $("#column_num").val(); // col-1....col-6
-   var column_order = $("#column_order").val(); // in column input field order
-   var label = $("#label-name").val();
-   var type = $("#type").val();
-   var name = $("#name").val();
-   var placeholder = $("#placeholder").val();
-   var defaultValue = $("#default-value").val();
-   var helpText = $("#help-text").val();
-   var hoverText = $("#hover-text").val();
-   var readonly = $("#readonly").val();
-   var disable = $("#disable").val();
-   var requiered = $("#requiered").val();
-   var array_index = $("#arr_index").val();// array index value
+  var row_index = $("#row_index").val();// row order
+  var column_num = $("#column_num").val(); // col-1....col-6
+  var column_order = $("#column_order").val(); // in column input field order
+  var label_name = $("#label_name").val();
+  var type = $("#type").val();
+  var name = $("#name").val();
+  var placeholder = $("#placeholder").val();
+  var default_value = $("#default_value").val();
+  var help_text = $("#help_text").val();
+  var hover_text = $("#hover_text").val();
+  var readonly = 0;
+  if ($('#readonly').is(':checked')) {
+    readonly = $("#readonly").val();
+  }
+  var disable = 0;
+  if ($('#disable').is(':checked')) {
+    disable = $("#disable").val();
+  }
+  var requiered = 0;
+  if ($('#requiered').is(':checked')) {
+    requiered = $("#requiered").val();
+  } 
+  var array_index = $("#arr_index").val();// array index value
+  var prepend = $("#prepend").val();
+  var append = $("#append").val();  
+  var prepend_name = $("#prepend_name").val();
+  var append_name = $("#append_name").val();    
+  var options = options_values();    
+  var options_appear = $("input[name='options_appear']:checked").val();    
    
    var total_values_obj = {
-                  "label":label,
+                  "label_name":label_name,
                   "type":type,
                   "name":name,
                   "placeholder":placeholder,
-                  "defaultValue":defaultValue,
-                  "helpText":helpText,
-                  "hoverText":hoverText,
+                  "default_value":default_value,
+                  "help_text":help_text,
+                  "hover_text":hover_text,
                   "readonly":readonly,
                   "disable":disable,
                   "requiered":requiered,
@@ -69,13 +114,29 @@ function make_data()
                   "column_order":column_order,
                   "row_index":row_index,
                   "array_index":array_index,
+                  "prepend":prepend,
+                  "append":append,
+                  "prepend_name":prepend_name,
+                  "append_name":append_name,
+                  "options":options,
+                  "options_appear":options_appear,
               };
 
-    final_obj_makes(total_values_obj);
-   
+    final_obj_makes(total_values_obj);   
 }
 
-
+function options_values()
+{
+  var theForm = document.getElementsByClassName("options");
+  var options = [];
+  for (var i = 0; i < theForm.length; ++i) 
+  {
+    if(theForm[i].value){
+      options.push(theForm[i].value);
+    }
+  }
+  return options;
+}
 
 function check_value_exists(val)
 {
@@ -225,7 +286,7 @@ function final_obj_makes(my_obj)
   
    $('#configform')[0].reset();
    $('#exampleModal').modal('hide');
-   $("#dynamic_form_"+my_obj.row_index+"_"+my_obj.column_num+"_"+my_obj.column_order).replaceWith('<button type="button" id="dynamic_form_'+my_obj.row_index+'_'+my_obj.column_num+'_'+my_obj.column_order+'" onClick="dynamic_form('+my_obj.row_index+','+my_obj.column_num+','+my_obj.column_order+','+arr_index+')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">' +my_obj.label+ '</button>'); 
+   $("#dynamic_form_"+my_obj.row_index+"_"+my_obj.column_num+"_"+my_obj.column_order).replaceWith('<button type="button" id="dynamic_form_'+my_obj.row_index+'_'+my_obj.column_num+'_'+my_obj.column_order+'" onClick="dynamic_form('+my_obj.row_index+','+my_obj.column_num+','+my_obj.column_order+','+arr_index+')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">' +my_obj.label_name+ '</button>'); 
    console.log(obj); 
    console.log(JSON.stringify(obj)); 
 }

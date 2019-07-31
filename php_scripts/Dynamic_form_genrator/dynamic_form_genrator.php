@@ -100,38 +100,38 @@
 		  
 		  <div class="form-group">
             <label for="label-name" class="col-form-label">Label:</label>
-            <input type="text" class="form-control" id="label-name">
+            <input type="text" class="form-control" id="label_name" name="label_name">
           </div>
 		  
 		  <!-- For text field-->
 		  <span  id="show_if_text" style="display:none;">
 			  <label for="label-name" class="col-form-label">Prepend:</label>
 				<div class="input-group mb-3">
-				<select class="form-control" id="type">
+				<select class="form-control" id="prepend" name="prepend">
 				  <option value=""> Select </option>
 				  <option value="no"> No </option>
 				  <option value="text"> Text </option>
 				  <option value="icon"> Icon </option>
 				 </select>
-				<input type="text" class="form-control" id="prepend-name">
+				<input type="text" class="form-control" id="prepend_name" name="prepend_name">
 			  </div>
 			  
 			  <label for="label-name" class="col-form-label">Append:</label>
 				<div class="input-group mb-3">
-				<select class="form-control" id="type">
+				<select class="form-control" id="append" name="append">
 				  <option value=""> Select </option>
 				  <option value="no"> No </option>
 				  <option value="text"> Text </option>
 				  <option value="icon"> Icon </option>
 				 </select>
-				<input type="text" class="form-control" id="append-name">
+				<input type="text" class="form-control" id="append_name" name="append_name">
 			  </div>
 		  </span>
 		  <!-- For text field ends-->
 
           <div class="form-group">
             <label for="name" class="col-form-label">Name:</label>
-            <input type="text" class="form-control" id="name">
+            <input type="text" class="form-control" id="name" name="name">
           </div>
 
           <!-- For check box -->
@@ -145,52 +145,52 @@
 
             <div class="form-check-inline">
               <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="options_appear"> Inline 
+                <input type="radio" class="form-check-input" name="options_appear" id="options_appear"> Inline 
               </label>
             </div>
             
             <div class="form-check-inline">
               <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="options_appear"> Vertical
+                <input type="radio" class="form-check-input" name="options_appear" > Vertical
               </label>
             </div>
           </span>
 
           <div class="form-group placeholder">
             <label for="placeholder" class="col-form-label">Placeholder:</label>
-            <input type="text" class="form-control" id="placeholder">
+            <input type="text" class="form-control" id="placeholder" name="placeholder">
           </div>
 
           <div class="form-group default-value">
             <label for="default-value" class="col-form-label">Default value:</label>
-            <input type="text" class="form-control" id="default-value">
+            <input type="text" class="form-control" id="default_value" name="default_value">
           </div>
 
           <div class="form-group">
             <label for="help-text" class="col-form-label">Help text:</label>
-            <textarea class="form-control" id="help-text"></textarea>
+            <textarea class="form-control" id="help_text" name="help_text"></textarea>
           </div>
 
           <div class="form-group">
             <label for="hover-text" class="col-form-label">Hover text:</label>
-            <textarea class="form-control" id="hover-text"></textarea>
+            <textarea class="form-control" id="hover_text" name="hover_text"></textarea>
           </div>
 
           <div class="form-check-inline">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" value="1" id="readonly">Readonly
+              <input type="checkbox" class="form-check-input" value="1" id="readonly" name="readonly">Readonly
             </label>
           </div>
 
           <div class="form-check-inline">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" id="disable" value="1">Disable
+              <input type="checkbox" class="form-check-input" id="disable" name="disable" value="1">Disable
             </label>
           </div>
 
           <div class="form-check-inline">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" value="1" id="requiered">Requiered
+              <input type="checkbox" class="form-check-input" value="1" id="requiered" name="requiered">Requiered
             </label>
           </div>
 
@@ -216,7 +216,7 @@
 <!-- Copy Fields -->
 <div class="copy d-none">
   <div class="control-group input-group" style="margin-top:10px">
-    <input type="text" name="options[]" class="form-control" placeholder="Enter Option Name Here">
+    <input type="text" name="options[]" class="form-control options" placeholder="Enter Option Name Here">
     <div class="input-group-btn"> 
       <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
     </div>
