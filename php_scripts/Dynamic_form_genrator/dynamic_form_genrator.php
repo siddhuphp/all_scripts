@@ -137,7 +137,7 @@
           <!-- For check box -->
           <span  id="show_if_chk_or_radio" style="display:none;">
             <div class="input-group control-group after-add-more">
-              <input type="text" name="options[]" class="form-control" placeholder="Enter Option Name Here">
+              <input type="text" name="options[]" class="form-control options" placeholder="Enter Option Name Here" id="options_1">
               <div class="input-group-btn"> 
                 <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
               </div>

@@ -10,7 +10,7 @@ $(".column-index").click(function name(params) {
           url: url+'/form_making.php'
         }).done(function(data) {
            // If successful
-          console.log(data);
+          // console.log(data);
           $("#dynamic_form").append(data);
         }).fail(function(jqXHR, textStatus, errorThrown) {
           // If fail
@@ -28,6 +28,7 @@ function dynamic_form(row_index,column_num,column_order,arr_index=null) {
   $("#column_num").val(column_num);
   $("#column_order").val(column_order);
   $("#arr_index").val(arr_index);
+ 
  
   if((arr_index != null) && check_value_exists(obj[row_index][arr_index].name))
   {
@@ -63,6 +64,15 @@ function dynamic_form(row_index,column_num,column_order,arr_index=null) {
     if(obj[row_index][arr_index].options_appear)
     {
        $('input[name="options_appear"][value="'+obj[row_index][arr_index].options_appear+'"]').prop('checked', true);
+    }
+
+	if(obj[row_index][arr_index].options)
+    {
+        $("#options_1").val(obj[row_index][arr_index].options[0]);		
+		if(obj[row_index][arr_index].options.length > 0)
+		{			
+			$('.after-add-more').after(append_html_options(obj[row_index][arr_index].options));
+		}
     }  
   }  
 };
@@ -129,13 +139,31 @@ function options_values()
 {
   var theForm = document.getElementsByClassName("options");
   var options = [];
-  for (var i = 0; i < theForm.length; ++i) 
+  for (var i = 0; i < theForm.length; i++) 
   {
     if(theForm[i].value){
       options.push(theForm[i].value);
     }
   }
   return options;
+}
+
+function append_html_options(data)
+{
+	options_html = "";	
+	for(i=0;i<=data.length;i++)
+	{
+		if(data[i])
+		{
+			options_html += `<div class="control-group input-group" style="margin-top:10px">
+							<input type="text" name="options[]" class="form-control options" placeholder="Enter Option Name Here" value="`+data[i]+`">
+							<div class="input-group-btn"> 
+							  <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+							</div>
+						  </div>`;
+		}		
+	}
+	return options_html;
 }
 
 function check_value_exists(val)
