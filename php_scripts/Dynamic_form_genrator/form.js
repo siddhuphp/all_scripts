@@ -106,7 +106,7 @@ function make_data()
   var append = $("#append").val();  
   var prepend_name = $("#prepend_name").val();
   var append_name = $("#append_name").val();    
-  var options = options_values();    
+  var options = options_values(row_index);    
   var options_appear = $("input[name='options_appear']:checked").val();    
    
    var total_values_obj = {
@@ -135,8 +135,16 @@ function make_data()
     final_obj_makes(total_values_obj);   
 }
 
-function options_values()
+function options_values(row_index)
 {
+
+  /* For Edit, If options already exist then clear the array */
+  if(typeof obj[row_index] !== 'undefined')
+  {    
+    obj[row_index][0].options = [];
+  }
+  /* For Edit, If options already exist then clear the array Ends*/
+
   var theForm = document.getElementsByClassName("options");
   var options = [];
   for (var i = 0; i < theForm.length; i++) 
