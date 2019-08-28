@@ -8,10 +8,14 @@ class General_model extends CI_Model
     }
  
     // Return all records in the table
-    public function get_all($table,$where)
+    public function get_all($table,$fields,$where)
     {
         $array = array();
         
+		if(isset($fields) && !empty($fields))
+        {
+            $this->db->select($fields);			
+        }
 		if(isset($where) && !empty($where) && is_array($where))
         {
             foreach($where as $data)
@@ -40,6 +44,7 @@ class General_model extends CI_Model
         $array = array();
         $this->db->where($primaryfield,$id);
         $q = $this->db->get($table);
+        // echo $this->db->last_query(); exit;
         if($q->num_rows() > 0)
         {
             $array['status'] = TRUE;
@@ -100,7 +105,7 @@ class General_model extends CI_Model
     }
  
     // Delete record from the table
-    public function delete($table,$primaryfield,$id)
+    public function delete_row($table,$primaryfield,$id)
     {
         $array = array();
     	$this->db->where($primaryfield,$id);
@@ -115,6 +120,27 @@ class General_model extends CI_Model
         }
         return $array;
     }
+
+
+     // Bulk Delete record from the table
+     public function delete_bulk($table,$primaryfield,$ids)
+     {
+         $array = array();
+         if(isset($ids) && !empty($ids) && is_array($ids))
+        {
+            $this->db->where_in($primaryfield,$ids);
+            $this->db->delete($table);
+            if ($this->db->affected_rows() > 0)
+            {
+                $array['status'] = TRUE;
+            }
+            else
+            {
+                $array['status'] = FALSE;
+            }
+        }
+         return $array;
+     }
  
     // Check whether a value has duplicates in the database
     public function has_duplicate($value, $tabletocheck, $fieldtocheck)
@@ -168,7 +194,7 @@ class General_model extends CI_Model
         return $array;
     }
 
-    public function get_from_join($data)
+    public function get_all_from_join($data)
     {
 
         /*  Example structure of join common query building
@@ -180,6 +206,121 @@ class General_model extends CI_Model
                     ["table"=>"Table C","join_on"=>'"C.id" = "A.id"',"join_type" => "right"],
                 ],                
                 "where" => [
+                    ["column" => "B.id", "value" => 1],
+                    ["column" => "A.status", "value" => 'Active']
+                ],
+                "like" => [
+                    ["column" => "B.id", "value" => 1],
+                    ["column" => "A.status", "value" => 'Active']
+                ],
+                "limit" => ["start" => 1, "end" => 5],
+                "order_by" => [
+                    ["column" => "A.Name", "type" => 'ASC'],
+                    ["column" => "A.id", "type" => 'DESC']
+                ]                               
+		    ];        
+        */
+
+        if(isset($data) && !empty($data) && is_array($data))
+        {
+            $fileds = (isset($data['fileds']) && !empty($data['fileds']))?$data['fileds']:"*";
+
+            $this->db->select($fileds);
+            $this->db->from($data['table']); 
+
+            // Joins
+            if(isset($data['join_tables']) && !empty($data['join_tables']) && is_array($data['join_tables']))
+            {
+                foreach($data['join_tables'] as $join)
+                {
+                    $join_type = (isset($join['join_type']) && !empty($join['join_type']))?$join['join_type']:"left";
+
+                    $this->db->join($join['table'], $join['join_on'], $join_type);
+                }
+            }
+
+            // Where
+            if(isset($data['where']) && !empty($data['where']) && is_array($data['where']))
+            {
+                foreach($data['where'] as $where)
+                {
+                    if(isset($where['column'],$where['value']))
+					{
+						$this->db->where($where['column'],$where['value']);
+					}
+                }
+            }
+
+            // Like
+            if(isset($data['like']) && !empty($data['like']) && is_array($data['like']))
+            {
+                foreach($data['like'] as $key => $like)
+                {
+                    if(isset($like['column'],$like['value']) && ($key == 0))
+					{
+						$this->db->like($like['column'],$like['value']);
+                    }
+                    else if(isset($like['column'],$like['value']))
+                    {
+                        $this->db->or_like($like['column'],$like['value']);
+                    }
+                }
+            }
+
+            //Limit            
+            if(isset($data['limit']['start'],$data['limit']['end']) && !empty($data['limit']) && is_array($data['limit']))
+            {
+                $limit = $data['limit']['start']; $offset = $data['limit']['end'];
+                $this->db->limit($offset, $limit);                
+            }   
+
+
+            // Order By
+            if(isset($data['order_by']) && !empty($data['order_by']) && is_array($data['order_by']))
+            {
+                foreach($data['order_by'] as $order)
+                {
+                    if(isset($order['column'],$order['type']))
+					{
+						$this->db->order_by($order['column'],$order['type']);
+					}
+                }
+            }
+
+
+
+                   
+            $q = $this->db->get(); 
+            //    echo $this->db->last_query(); exit;
+            if($q->num_rows() > 0)
+            {
+                $array['status'] = TRUE;
+                $array['resultSet'] = $q->result_array();
+            }else{
+                $array['status'] = FALSE;
+            }        
+            return $array;
+        }
+        
+    }
+
+
+    public function get_row_from_join($data)
+    {
+
+        /*  Example structure of join common query building
+            $array = [
+                "fileds" => "A.name, B.email",
+                "table" => "Table A",
+                "join_tables" => [
+                    ["table"=>"Table B","join_on"=>'"B.id" = "A.id"',"join_type" => "left"],
+                    ["table"=>"Table C","join_on"=>'"C.id" = "A.id"',"join_type" => "right"],
+                ],                
+                "where" => [
+                    ["column" => "B.id", "value" => 1],
+                    ["column" => "A.status", "value" => 'Active']
+                ],
+                "like" => [
                     ["column" => "B.id", "value" => 1],
                     ["column" => "A.status", "value" => 'Active']
                 ],
@@ -219,8 +360,7 @@ class General_model extends CI_Model
                 }
             }
 
-            //Limit
-            
+            //Limit            
             if(isset($data['limit']['start'],$data['limit']['end']) && !empty($data['limit']) && is_array($data['limit']))
             {
                 $limit = $data['limit']['start']; $offset = $data['limit']['end'];
@@ -237,11 +377,11 @@ class General_model extends CI_Model
             }
                    
             $q = $this->db->get(); 
-             // echo $this->db->last_query(); exit;
+            //  echo $this->db->last_query(); exit;
             if($q->num_rows() > 0)
             {
                 $array['status'] = TRUE;
-                $array['resultSet'] = $q->result_array();
+                $array['resultSet'] = $q->row_array();
             }else{
                 $array['status'] = FALSE;
             }        

@@ -23,6 +23,10 @@ $(".column-index").click(function name(params) {
 function dynamic_form(row_index,column_num,column_order,arr_index=null) {  
   // alert(row_index);
   // alert(column_num);
+  /* It removes previous given values for options  */
+  $('.delete_when_edit').remove(); 
+  /* Ends */  
+  
   $('#configform')[0].reset();
   $("#row_index").val(row_index);
   $("#column_num").val(column_num);
@@ -132,7 +136,7 @@ function make_data()
                   "options_appear":options_appear,
               };
 
-    final_obj_makes(total_values_obj);   
+    final_obj_makes(total_values_obj);     
 }
 
 function options_values(row_index)
@@ -161,12 +165,13 @@ function append_html_options(data)
 	options_html = "";	
 	for(i=0;i<=data.length;i++)
 	{
-		if(data[i])
-		{
-			options_html += `<div class="control-group input-group" style="margin-top:10px">
+		if(data[i] && (i>=1))
+		{    
+      console.log(i +'--->'+ data[i]); 
+			options_html += `<div class="control-group input-group delete_when_edit" style="margin-top:10px">
 							<input type="text" name="options[]" class="form-control options" placeholder="Enter Option Name Here" value="`+data[i]+`">
 							<div class="input-group-btn"> 
-							  <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+							  <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove "`+i+`"</button>
 							</div>
 						  </div>`;
 		}		
