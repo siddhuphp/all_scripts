@@ -1,28 +1,3 @@
-<?php
-/* Required Parameters for Translation */
-if(isset($_POST) && !empty($_POST))
-{
-	$key = $_POST['key'];
-	$txnid = $_POST['txnid'];
-	$amount = $_POST['amount'];
-	$firstname = $_POST['firstname'];
-	$email = $_POST['email'];
-	$phone = $_POST['phone'];
-	$productinfo = $_POST['productinfo'];
-	$surl = $_POST['surl'];
-	$furl = $_POST['furl'];
-	$service_provider = $_POST['service_provider'];	
-	$salt = 'a3yMmYqqmA';	
-	$udf5 = $_POST['udf5'];	//optional (user define field udf)
-	
-	/* We need to convert the inputs into HASH as per PayU alogrithem */
-	$hash=hash('sha512', $key.'|'.$txnid.'|'.$amount.'|'.$productinfo.'|'.$firstname.'|'.$email.'|'.$phone.'|||||'.$udf5.'||||||'.$salt);
-	
-}
-
-
-?>
-
 <!DOCTYPE html>
 <!--
    To change this license header, choose License Headers in Project Properties.
@@ -33,18 +8,18 @@ if(isset($_POST) && !empty($_POST))
    <head ></head>
    <body>
       <h1>PayUMoney Payment Request Form </h1>
-      <form action="https://sandboxsecure.payu.in/_payment"  name="payuform" method=POST >
-         <input type="hidden" name="key" value="skGYhOaC" />
+      <form action="https://sandboxsecure.payu.in/_payment"  name="payuform" method="POST" id="payuform" >
+         <input type="hidden" name="key" id="key" value="skGYhOaC" />
          <input type="hidden" name="hash_string" value="" />
-         <input type="hidden" name="hash" />
-         <input type="hidden" name="txnid" value="siddhu123"/> <!--This is unique generated id from me-->
+         <input type="hidden" name="hash" id="hash" value="" />
+         <input type="hidden" name="txnid" id="txnid" value="<?php echo  "Txn" . rand(10000,99999999)?>"/> <!--This is unique generated id from me-->
          <table>
             <tr>
                <td><b>Mandatory Parameters</b></td>
             </tr>
             <tr>
                <td>Amount: </td>
-               <td><input name="amount" value="5" /></td>
+               <td><input name="amount" id="amount" value="5" /></td>
                <td>First Name: </td>
                <td><input name="firstname" id="firstname" value="Siddhu"  /></td>
             </tr>
@@ -52,11 +27,11 @@ if(isset($_POST) && !empty($_POST))
                <td>Email: </td>
                <td><input name="email" id="email" value="siddharthaesunuri@gmail.com"   /></td>
                <td>Phone: </td>
-               <td><input name="phone" value="9912238386" /></td>
+               <td><input name="phone" id="phone" value="9912238386" /></td>
             </tr>
             <tr>
                <td>Product Info: </td>
-               <td colspan="3"><textarea name="productinfo" >  </textarea></td>
+               <td colspan="3"><textarea name="productinfo" id="productinfo" ></textarea></td>
             </tr>
             <tr>
                <td>Success URI: </td>
@@ -110,7 +85,7 @@ if(isset($_POST) && !empty($_POST))
             </tr>
             <tr>
                <td>UDF5: </td>
-               <td><input name="udf5"  /></td>
+               <td><input name="udf5" id="udf5"  /></td>
                <td>PG: </td>
                <td><input name="pg"  /></td>
             </tr>
@@ -118,5 +93,38 @@ if(isset($_POST) && !empty($_POST))
             </tr>
          </table>
       </form>
+
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script type="text/javascript">
+         $('#payuform').bind('keyup blur', function(){
+            $.ajax({
+                     url: 'hash_generator.php',
+                     type: 'post',
+                     data: JSON.stringify({ 
+                              key: $('#key').val(),                    
+                              txnid: $('#txnid').val(),
+                              amount: $('#amount').val(),
+                              productinfo: $('#productinfo').val(),
+                              firstname: $('#firstname').val(),
+                              email: $('#email').val(),
+                              phone: $('#phone').val(),
+                              udf5: $('#udf5').val()
+                           }),
+                  contentType: "application/json",
+                  dataType: 'json',
+                  success: function(json) {
+                     if (json['error']) {
+                        alert(json['error']);
+                     }
+                     else if (json['success']) {	
+                        $('#hash').val(json['success']);
+                     }
+                  }
+               }); 
+         });
+         
+         </script>
+
    </body>
 </html>
