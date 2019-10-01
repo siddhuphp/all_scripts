@@ -16,7 +16,7 @@ if(isset($_POST) && !empty($_POST))
 	$udf5 = $_POST['udf5'];	//optional (user define field udf)
 	
 	/* We need to convert the inputs into HASH as per PayU alogrithem */
-	$hash=hash('sha512', $key.'|'.$txnid.'|'.$amount.'|'.$productinfo.'|'.$firstname.'|'.$email.'|||||'.$udf5.'||||||'.$salt);
+	$hash=hash('sha512', $key.'|'.$txnid.'|'.$amount.'|'.$productinfo.'|'.$firstname.'|'.$email.'|'.$phone.'|||||'.$udf5.'||||||'.$salt);
 	
 }
 
@@ -46,13 +46,13 @@ if(isset($_POST) && !empty($_POST))
                <td>Amount: </td>
                <td><input name="amount" value="5" /></td>
                <td>First Name: </td>
-               <td><input name="firstname" id="firstname"  /></td>
+               <td><input name="firstname" id="firstname" value="Siddhu"  /></td>
             </tr>
             <tr>
                <td>Email: </td>
-               <td><input name="email" id="email"   /></td>
+               <td><input name="email" id="email" value="siddharthaesunuri@gmail.com"   /></td>
                <td>Phone: </td>
-               <td><input name="phone"  /></td>
+               <td><input name="phone" value="9912238386" /></td>
             </tr>
             <tr>
                <td>Product Info: </td>
@@ -60,11 +60,11 @@ if(isset($_POST) && !empty($_POST))
             </tr>
             <tr>
                <td>Success URI: </td>
-               <td colspan="3"><input name="surl"  size="64"  /></td>
+               <td colspan="3"><input name="surl"  size="64" value="http://localhost/all_scripts/payUmoney/success.php"  /></td>
             </tr>
             <tr>
                <td>Failure URI: </td>
-               <td colspan="3"><input name="furl"  size="64" /></td>
+               <td colspan="3"><input name="furl"  size="64" value="http://localhost/all_scripts/payUmoney/failed.php" /></td>
             </tr>
             <tr>
                <td colspan="3"><input type="hidden" name="service_provider" value="payu_paisa" /></td>
