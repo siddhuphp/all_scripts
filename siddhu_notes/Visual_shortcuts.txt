@@ -1,0 +1,15 @@
+Zoom OUT / IN                =   CTRL + / CTRL -
+Teriminal                    =   CTRL + `
+Side by side file            =   CTRL + SELECT THE FILE + ENTER
+To Close side menu           =   CTRL + B 
+Quick file search            =   CTRL + P
+Multiple Cursors             =   ALT + Select Place
+Select all occurences        =   CTRL + F2
+Jump to matching Bracket     =   SHIFT + CTRL + \
+Display Autocomplete         =   CTRL + SPACE
+Copy Line UP/ DOWN           =   SHIFT + ALT + DOWN/ UP ARROWS
+Code preety                  =   CTRL + SHIFT + P
+Page will stick              =   Mouse Left Double click
+Block commet                =   SHIFT + alt + A
+single line comment                =   ctrl + / 
+ 
