@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <title>ACE in Action</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Ace - The High Performance Code Editor for the Web</title>
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css" />
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--<link href="./api/resources/csses/ace_api.css" rel="stylesheet" type="text/css" /> 
+        <link href="./doc/site/style.css" rel="stylesheet" type="text/css" />-->
+        <link href="./doc/site/images/favicon.ico" rel="icon" type="image/x-icon" />
+
+        <script src="./build/src/ace.js"></script>
+        <script src="./build/src/ext-static_highlight.js"></script>
+        <!--[if lt IE 9]>
+            <script src="./build/src/ext-old_ie.js"></script>
+        <![endif]-->
+		
+<style type="text/css" media="screen">
+    #editor { 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    } 
+	
+</style>
+    </head>
+	
+
+<body>
+
+
+
+<div class="container">
+  <div class="row">    
+  </br></br></br>
+    <div class="col-sm-12">
+      <h3>Column 2</h3>
+      <pre id="editor">&lt;?php 
+	$a= 20;
+	$c = array(1,2,3);
+	$d = [1,2,3];
+	$a= 20;
+	$c = array(1,2,3);
+	$d = [1,2,3];
+	$a= 20;
+	$c = array(1,2,3);
+	$d = [1,2,3];
+?></pre>		
+    </div>   
+  </div>
+  <button name="save" onclick='save()'>Save</button>
+</div>
+    
+<script src="./build/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+   
+	 var editor = ace.edit("editor");
+	 
+			editor.setTheme("ace/theme/monokai");
+			editor.session.setMode("ace/mode/php");
+			editor.setOptions({
+				readOnly: false,
+				highlightActiveLine: false,
+				highlightGutterLine: false,
+				maxLines:30,
+				printMargin:false,
+				enableBasicAutocompletion:true
+			});
+			  
+	document.getElementById('editor').style.fontSize='32px';
+	/*more help: https://github.com/ajaxorg/ace/wiki/Configuring-Ace*/
+	
+	
+</script>
+</body>
+</html>
