@@ -8,7 +8,7 @@ class General_model extends CI_Model
     }
  
     // Return all records in the table
-    public function get_all($table,$fields,$where)
+    public function get_all($table,$fields="",$where="")
     {
         $array = array();
         
@@ -20,9 +20,15 @@ class General_model extends CI_Model
         {
             foreach($where as $data)
             {
-                $this->db->where($data['column'],$data['value']);
-            }
-			
+                if(is_array($data['value']))
+                {
+                    $this->db->where_in($data['column'],$data['value']);
+                }
+                else
+                {
+                    $this->db->where($data['column'],$data['value']);
+                }
+            }			
         }
 		$q = $this->db->get($table);
 		
@@ -39,12 +45,30 @@ class General_model extends CI_Model
     }
  
     // Return only one row
-    public function get_row($table,$primaryfield,$id)
+    public function get_row($table,$fields="",$where="")
     {
         $array = array();
-        $this->db->where($primaryfield,$id);
-        $q = $this->db->get($table);
-        // echo $this->db->last_query(); exit;
+        
+		if(isset($fields) && !empty($fields))
+        {
+            $this->db->select($fields);			
+        }
+		if(isset($where) && !empty($where) && is_array($where))
+        {
+            foreach($where as $data)
+            {
+                if(is_array($data['value']))
+                {
+                    $this->db->where_in($data['column'],$data['value']);
+                }
+                else
+                {
+                    $this->db->where($data['column'],$data['value']);
+                }
+            }			
+        }
+		$q = $this->db->get($table);
+		
         if($q->num_rows() > 0)
         {
             $array['status'] = TRUE;
@@ -52,23 +76,6 @@ class General_model extends CI_Model
         }
         else
         {
-            $array['status'] = FALSE;
-        }        
-        return $array;
-    }
- 
-    // Return one only field value
-    public function get_data($table,$fieldname,$primaryfield,$id)
-    {
-        $array = array();
-        $this->db->select($fieldname);
-        $this->db->where($primaryfield,$id);
-        $q = $this->db->get($table);
-        if($q->num_rows() > 0)
-        {
-            $array['status'] = TRUE;
-            $array['resultSet'] = $q->row_array();
-        }else{
             $array['status'] = FALSE;
         }        
         return $array;
@@ -105,11 +112,25 @@ class General_model extends CI_Model
     }
  
     // Delete record from the table
-    public function delete_row($table,$primaryfield,$id)
+    public function delete_row($table,$where)
     {
         $array = array();
-    	$this->db->where($primaryfield,$id);
-        $this->db->delete($table);
+    	if(isset($where) && !empty($where) && is_array($where))
+        {
+            foreach($where as $data)
+            {
+                if(is_array($data['value']))
+                {
+                    $this->db->where_in($data['column'],$data['value']);
+                }
+                else
+                {
+                    $this->db->where($data['column'],$data['value']);
+                }                
+            }
+            $this->db->delete($table);			
+        }
+        
         if ($this->db->affected_rows() > 0)
         {
             $array['status'] = TRUE;
@@ -119,61 +140,8 @@ class General_model extends CI_Model
             $array['status'] = FALSE;
         }
         return $array;
-    }
-
-
-     // Bulk Delete record from the table
-     public function delete_bulk($table,$primaryfield,$ids)
-     {
-         $array = array();
-         if(isset($ids) && !empty($ids) && is_array($ids))
-        {
-            $this->db->where_in($primaryfield,$ids);
-            $this->db->delete($table);
-            if ($this->db->affected_rows() > 0)
-            {
-                $array['status'] = TRUE;
-            }
-            else
-            {
-                $array['status'] = FALSE;
-            }
-        }
-         return $array;
-     }
- 
-    // Check whether a value has duplicates in the database
-    public function has_duplicate($value, $tabletocheck, $fieldtocheck)
-    {
-        $this->db->select($fieldtocheck);
-        $this->db->where($fieldtocheck,$value);
-        $result = $this->db->get($tabletocheck);
- 
-        if($result->num_rows() > 0)
-        {
-            return TRUE;
-        }
-        else
-        {
-            return FALSE;
-        }
-    }
- 
-    // Check whether the field has any reference from other table
-    // Normally to check before delete a value that is a foreign key in another table
-    public function has_child($value, $tabletocheck, $fieldtocheck)
-    {
-        $this->db->select($fieldtocheck);
-        $this->db->where($fieldtocheck,$value);
-        $result = $this->db->get($tabletocheck);
- 
-        if($result->num_rows() > 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+    } 
+    
  
     // Return an array to use as reference or dropdown selection
     public function get_ref($table,$key,$value,$dropdown=false)
@@ -246,7 +214,14 @@ class General_model extends CI_Model
                 {
                     if(isset($where['column'],$where['value']))
 					{
-						$this->db->where($where['column'],$where['value']);
+						if(is_array($data['value']))
+                        {
+                            $this->db->where_in($data['column'],$data['value']);
+                        }
+                        else
+                        {
+                            $this->db->where($data['column'],$data['value']);
+                        }
 					}
                 }
             }
@@ -291,7 +266,7 @@ class General_model extends CI_Model
 
                    
             $q = $this->db->get(); 
-            //    echo $this->db->last_query(); exit;
+            //   echo $this->db->last_query(); exit;
             if($q->num_rows() > 0)
             {
                 $array['status'] = TRUE;
@@ -355,7 +330,14 @@ class General_model extends CI_Model
                 {
                     if(isset($where['column'],$where['value']))
 					{
-						$this->db->where($where['column'],$where['value']);
+						if(is_array($data['value']))
+                        {
+                            $this->db->where_in($data['column'],$data['value']);
+                        }
+                        else
+                        {
+                            $this->db->where($data['column'],$data['value']);
+                        }
 					}
                 }
             }
@@ -377,7 +359,7 @@ class General_model extends CI_Model
             }
                    
             $q = $this->db->get(); 
-            //  echo $this->db->last_query(); exit;
+            //   echo $this->db->last_query(); exit;
             if($q->num_rows() > 0)
             {
                 $array['status'] = TRUE;
