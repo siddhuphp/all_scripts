@@ -214,13 +214,13 @@ class General_model extends CI_Model
                 {
                     if(isset($where['column'],$where['value']))
 					{
-						if(is_array($data['value']))
+						if(is_array($where['value']))
                         {
-                            $this->db->where_in($data['column'],$data['value']);
+                            $this->db->where_in($where['column'],$where['value']);
                         }
                         else
                         {
-                            $this->db->where($data['column'],$data['value']);
+                            $this->db->where($where['column'],$where['value']);
                         }
 					}
                 }
@@ -330,13 +330,13 @@ class General_model extends CI_Model
                 {
                     if(isset($where['column'],$where['value']))
 					{
-						if(is_array($data['value']))
+						if(is_array($where['value']))
                         {
-                            $this->db->where_in($data['column'],$data['value']);
+                            $this->db->where_in($where['column'],$where['value']);
                         }
                         else
                         {
-                            $this->db->where($data['column'],$data['value']);
+                            $this->db->where($where['column'],$where['value']);
                         }
 					}
                 }
