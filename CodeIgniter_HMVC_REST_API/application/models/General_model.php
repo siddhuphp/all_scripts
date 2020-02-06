@@ -95,11 +95,26 @@ class General_model extends CI_Model
     }
  
     // Update data to table
-    public function update($table,$data,$primaryfield,$id)
+    public function update($table,$data,$where)
     {
         $array = array();
-        $this->db->where($primaryfield, $id);
-        $q = $this->db->update($table, $data);
+        if(isset($where) && !empty($where) && is_array($where))
+        {
+            foreach($where as $wdata)
+            {
+                if(is_array($wdata['value']))
+                {
+                    $this->db->where_in($wdata['column'],$wdata['value']);
+                }
+                else
+                {
+                    $this->db->where($wdata['column'],$wdata['value']);
+                }                
+            }
+            $q = $this->db->update($table, $data);		
+        }
+       
+       
         if ($this->db->affected_rows() > 0)
         {
             $array['status'] = TRUE;
