@@ -200,7 +200,8 @@ class General_model extends CI_Model
                 "order_by" => [
                     ["column" => "A.Name", "type" => 'ASC'],
                     ["column" => "A.id", "type" => 'DESC']
-                ]                               
+                ],
+                "group_by" => ['column1','column2','column3']                               
 		    ];        
         */
 
@@ -278,6 +279,11 @@ class General_model extends CI_Model
             }
 
 
+            //Group by
+            if(isset($data['group_by']) && !empty($data['group_by']) && is_array($data['group_by']))
+            {
+                $this->db->group_by($data['group_by']); 
+            }
 
                    
             $q = $this->db->get(); 
@@ -315,7 +321,8 @@ class General_model extends CI_Model
                     ["column" => "A.status", "value" => 'Active']
                 ],
                 "limit" => ["start" => 1, "end" => 5],
-                "order_by" => ["column" => "A.Name", "Type" => 'ASC'],                
+                "order_by" => ["column" => "A.Name", "Type" => 'ASC'],
+                "group_by" => ['column1','column2','column3']                
 		    ];
         
         */
@@ -371,6 +378,13 @@ class General_model extends CI_Model
                 $order_type = (isset($data['order_by']['Type']) && !empty($data['order_by']['Type']))?$data['order_by']['Type']:"ASC";
                 
                 $this->db->order_by($data['order_by']['column'],$order_type);                
+            }
+
+
+            //Group by
+            if(isset($data['group_by']) && !empty($data['group_by']) && is_array($data['group_by']))
+            {
+                $this->db->group_by($data['group_by']); 
             }
                    
             $q = $this->db->get(); 
