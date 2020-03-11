@@ -247,9 +247,23 @@ class General_model extends CI_Model
             {
                 foreach($data['like'] as $key => $like)
                 {
-                    if(isset($like['column'],$like['value']) && ($key == 0))
+                    if(isset($like['column'],$like['value']) && (is_array($like['value'])))
 					{
-						$this->db->like($like['column'],$like['value']);
+                        foreach($like['value'] as $key2 => $like_value)
+                        {
+                            if(($key2 == 0) && ($key == 0))
+                            {
+                                $this->db->like($like['column'],$like_value);
+                            }
+                            else
+                            {
+                                $this->db->or_like($like['column'],$like_value); 
+                            }                                
+                        }                                               
+                    }
+                    else if(isset($like['column'],$like['value']) && ($key == 0))
+                    {
+                       $this->db->like($like['column'],$like['value']); 
                     }
                     else if(isset($like['column'],$like['value']))
                     {
@@ -287,7 +301,7 @@ class General_model extends CI_Model
 
                    
             $q = $this->db->get(); 
-            //   echo $this->db->last_query(); exit;
+               // echo $this->db->last_query(); exit;
             if($q->num_rows() > 0)
             {
                 $array['status'] = TRUE;
@@ -361,6 +375,36 @@ class General_model extends CI_Model
                             $this->db->where($where['column'],$where['value']);
                         }
 					}
+                }
+            }
+
+             // Like
+            if(isset($data['like']) && !empty($data['like']) && is_array($data['like']))
+            {
+                foreach($data['like'] as $key => $like)
+                {
+                    if(isset($like['column'],$like['value']) && (is_array($like['value'])))
+					{
+                        foreach($like['value'] as $key2 => $like_value)
+                        {
+                            if(($key2 == 0) && ($key == 0))
+                            {
+                                $this->db->like($like['column'],$like_value);
+                            }
+                            else
+                            {
+                                $this->db->or_like($like['column'],$like_value); 
+                            }                                
+                        }                                               
+                    }
+                    else if(isset($like['column'],$like['value']) && ($key == 0))
+                    {
+                       $this->db->like($like['column'],$like['value']); 
+                    }
+                    else if(isset($like['column'],$like['value']))
+                    {
+                        $this->db->or_like($like['column'],$like['value']);
+                    }
                 }
             }
 
