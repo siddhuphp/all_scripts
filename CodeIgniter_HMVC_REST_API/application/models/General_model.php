@@ -68,7 +68,7 @@ class General_model extends CI_Model
             }			
         }
 		$q = $this->db->get($table);
-		
+		//  echo $this->db->last_query(); exit;
         if($q->num_rows() > 0)
         {
             $array['status'] = TRUE;
@@ -249,9 +249,9 @@ class General_model extends CI_Model
                 {
                     if(isset($like['column'],$like['value']) && (is_array($like['value'])))
 					{
-                        foreach($like['value'] as $key2 => $like_value)
+                        foreach($like['value'] as $key2 => $like_value) 
                         {
-                            if(($key2 == 0) && ($key == 0))
+                            if(($key2 == 0) && ($key == 0))// or case
                             {
                                 $this->db->like($like['column'],$like_value);
                             }
@@ -455,6 +455,35 @@ class General_model extends CI_Model
         } else {
             $array['status'] = FALSE;
         }
+        //    echo $this->db->last_query(); exit;
         return $array;
+    }
+
+    public function custom_query($sql,$check="")
+    {
+        $array = array();
+        if(isset($sql) && !empty($sql))
+        {
+            $query = $this->db->query($sql); 
+            if($this->db->affected_rows() > 0)
+            {
+                $array['status'] = TRUE;
+                if(isset($check) && !empty($check) && ($check == 'row'))
+                {
+                    $array['resultSet'] = $query->row_array();
+                }
+                else
+                {
+                    $array['resultSet'] = $query->result_array();
+                }
+                
+            }
+            else
+            {
+                $array['status'] = FALSE;
+            }           
+        }
+            // echo $this->db->last_query(); exit;
+         return $array;
     }
 }
