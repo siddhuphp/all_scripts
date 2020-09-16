@@ -31,7 +31,7 @@ class General_model extends CI_Model
             }			
         }
 		$q = $this->db->get($table);
-		
+		//   echo $this->db->last_query(); exit;
         if($q->num_rows() > 0)
         {
             $array['status'] = TRUE;
@@ -68,7 +68,7 @@ class General_model extends CI_Model
             }			
         }
 		$q = $this->db->get($table);
-		//  echo $this->db->last_query(); exit;
+		//   echo $this->db->last_query(); exit;
         if($q->num_rows() > 0)
         {
             $array['status'] = TRUE;
@@ -114,7 +114,7 @@ class General_model extends CI_Model
             $q = $this->db->update($table, $data);		
         }
        
-       
+        //    echo $this->db->last_query(); exit;
         if ($this->db->affected_rows() > 0)
         {
             $array['status'] = TRUE;
@@ -301,7 +301,7 @@ class General_model extends CI_Model
 
                    
             $q = $this->db->get(); 
-               // echo $this->db->last_query(); exit;
+            // echo $this->db->last_query(); exit;
             if($q->num_rows() > 0)
             {
                 $array['status'] = TRUE;
@@ -485,5 +485,241 @@ class General_model extends CI_Model
         }
             // echo $this->db->last_query(); exit;
          return $array;
+    }
+
+
+    public function get_datatables($data)
+    {
+        /* Implemented for datables
+            Auther: Siddhartha
+            Date: 21-june-2020
+            Referance source: https://datatables.net/examples/server_side/simple.html
+            Version: https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js
+        */
+        /*  Example structure of join common query building
+            $array = [
+                "data_table" => ['A.name','B.email'],
+                "fileds" => "A.name, B.email",
+                "table" => "Table A",
+                "join_tables" => [
+                    ["table"=>"Table B","join_on"=>'"B.id" = "A.id"',"join_type" => "left"],
+                    ["table"=>"Table C","join_on"=>'"C.id" = "A.id"',"join_type" => "right"],
+                ],                
+                "where" => [
+                    ["column" => "B.id", "value" => 1],
+                    ["column" => "A.status", "value" => 'Active']
+                ]
+                "group_by" => ['column1','column2','column3']                               
+            ];
+            Note: You don't need to send the Like, limit, order by columns. It tooks automatically.        
+        */
+
+        /* 
+            Jquery data output like to be below format
+            {
+                "draw": 1,
+                "recordsTotal": 57,
+                "recordsFiltered": 57,
+                "data": [
+                            [
+                                "Airi",
+                                "Satou",
+                                "Accountant",
+                                "Tokyo",
+                                "28th Nov 08",
+                                "$162,700"
+                            ],
+                            [.....],
+                            [.....],
+                            [.....],                    
+                        ],
+            }
+
+            And make sure your jquery script to be below format
+
+            $(document).ready( function () {
+                $('#table_id').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": '<?php echo base_url("log_messages/get_datatables"); ?>',
+                    columns: [
+                                { data: 'id' },
+                                { data: 'module' },
+                                { data: 'at_where' },
+                                { data: 'msg' },
+                                { data: 'request_json' },
+                                { data: 'receive_json' },
+                                { data: 'created_on' },
+                            ]
+                });
+            });
+        */
+
+        // pr($_GET,1);
+        if(isset($data) && !empty($data) && is_array($data))
+        {
+            $fileds = (isset($data['fileds']) && !empty($data['fileds']))?$data['fileds']:"*";
+
+            $this->db->select($fileds);
+            $this->db->from($data['table']); 
+
+            // Joins
+            if(isset($data['join_tables']) && !empty($data['join_tables']) && is_array($data['join_tables']))
+            {
+                foreach($data['join_tables'] as $join)
+                {
+                    $join_type = (isset($join['join_type']) && !empty($join['join_type']))?$join['join_type']:"left";
+
+                    $this->db->join($join['table'], $join['join_on'], $join_type);
+                }
+            }
+
+            // Where
+            if(isset($data['where']) && !empty($data['where']) && is_array($data['where']))
+            {
+                foreach($data['where'] as $where)
+                {
+                    if(isset($where['column'],$where['value']))
+					{
+						if(is_array($where['value']))
+                        {
+                            $this->db->where_in($where['column'],$where['value']);
+                        }
+                        else
+                        {
+                            $this->db->where($where['column'],$where['value']);
+                        }
+					}
+                }
+            }
+
+            // Like
+            if(isset($data['data_table'],$_GET['search']['value']) && !empty($data['data_table']) && !empty($_GET['search']['value']) && is_array($data['data_table']))
+            {
+                $this->db->group_start();
+                foreach($data['data_table'] as $key => $column)
+                {
+                    if(isset($column) && !empty($column) && ($key == 0))
+                    {
+                       $this->db->like($column,trim($_GET['search']['value'])); 
+                    }
+                    else if(!empty($column))
+                    {
+                        $this->db->or_like($column,trim($_GET['search']['value']));
+                    }
+                }
+                $this->db->group_end();
+            }
+
+            
+
+            //Limit           
+            if(isset($_GET['length'], $_GET['start']))
+            {
+                $this->db->limit($_GET['length'], $_GET['start']);
+            }            
+
+
+            // Order By
+            if(isset( $_GET['order'][0]['column'],$_GET['order'][0]['dir']) && !empty($_GET['order'][0]['dir']))
+            {
+                $this->db->order_by( $data['data_table'][$_GET['order'][0]['column']],$_GET['order'][0]['dir']);				
+            }
+
+            //Group by
+            if(isset($data['group_by']) && !empty($data['group_by']) && is_array($data['group_by']))
+            {
+                $this->db->group_by($data['group_by']); 
+            }
+
+                   
+            $q = $this->db->get(); 
+            //    echo $this->db->last_query(); exit;
+            if($q->num_rows() > 0)
+            {
+                $data_count = $this->get_count_datatables($data);
+                $count = 0;
+                if($data_count['status'])
+                {
+                    $count = $data_count['count'];
+                }
+                $array['status'] = TRUE;
+                $array['draw'] = (isset($_GET['draw']) && !empty($_GET['draw']))?$_GET['draw']:1;
+                $array['recordsTotal'] = $count;
+                $array['recordsFiltered'] = $count;
+                $array['data'] = $q->result_array();
+            }else{
+                $array['status'] = FALSE;
+                $array['draw'] = (isset($_GET['draw']) && !empty($_GET['draw']))?$_GET['draw']:1;
+                $array['recordsTotal'] = 0;
+                $array['recordsFiltered'] = 0;
+                $array['data'] = [];
+            }  
+                  
+            return $array;
+            
+        }
+        
+    }
+
+    function get_count_datatables($data)
+    {
+        
+        if(isset($data) && !empty($data) && is_array($data))
+        {
+            $fileds = (isset($data['fileds']) && !empty($data['fileds']))?$data['fileds']:"*";
+
+            $this->db->select($fileds);
+            $this->db->from($data['table']); 
+
+            // Joins
+            if(isset($data['join_tables']) && !empty($data['join_tables']) && is_array($data['join_tables']))
+            {
+                foreach($data['join_tables'] as $join)
+                {
+                    $join_type = (isset($join['join_type']) && !empty($join['join_type']))?$join['join_type']:"left";
+
+                    $this->db->join($join['table'], $join['join_on'], $join_type);
+                }
+            }
+
+            // Where
+            if(isset($data['where']) && !empty($data['where']) && is_array($data['where']))
+            {
+                foreach($data['where'] as $where)
+                {
+                    if(isset($where['column'],$where['value']))
+					{
+						if(is_array($where['value']))
+                        {
+                            $this->db->where_in($where['column'],$where['value']);
+                        }
+                        else
+                        {
+                            $this->db->where($where['column'],$where['value']);
+                        }
+					}
+                }
+            }
+
+            //Group by
+            if(isset($data['group_by']) && !empty($data['group_by']) && is_array($data['group_by']))
+            {
+                $this->db->group_by($data['group_by']); 
+            }
+                   
+            $q = $this->db->get(); 
+            //    echo $this->db->last_query(); exit;
+            if($q->num_rows() > 0)
+            {
+                $array['status'] = TRUE;
+                $array['count'] = count($q->result_array());
+            }else{
+                $array['status'] = FALSE;
+            }                  
+            return $array;
+            
+        }
+        
     }
 }
