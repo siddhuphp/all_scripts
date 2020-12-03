@@ -1,0 +1,8 @@
+What is Composer in PHP?
+
+Composer is a tool for dependency management in PHP. it's install or updates the libraries and depended libraries based on your project.
+
+
+
+
+ 
