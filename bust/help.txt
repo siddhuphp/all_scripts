@@ -1,0 +1,38 @@
+siddhartha
+Siddhun9JB5AuPGo
+
+#########################################################
+var arr = [100,100,300,500,800,1300,2100,3400,5400,8100,12200,18300,27400,41100,61700];
+
+
+var first = arr[0];
+
+var iterator = arr.values(); 
+
+
+
+
+function if_lose()
+{
+    return iterator.next().value;
+}
+
+
+function if_win()
+{
+  iterator = arr.values();
+  return iterator.next().value;
+}
+
+
+
+function roundBit(bet) {
+  return Math.round(bet / 100) * 100;
+}
+###############################################################
+
+https://github.com/bustabit/autobet#how-to-write-a-script
+
+https://mtihc.github.io/bustabit-script-simulator/
+
+https://gist.github.com/RHavar/e608bb389a5cfe2f01e1
