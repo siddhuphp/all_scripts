@@ -12,4 +12,5 @@ Code preety                  =   CTRL + SHIFT + P
 Page will stick              =   Mouse Left Double click
 Block commet                =   SHIFT + alt + A
 single line comment                =   ctrl + / 
+Code pretty               =   shift + alt + F
  
