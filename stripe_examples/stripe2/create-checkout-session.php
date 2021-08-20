@@ -5,7 +5,7 @@ require 'vendor/autoload.php';
 
 header('Content-Type: application/json');
 
-$YOUR_DOMAIN = 'http://localhost/stripe2';
+$YOUR_DOMAIN = 'http://localhost/all_scripts/stripe_examples/stripe2';
 
 $checkout_session = \Stripe\Checkout\Session::create([
   'payment_method_types' => [
@@ -13,12 +13,12 @@ $checkout_session = \Stripe\Checkout\Session::create([
   ],
   'line_items' => [[
     # TODO: replace this with the `price` of the product you want to sell
-    'price' => 'price_1JQ9pmSIfuNF32jtxLTLzq2B',
+    'price' => 'price_1JQR3JSIfuNF32jtDH7pu005',
     'quantity' => 1,
-  ]],
-  'automatic_tax' => [
-    'enabled' => true,
-  ],
+	'tax_rates' => [
+      'txr_1JQR2NSIfuNF32jt0GP6pJjE',
+    ],	
+  ]],  
   'mode' => 'payment',
   'success_url' => $YOUR_DOMAIN . '/public/success.html',
   'cancel_url' => $YOUR_DOMAIN . '/public/cancel.html',
