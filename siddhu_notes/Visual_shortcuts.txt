@@ -14,3 +14,26 @@ Block commet                =   SHIFT + alt + A
 single line comment                =   ctrl + / 
 Code pretty               =   shift + alt + F
  
+ 
+ 
+ 
+ 
+###Extentions###
+Live Server
+
+Prettier : Prettier automatically clean up your formatting
+
+ESLint : written by Dirk Baeumer, Helps automatically detect coding errors and can do basic cleanup automatically
+
+Prettier, ESLint both require node.js
+
+
+
+## Settings ##
+
+File->prefrences->settings
+	Search for "formatsave" 
+	
+	Trun on the "Format on save"
+
+	It will help you autoset format before save a file for Prettier and ESLint  
