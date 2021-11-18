@@ -36,4 +36,4 @@ File->prefrences->settings
 	
 	Trun on the "Format on save"
 
-	It will help you autoset format before save a file for Prettier and ESLint  
+	It will help you autoset format before save a file for Prettier and ESLint   
