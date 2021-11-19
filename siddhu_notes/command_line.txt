@@ -34,3 +34,11 @@ ls -alt 	=> Here, ls -alt lists all contents, including hidden files and directo
 In addition to using each option separately, like ls -a or ls -l, multiple options can be used together, like ls -alt.
 
 cp copy_file_namels paste_file_name	=> This command used for copy the file.
+
+
+
+Proper way to do backup files in server, Zip that folder using this command
+
+tar -zcvf your_folder_backup_name.tar.gz select_backup_folder
+
+example: tar -zcvf public_html_14June2021.tar.gz public_html/  
