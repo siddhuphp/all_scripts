@@ -1,0 +1,31 @@
+
+Install
+	composer create-project flarum/flarum
+	
+	After install, You can able to access from public folder
+	
+	ex: yoursite.com/public
+	
+	Now you able to open a form to setup database. Create databse in phpmyadmin and note down the username, database, and password. Fill all the information and click next..
+	
+	Done... You have successfully Installed flarum.
+	
+	If you want to remove public on your URL. then follow below process.
+	
+	By default Flarum's directory structure includes a public directory which contains only publicly-accessible files. This is a security best-practice, ensuring that all sensitive source code files are completely inaccessible from the web root.
+
+	However, if you wish to host Flarum in a subdirectory (like yoursite.com/forum), or if your host doesn't give you control over your webroot (you're stuck with something like public_html or htdocs), you can set up Flarum without the public directory.
+
+	Simply move all the files inside the public directory (including .htaccess) into the directory you want to serve Flarum from. Then edit ".htaccess" and uncomment lines 9-15 in order to protect sensitive resources. For Nginx, uncomment lines 8-11 of ".nginx.conf."
+
+	You will also need to edit the "index.php" file and change the following line:
+	
+	$site = require './site.php';
+	
+	Edit the site.php and update the paths in the following lines to reflect your new directory structure:
+	
+	'base' => __DIR__,
+	'public' => __DIR__,
+	'storage' => __DIR__.'/storage',
+	
+	Finally, check config.php and make sure the url value is correct. 
