@@ -42,3 +42,24 @@ Proper way to do backup files in server, Zip that folder using this command
 tar -zcvf your_folder_backup_name.tar.gz select_backup_folder
 
 example: tar -zcvf public_html_14June2021.tar.gz public_html/  
+
+
+
+UBuntu:
+To check list of services running on ubuntu:
+	cmd: service --status-all
+
+	output: would be like this
+	[+] => mysql
+	[-] => apache2
+	[+] plus symbols tells that services running
+	[-] plus symbols tells that services not running
+	
+To restrat mysql service on ubuntu:
+	cmd: sudo service mysql restart
+	
+To stop mysql service on ubuntu:	
+	sudo service mysql stop;
+	
+To start mysql service on ubuntu:
+	sudo service mysql start;

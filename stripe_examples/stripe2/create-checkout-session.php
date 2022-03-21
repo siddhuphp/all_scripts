@@ -17,6 +17,7 @@ $checkout_session = \Stripe\Checkout\Session::create([
     'quantity' => 1,
 	'tax_rates' => [
       'txr_1JQR2NSIfuNF32jt0GP6pJjE',
+      'txr_1JQTraSIfuNF32jtWyqKN7qu',
     ],	
   ]],  
   'mode' => 'payment',

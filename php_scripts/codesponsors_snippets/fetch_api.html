@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+<head></head>
+<body>
+<script>
+// if (!('fetch' in window)) {
+//   console.log('Fetch API not found, try including the polyfill');
+//   return false;
+// }	
+// fetch("https://swapi.co/api/people/1/").then(function(response){
+// 	console.log("Status:",response.status);
+	
+// 	response.json().then(function(data){
+// 		console.log("Fetch Result:",data);
+// 	}).catch(function(err){
+// 		console.log("Fetch Error", err);
+// 	});
+	
+// });
+
+// https://javascript.info/promise-basics
+
+function checkStatus(response){
+	if(response.status === 200){
+		return Promise.resolve(response);
+	}else{
+		return Promise.reject(
+		new Error(response.statusText));
+	}
+
+}
+
+function getJSON(response){
+	return response.json();
+}
+
+
+fetch("https://swapi.co/api/people/1/")
+.then(checkStatus)
+.then(getJSON)
+.then(function(response){
+	console.log("Status:",response.status);	
+	// response.json().then(function(data){
+	// 	console.log("Fetch Result:",data);
+	// }).catch(function(err){
+	// 	console.log("Fetch Error", err);
+	// });	
+});
+
+// Fetch options
+// 	Method
+// 	HTTP Headers
+// 	body
+// 	credentials
+// 	cors
+
+// example of options
+// var options = {
+// 	"method": "post",
+// 	"headers":{
+// 		"Authorization":"Bearer XXXX"},
+// 	"body":"Hello body!"
+// };
+
+// fetch mode options
+// 	same-origin
+// 	cors
+// 	cors-with-forced-preflight
+// 	no-cors
+
+// <!-- Now do some sample code for post -->
+// var name = "siddhu";
+// var body = "some text";
+// var url = "https://jsonplaceholder.typicode.com/posts";
+// fetch(url,{
+// 	method:'POST',
+// 	headers:{
+// 		'Accept':'application/json, text/plain, */*',
+// 		'Content-type':'application/json'
+// 	},
+// 	body:JSON.stringify({name:name,body:body})
+// }).then(checkStatus)
+// 	.then(getJSON)
+// 	.then(function(response){
+// 	console.log("Status:",response.status);
+	
+// 	response.json().then(function(data){
+// 		console.log("Fetch Result:",data);
+// 	}).catch(function(err){
+// 		console.log("Fetch Error", err);
+// 	});
+// });
+
+
+</script>
+</body>
+</html>

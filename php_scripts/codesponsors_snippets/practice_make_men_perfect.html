@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+ <div class="row">
+    <div class="col-sm-12">
+<h1 align="center"><u>Git Commands</u></h1>
+
+<div>
+<p>Git is a version control system for tracking changes in computer files and coordinating work on those files among multiple people</p>
+
+<h4>The Command Line</h4>
+<p>
+There are a lot of different ways to use Git. There are the original command-line tools, and there are many graphical user interfaces of varying capabilities. For this book, we will be using Git on the command line. For one, the command line is the only place you can run all Git commands – most of the GUIs implement only a partial subset of Git functionality for simplicity. If you know how to run the command-line version, you can probably also figure out how to run the GUI version, while the opposite is not necessarily true. Also, while your choice of graphical client is a matter of personal taste, all users will have the command-line tools installed and available.</p>
+
+<h4>Coming to action</h4>
+<p>After installing git in your PC.
+The first thing you should do when you install Git is to set your user name and email address. This is important because every Git commit uses this information, and it’s immutably baked into the commits you start creating:
+</p>
+<code> $ git config --global user.name "John Doe"</code></br>
+<code>$ git config --global user.email johndoe@example.com </code>
+
+<p>Again, you need to do this only once if you pass the --global option, because then Git will always use that information for anything you do on that system. If you want to override this with a different name or email address for specific projects, you can run the command without the --global option when you’re in that project.
+
+Many of the GUI tools will help you do this when you first run them.</p>
+
+<h4>Checking Your Settings</h4>
+<p>If you want to check your configuration settings, you can use the git config --list command to list all the settings Git can find at that point</p>
+<code> $ git config --list </code></br>
+
+<h4>Getting Help</h4>
+<p>If you ever need help while using Git, there are two equivalent ways to get the comprehensive manual page (manpage) help for any of the Git commands:</p>
+<code> $ git help <verb> </code></br>
+
+<h4>Getting a Git Repository</h4>
+<p>You typically obtain a Git repository in one of two ways:</p>
+
+<p>1) You can take a local directory that is currently not under version control, and turn it into a Git repository, or</p>
+
+<p>2) You can clone an existing Git repository from elsewhere.</p>
+
+
+<code> git init </code></br>
+<code> git config --global user.name "Siddhu" </code></br>
+<code> git config --global user.email "siddhartha.e@inspiredge.in" </code></br>
+<code> git config --list (to check configuration) </code></br>
+<code> git add --all </code></br>
+<code> git status (to check status) </code></br>
+<code> git remote add origin YOUR_LINK_TO_REPO </code></br>
+<code> git commit -m "my first commit" </code></br>
+<code> git push -u origin master </code></br>
+
+<code> git push -f origin master (force fully push. it will replaced existed files) </code></br>
+
+
+<p>For clone the project to our local server</p>
+<code> git clone YOUR_LINK_TO_CLONE </code></br>
+
+or
+<p>If you want to clone a branch</p>
+<code> git clone -b <branchname> YOUR_LINK_TO_CLONE</code>
+
+<p>Before starting the work, we need to pull the data for latest changes for all developers  </p>
+<code> git pull  origin master  </code></br>
+
+If we modified any files on the local server, we need to update those changes into the repo. so that after modifying local server files, check the command git status. it will return you, modified files in red font, then you move to those files to staging area using git add -A (which tell move all changes into stage). The staging area is a communicator and holds changes from the local server. until we push the files into the repo. </p>
+
+<code>:  git status  (to check the files that modified) </code></br>
+<p>Add files into staging area </p>
+
+<code>:  git add -A </code></br>
+
+<p> now check again:  git status (now it shows green font that it is modified). In order to commit this changes into the repo.</p>
+
+ <code>: git commit -m "this is change for ur message" </code></br>
+
+<p>now check again git status and(it says working directory is clean) if want to check last modified</p>
+
+<code>:  git log </code></br>
+
+<p>Before pushing the files into the repo.  run the command "git pull origin master". 
+it will bring the all latest modified code to your local server from all developers. Push the code to the repo.</p>
+
+<code>: git push  origin master  </code></br>
+<p>if there is a branch then the command is:</p>
+ git push  origin <branchname>
+
+
+<p>if you want to remove files from the staging area
+<code> git reset </code></br>
+<p>and check the status git status</p>
+
+<p>if you want the changes you made before  "git add -A" check the command "git diff" </p>
+
+<p>if you are sure only don't need call pull before the push. Then use this command </p>
+<code> git push -f origin master </code></br>
+
+
+<p>Deleted a folder in git local repo, How to delete in repo
+Suppose I deleted in modules one module folder called "Events"
+for this use git rm <specific the path></p>
+
+<p>if it is folder then the command is:</p>
+<code> git rm -r <specific the path> </code></br>
+
+<p>if it is file then the command is:</p>
+<code> git rm <specific the path> </code></br>
+
+<p>How to stop few files for doesn't require to change or ignore in git?
+To ignore the files just create a file called .gitignore in the root directory. Before creating once check the file exist or not. It should be a hidden file.</p>
+
+<p>Open the .gitignore file and type name of the file ex:
+home.php</p>
+
+<p>if you want to ignore a folder specify the folder path ex:
+application/config/*
+'*' as the global parameter. it ignores all files inside the config folder.</p>
+
+<p>if you want to use one file inside the folder Ex:</p>
+<code> !application/config/database.php </code></br>
+
+<p>so here we can access the database.php file inside the folder</p>
+
+<p>if you want to stop specfic extention(.img,.jpg and .zip) Ex:</p>
+<code> *.zip </code></br>
+<code> *.jpg </code></br>
+
+<p>if you want to write a comment there Ex:
+# this file is not should be modified. </p>
+
+<h4>To remove cashed in file Ex: </h4>
+<code> git rm --cached  <filename> </code></br>
+
+<h4>To remove cashed in folder Ex: </h4>
+<code> git rm -r --cached  <foldername> </code></br>
+
+  
+<h4>To know the ignored files </h4>
+<code> $ git ls-files --others --ignored --exclude-standard  </code></br>
+
+<h4>To check branch list </h4>
+<code> $ git branch </code></br>
+
+<p> Here "*" tell us. currently we are working on this branch.  </p>
+
+<h4>To change one branch to another branch</h4>
+<code>$ git checkout -b <branchname> </code>
+
+<h4>how can we save our git credentials?</h4>
+<p>Create a text file called _netrc in the home Directory</p>
+<p>Example:</p>
+<p>machine github.com</p>
+<p>login myloginid</p>
+<p>password mypassword</p>
+
+</div>
+
+<code></code>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>
