@@ -1,0 +1,34 @@
+PHPUnit notes
+
+
+To check phpunit version follow command: vendor/bin/phpunit --version
+
+
+To Run testing code: vendor/bin/phpunit tests
+ (or)
+We can specify by name if we have large application:  vendor/bin/phpunit tests/ReceiptTest.php
+ (or)
+Even you can filter more deep, You can call specify method: vendor/bin/phpunit tests --filter=testTax
+ (or)
+Even better you can filter with class more deep, You can call specify method: vendor/bin/phpunit tests --filter=ReceiptTest::testTax
+ (or)
+Instead of running single command like above mentioned, we can setup phpunit.xml here we can mention default files or exclude files for testing and more options 
+After setup phpunit.xml file you can run command: vendor/bin/phpunit --testsuite=app
+we can call specify method with filter command: vendor/bin/phpunit --testsuite=app --filter=testTax
+Asserts functions
+
+assertEquals => this assertEquals has 3 inputs ( first expected value, second actual value, Message displayed in case of failure)
+Find more assert functions in https://phpunit.de/manual/current/en/appendixes.assertions.html 
+
+Arrange Act Assert => the basic pattern we use is called Arrange-Act-Assert
+
+
+Arrange => All necessary preconditions and inputs. 
+Act =>  On the Object or Method under test. 
+Assert => That the Expected results have occurred.
+
+We add two new methods => setUp() & tearDown()  That PHPUnit call before every test method.
+
+
+
+Test Double 
