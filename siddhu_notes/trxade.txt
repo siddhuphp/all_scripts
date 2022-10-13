@@ -1,0 +1,16 @@
+Trxade: ZW1haWw6IHNpZGRoYXJ0aGEuZXN1bnVyaUB0cnhhZGVkZXYuY29tCnA6IFNpZEVzISEyMDIy
+mysql: c2lkZGhhcnRoYQpTaWRFcyEhMjAyMg==
+jiracorn: aHR0cDovL2ppcmFjb24udHJ4YWRlZGV2LmNvbTo3Njg1LwpVc2VybmFtZQpFc3VudXJpClBhc3N3b3JkCiRJZGRodTAwNzcwMAo=
+
+
+
+
+http://jiracon.trxadedev.com:7685/pages/viewpage.action?pageId=107315234
+
+http://qapitest.trxadedev.com/oauth
+method post
+{
+"grant_type":"client_credentials",
+"client_id":"103703",
+"client_secret":"pass1221"
+}
