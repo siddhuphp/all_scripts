@@ -1,0 +1,26 @@
+Laravel-commands
+
+
+Create a project
+	composer create-project laravel/laravel project_name
+
+Create a new table
+	php artisan make:migration create_yourTableName_table
+	
+Create Controll & Model & migration file
+	php artisan make:model Yourname -mc
+	
+Create Controll & Model & migration file & it will create default api structure
+	php artisan make:model Yourname -mc --api
+	
+	
+List out routes or all api calls
+	php artisan route:list
+	
+	
+	
+	
+Helpful URL
+	https://laravel.com/docs/9.x/validation#available-validation-rules
+	
+	https://laravel.com/docs/9.x/eloquent
