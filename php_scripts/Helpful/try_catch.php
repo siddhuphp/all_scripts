@@ -1,0 +1,2 @@
+<?php
+// Try catch example
