@@ -16,7 +16,11 @@
 <body>
   <div class="container">
     <h1>Multiple File Upload</h1>
-    <form action="/file-upload/upload.php" method="post" enctype="multipart/form-data">
+    <form action="/all_scripts/file-upload/upload.php" method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="file-input" class="form-label">Username:</label>
+        <input type="input" id="username" name="usernane" />
+      </div>
       <div class="mb-3">
         <label for="file-input" class="form-label">Select Files:</label>
         <input type="file" id="files" name="files[]" multiple="multiple" />
@@ -57,18 +61,18 @@
       $.fn.fileinputBsVersion = "3.3.7";
       $("#files").fileinput({
         theme: 'fas',
-        uploadUrl: '/file-upload/upload.php', // Replace with your actual upload URL
+        uploadUrl: '/all_scripts/file-upload/upload.php', // Replace with your actual upload URL
         uploadAsync: false,
         maxFileCount: 50,
         allowedFileTypes: ['image', 'video', 'pdf'],
-        showUpload: false,
-        showRemove: false,
+        showUpload: true,
+        showRemove: true,
         overwriteInitial: true,
         previewFileType: 'any',
         maxFileSize: 50000, // 50 MB in bytes
         fileActionSettings: {
-          showUpload: false, // This also hides the upload icon
-          showRotate: false // Hides the rotate button
+          // showUpload: false, // This also hides the upload icon
+          showRotate: false, // Hides the rotate button
         }
       });
     });
