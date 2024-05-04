@@ -77,7 +77,7 @@
             }).done(function(data) {
                 // If successful
                 // console.log(data);
-                $('#prism_code').val(data.data);
+                $('#prism_code').val(data.data+"<div> ### </div>");
                 $('#preview').html(data.data);
                 $('#prismCode').show();
                 Prism.highlightAll();
