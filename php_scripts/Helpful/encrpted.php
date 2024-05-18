@@ -1,6 +1,6 @@
 <?php
 
-$string_to_encrypt = "test";
+$string_to_encrypt = 'Test';
 
 $password = "password";
 
@@ -30,7 +30,10 @@ $data = [
 	"LpF4et1S3cxv6bj04IlVyEa2qIUSdEEv2iJnBdS18XG35bnvPDn3C0BuclFBk9eT",
 	"bb7JqwtYlD87hpB2g7QR7Yo0AbfH05ZFHcMzFi29hGr1Rxb9UVC+Wq8pw9isXSGNxiR7MFKMlQZxa/Z0cQsfSQ==",
 	"xpezMvgxitksAX8/lgZNlC4eajNMS2D+b+vUXZe27Wk=",
-	"YW4ga9XEV6E+4rbyM9OJrXFPtB295C5t/e/fu3PAj1A="
+	"YW4ga9XEV6E+4rbyM9OJrXFPtB295C5t/e/fu3PAj1A=",
+	"oaMOEeqQXyyJKze3PXhqKxi7HLnHkDRSldzCL+SfThideApFVG7sXle33mFX7iNB",
+	"c/UveID86Ht9X9hBApTzi/VHFv1RUL5arynD2KxdIY3GJHswUoyVBnFr9nRxCx9J",
+	"U80/u89Laq9hCFjmeaeQgnFPtB295C5t/e/fu3PAj1A="
 ];
 echo "<br/>";
 $password = "";
