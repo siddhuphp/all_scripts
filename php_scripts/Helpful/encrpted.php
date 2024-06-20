@@ -39,7 +39,7 @@ $data = [
 	"N8TeyXAsly5aFfzWCl9Z+wu2Q/0dc/DNEJOsBLrfGXk="
 ];
 echo "<br/>";
-$password = "siddhu007700";
+$password = "password";
 foreach ($data as $d) {
 
 	echo $d . "\n";
